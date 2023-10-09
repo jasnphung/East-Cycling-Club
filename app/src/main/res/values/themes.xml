@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.GrimpeursCyclingClub" parent="Base.Theme.GrimpeursCyclingClub" />
+
+    <style name="ThemeOverlay.MyTitleText" parent="Base.Theme.GrimpeursCyclingClub">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
 </resources>

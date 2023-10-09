@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    //Adding Google Services Gradle Plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -31,6 +33,8 @@ android {
     }
 }
 
+
+
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -39,4 +43,12 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //importing Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    //adding dependencies for Firebase authentication
+    implementation("com.google.firebase:firebase-auth-ktx")
+    //adding dependencies for Cloud Firestore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+
 }
