@@ -2,11 +2,15 @@ package com.example.grimpeurscyclingclub;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.text.TextUtils;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class CreateAccount extends AppCompatActivity {
+
+
+
+
+public class CreateAccount extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private FirebaseAuth mAuth;
     EditText editTextName;
     EditText editTextEmail;
@@ -32,6 +40,12 @@ public class CreateAccount extends AppCompatActivity {
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        Spinner spinner = findViewById(R.id.dropdown_menu);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setPrompt("Select an Option");
+        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         createAccountButton = findViewById(R.id.createAccountButton);
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +94,24 @@ public class CreateAccount extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedItem = parent.getItemAtPosition(position).toString();
+
+        // Depending on the selected item, perform actions accordingly
+        if (selectedItem.equals("Join a Club")) {
+            // Perform actions specific to "Join a Club"
+            Toast.makeText(this, "Join a Club selected", Toast.LENGTH_SHORT).show();
+        } else // Perform actions specific to "Participants"
+            if (selectedItem.equals("Participants"))
+                Toast.makeText(this, "Participants selected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
+    }
+
 
 
 

@@ -26,69 +26,85 @@
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
         android:background="@drawable/custom_edittext">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
-            android:padding="24dp">
+            android:orientation="vertical"
+            android:padding="24dp"
+            tools:ignore="ExtraText">
+
             <TextView
+                android:id="@+id/createAccountText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Create Account"
-                android:id="@+id/createAccountText"
-                android:textSize="36sp"
                 android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/royal_blue"/>
+                android:textColor="@color/royal_blue"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Name"
-                android:padding="8dp"
                 android:inputType="textPersonName"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/royal_blue"
-                android:layout_marginTop="40dp"/>
+                android:textColorHighlight="@color/royal_blue" />
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Email"
-                android:padding="8dp"
                 android:inputType="textNoSuggestions"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/royal_blue"
-                android:layout_marginTop="20dp"/>
+                android:textColorHighlight="@color/royal_blue" />
+
+            <!--TODO            Need to add dropdown menu here to decide whether to make a
+                Cycling Club Account or Participant Account -->
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Password"
-                android:padding="8dp"
                 android:inputType="textPassword"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/royal_blue"
-                android:layout_marginTop="20dp"/>
+                android:textColorHighlight="@color/royal_blue" />
 
-<!--TODO            Need to add dropdown menu here to decide whether to make a
-                Cycling Club Account or Participant Account -->
+            <Spinner
+                android:id="@+id/dropdown_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:translationY="10dp"
+                android:prompt="@string/menu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"/>
 
             <Button
                 android:id="@+id/createAccountButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/royal_blue"
                 android:text="Create Account"
                 android:textSize="18sp"
+                android:translationY="10dp"
                 app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

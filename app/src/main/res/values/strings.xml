@@ -8,4 +8,11 @@
     <string name="verify_email">Verify Email</string>
     <string name="reload">Reload</string>
     <string name="signed_out">Signed Out</string>
+    <string name="menu">Select an Option</string>
+
+    <string-array name="Options">
+        <item>Select Account Type</item>
+        <item>Cycling Club</item>
+        <item>Participant</item>
+    </string-array>
 </resources>
