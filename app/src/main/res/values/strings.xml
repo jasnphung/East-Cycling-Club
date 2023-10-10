@@ -8,6 +8,7 @@
     <string name="verify_email">Verify Email</string>
     <string name="reload">Reload</string>
     <string name="signed_out">Signed Out</string>
+<<<<<<< HEAD
     <string name="menu">Select an Option</string>
 
     <string-array name="Options">
@@ -16,3 +17,8 @@
         <item>Participant</item>
     </string-array>
 </resources>
+=======
+    <string name="welcome_text">Welcome %1$s! logged in as: </string>
+    <string name="unable_to_login">Unable to Login</string>
+</resources>
+>>>>>>> 1d1df6b38cb9c58d0af7aa76567f9efdc344d80d
