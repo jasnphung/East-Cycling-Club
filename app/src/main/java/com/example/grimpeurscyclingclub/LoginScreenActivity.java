@@ -23,6 +23,9 @@ public class LoginScreenActivity extends AppCompatActivity {
     EditText password;
     Button loginButton;
 
+    private String name;
+    private String role;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
@@ -30,6 +33,10 @@ public class LoginScreenActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
+
+        Intent SignUpIntent = getIntent();
+        name = SignUpIntent.getStringExtra("name");
+        role = SignUpIntent.getStringExtra("role");
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -47,17 +54,23 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 if (email.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
                     Toast.makeText(LoginScreenActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+
+
                     Intent intent = new Intent(LoginScreenActivity.this, WelcomeScreen.class);
+
+                    intent.putExtra("name", "admin");
+                    intent.putExtra("role", "admin");
+
                     startActivity(intent);
                     finish();
                 }
 
-                signIn(email.getText().toString(), password.getText().toString());
+                signIn(email.getText().toString(), password.getText().toString(), name, role);
             }
         });
     }
 
-    private void signIn(String email, String password) {
+    private void signIn(String email, String password, String name, String role) {
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -66,6 +79,8 @@ public class LoginScreenActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginScreenActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginScreenActivity.this, WelcomeScreen.class);
+                            intent.putExtra("name", name);
+                            intent.putExtra("role", role);
                             startActivity(intent);
 
                         } else {

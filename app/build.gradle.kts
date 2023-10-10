@@ -49,6 +49,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     //adding dependencies for Cloud Firestore
     implementation("com.google.firebase:firebase-firestore-ktx")
+    // used for firebaseAnalytics ( setUserProperties() methods )
+    implementation("com.google.firebase:firebase-analytics")
+
 
 
 }

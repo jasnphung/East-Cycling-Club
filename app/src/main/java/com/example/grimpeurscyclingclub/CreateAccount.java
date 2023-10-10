@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 
@@ -70,24 +73,28 @@ public class CreateAccount extends AppCompatActivity implements AdapterView.OnIt
                     return;
                 }
 
-                createAccount(email, password);
+                String role = spinner.getSelectedItem().toString();
+
+                createAccount(email, password, name, role);
             }
         });
 
     }
 
-    public void createAccount(String email, String password) {
+    public void createAccount(String email, String password, String name, String role) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //upon successful account creation, application immediately logs you in instead of taking you back to login page
+                            // success notification
                             Toast.makeText(CreateAccount.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                            // !TODO when going into welcome screen, find a way to bring name
-                            //  !TODO into welcome screen since Firebase doesnt store that information
-                            Intent intent = new Intent(getApplicationContext(), WelcomeScreen.class);
+                            Intent intent = new Intent(CreateAccount.this, LoginScreenActivity.class);
+                            // 'brings over' extra name and role to welcome page
+                            intent.putExtra("name", name);
+                            intent.putExtra("role", role);
                             startActivity(intent);
+
                         } else {
                             String errorMessage = task.getException().getMessage();
                             Toast.makeText(CreateAccount.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -112,9 +119,6 @@ public class CreateAccount extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
     }
-
-
-
 
 
 }

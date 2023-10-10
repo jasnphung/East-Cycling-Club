@@ -2,6 +2,7 @@ package com.example.grimpeurscyclingclub;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -17,15 +18,18 @@ public class WelcomeScreen extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        // text to change
         TextView text = (TextView)findViewById(R.id.WelcomeText);
 
         if(user != null){
-            // TODO: Needs to be getDisplayName() eventually
-            String name = user.getEmail();
-
-            text.setText(getString(R.string.welcome_text, name));
+            Intent intent = getIntent();
+            // takes the extra data put in intent inside CreateAccount.java
+            String name = intent.getStringExtra("name");
+            String role = intent.getStringExtra("role");
+            text.setText(getString(R.string.welcome_text, name, role));
         }else{
             text.setText(getString(R.string.unable_to_login));
         }
     }
+
 }
