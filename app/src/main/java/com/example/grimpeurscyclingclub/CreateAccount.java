@@ -75,7 +75,8 @@ public class CreateAccount extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), WelcomeScreen.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(CreateAccount.this, "Cannot Create Account", Toast.LENGTH_SHORT).show();
+                            String errorMessage = task.getException().getMessage();
+                            Toast.makeText(CreateAccount.this, errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

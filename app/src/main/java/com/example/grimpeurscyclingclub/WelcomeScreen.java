@@ -20,8 +20,8 @@ public class WelcomeScreen extends AppCompatActivity {
         TextView text = (TextView)findViewById(R.id.WelcomeText);
 
         if(user != null){
-
-            String name = user.getDisplayName();
+            // TODO: Needs to be getDisplayName() eventually
+            String name = user.getEmail();
 
             text.setText(getString(R.string.welcome_text, name));
         }else{
