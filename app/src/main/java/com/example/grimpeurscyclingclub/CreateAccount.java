@@ -89,11 +89,12 @@ public class CreateAccount extends AppCompatActivity implements AdapterView.OnIt
                         if (task.isSuccessful()) {
                             // success notification
                             Toast.makeText(CreateAccount.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CreateAccount.this, LoginScreenActivity.class);
+                            Intent intent = new Intent(CreateAccount.this, WelcomeScreen.class);
                             // 'brings over' extra name and role to welcome page
                             intent.putExtra("name", name);
                             intent.putExtra("role", role);
                             startActivity(intent);
+                            finish();
 
                         } else {
                             String errorMessage = task.getException().getMessage();

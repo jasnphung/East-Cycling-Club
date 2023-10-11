@@ -82,6 +82,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                             intent.putExtra("name", name);
                             intent.putExtra("role", role);
                             startActivity(intent);
+                            finish();
 
                         } else {
                             Toast.makeText(LoginScreenActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
