@@ -11,7 +11,7 @@
     <string name="menu">Select an Option</string>
 
     <string-array name="Options">
-        <item>Select Account Type</item>
+        <item></item>
         <item>Cycling Club</item>
         <item>Participant</item>
     </string-array>

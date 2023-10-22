@@ -71,9 +71,6 @@
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/royal_blue" />
 
-            <!--TODO            Need to add dropdown menu here to decide whether to make a
-                Cycling Club Account or Participant Account -->
-
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -91,8 +88,11 @@
                 android:id="@+id/dropdown_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:padding="8dp"
                 android:spinnerMode="dropdown"
-                android:translationY="10dp"
                 android:prompt="@string/menu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"/>
 
@@ -104,7 +104,6 @@
                 android:backgroundTint="@color/royal_blue"
                 android:text="Create Account"
                 android:textSize="18sp"
-                android:translationY="10dp"
                 app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

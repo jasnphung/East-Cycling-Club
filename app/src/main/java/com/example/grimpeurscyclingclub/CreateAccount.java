@@ -33,6 +33,7 @@ public class CreateAccount extends AppCompatActivity implements AdapterView.OnIt
     EditText editTextEmail;
     EditText editTextPassword;
     Button createAccountButton;
+    Spinner spinner;
 
 
     @Override
@@ -43,11 +44,11 @@ public class CreateAccount extends AppCompatActivity implements AdapterView.OnIt
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
-        Spinner spinner = findViewById(R.id.dropdown_menu);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Options, android.R.layout.simple_spinner_item);
+        spinner = findViewById(R.id.dropdown_menu);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Options, R.layout.spnr_accounttype);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setPrompt("Select an Option");
+        spinner.setPrompt("Select an Account Type");
         spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         createAccountButton = findViewById(R.id.createAccountButton);
 
