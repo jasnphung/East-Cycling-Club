@@ -12,10 +12,10 @@
 
     <string-array name="Options">
         <item></item>
-        <item>Cycling Club</item>
+        <item>Cycling Club Owner</item>
         <item>Participant</item>
     </string-array>
 
-    <string name="welcome_text">Welcome %1$s! logged in as: %2$s</string>
+    <string name="welcome_text">Welcome %1$s! \n You are logged in as: %2$s</string>
     <string name="unable_to_login">Unable to Login</string>
 </resources>

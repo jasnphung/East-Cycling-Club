@@ -21,14 +21,15 @@ public class WelcomeScreen extends AppCompatActivity {
         // text to change
         TextView text = (TextView)findViewById(R.id.WelcomeText);
 
-        if(user != null){
+        if (user != null){
             Intent intent = getIntent();
             // takes the extra data put in intent inside CreateAccount.java
             String name = intent.getStringExtra("name");
             String role = intent.getStringExtra("role");
             text.setText(getString(R.string.welcome_text, name, role));
-        }else{
-            text.setText(getString(R.string.unable_to_login));
+        }
+        else {
+            text.setText("Welcome! \n You are signed in as admin");
         }
     }
 

@@ -64,8 +64,9 @@ public class LoginScreenActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
-                signIn(email.getText().toString(), password.getText().toString(), name, role);
+                else {
+                    signIn(email.getText().toString(), password.getText().toString(), name, role);
+                }
             }
         });
     }
