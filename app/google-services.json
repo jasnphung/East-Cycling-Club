@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1077416317031",
-    "project_id": "grimpeurscyclingclub-bd3a4",
-    "storage_bucket": "grimpeurscyclingclub-bd3a4.appspot.com"
+    "project_number": "1088392660306",
+    "project_id": "eastcyclingclub-48e54",
+    "storage_bucket": "eastcyclingclub-48e54.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1077416317031:android:f1ddaaa34044bc008f04c2",
+        "mobilesdk_app_id": "1:1088392660306:android:794120cf2d0953bf8a668b",
         "android_client_info": {
-          "package_name": "com.example.grimpeurscyclingclub"
+          "package_name": "com.example.eastcyclingclub"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAssJg4XtezjnS8I1aAo2R5mOiSTCFqoAM"
+          "current_key": "AIzaSyBDoiBOH5KJyWRFJk2XPoHx7BI5nk50mwg"
         }
       ],
       "services": {

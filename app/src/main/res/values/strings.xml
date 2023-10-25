@@ -1,13 +1,5 @@
 <resources>
-    <string name="app_name">GrimpeursCyclingClub</string>
-    <string name="sign_in">Sign In</string>
-    <string name="password">Password</string>
-    <string name="create_account">Create Account</string>
-    <string name="email">Email</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="verify_email">Verify Email</string>
-    <string name="reload">Reload</string>
-    <string name="signed_out">Signed Out</string>
+    <string name="app_name">EastCyclingClub</string>
     <string name="menu">Select an Option</string>
 
     <string-array name="Options">
@@ -15,7 +7,7 @@
         <item>Cycling Club Owner</item>
         <item>Participant</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="welcome_text">Welcome %1$s! \n You are logged in as: %2$s</string>
-    <string name="unable_to_login">Unable to Login</string>
 </resources>
