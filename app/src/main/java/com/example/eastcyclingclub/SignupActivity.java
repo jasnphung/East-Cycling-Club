@@ -37,7 +37,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
         spinner = findViewById(R.id.dropdown_menu);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Options, R.layout.spnr_accounttype);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.spnr_accounttype);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setPrompt("Select an Account Type");
