@@ -19,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
@@ -49,12 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
-                        intent.putExtra("name", "admin");
-                        intent.putExtra("role", "admin");
-                        intent.putExtra("username", "admin");
-
                         startActivity(intent);
-                        finish();
                     }else{
                         checkUser();
                     }

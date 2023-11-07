@@ -16,10 +16,22 @@
             android:name=".CreateEventActivity"
             android:exported="false" />
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -30,12 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

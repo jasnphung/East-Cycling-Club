@@ -30,12 +30,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildToolsVersion = "33.0.1"
 
 }
 
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
+    //noinspection GradleCompatible
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-firestore:24.9.0")

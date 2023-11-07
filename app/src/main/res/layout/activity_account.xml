@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    tools:context=".AccountActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event"
+        android:text="Account"
         android:textColor="@color/lavender"
         android:layout_centerInParent="true"
         android:textSize="36sp" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottomNavigation"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
@@ -24,9 +24,9 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/bottom_background"
         android:elevation="2dp"
-        app:menu="@menu/bottom_menu"
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled" />
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_menu" />
 </RelativeLayout>
