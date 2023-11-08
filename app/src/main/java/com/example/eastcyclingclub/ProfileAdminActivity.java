@@ -16,7 +16,7 @@ public class ProfileAdminActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id==R.id.event){
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), EventActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }if (id==R.id.profile){

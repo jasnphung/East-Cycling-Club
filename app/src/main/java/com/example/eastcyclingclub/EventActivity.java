@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_admin);
+        setContentView(R.layout.activity_event);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.event);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
             if (id==R.id.event){
                 return true;
             }if (id==R.id.profile){
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }if (id==R.id.account){
