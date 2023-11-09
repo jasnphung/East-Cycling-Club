@@ -2,17 +2,21 @@ package com.example.eastcyclingclub;
 
 public class EventCreateHelperClass {
 
-    private String  age, pace, eventType, difficultyLevel;
+    private String  eventName,age, pace, eventType, difficultyLevel;
 
     public EventCreateHelperClass(String eventName, String age, String pace, String eventType, String difficultyLevel) {
+        this.eventName = eventName;
         this.age = age;
         this.pace = pace;
         this.eventType = eventType;
         this.difficultyLevel = difficultyLevel;
     }
+
     public String getAge() {
         return age;
     }
+    public String getEventName(){return eventName;}
+    public void setEventName(String eventName){this.eventName = eventName;}
     public void setAge(String age) {
         this.age = age;
     }
