@@ -111,7 +111,6 @@
                 android:id="@+id/loginRedirectText"
                 android:text="Already an user? Login"
                 android:layout_gravity="center"
-                android:padding="8dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/royal_blue"
                 android:textSize="18sp"/>

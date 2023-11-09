@@ -51,6 +51,7 @@
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:hint="Username"
+                android:inputType="textPersonName"
                 android:drawableLeft="@drawable/baseline_person_pin_24"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"/>
@@ -82,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/signupRedirectText"
-                android:text="Dont have an account? Sign Up"
+                android:text="Don't have an account? Sign Up"
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:layout_marginTop="10dp"
