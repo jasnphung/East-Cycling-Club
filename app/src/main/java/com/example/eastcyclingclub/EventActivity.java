@@ -42,7 +42,7 @@ public class EventActivity extends AppCompatActivity {
             return false;
         });
 
-        // 
+        //
         expandFAB = findViewById(R.id.expandMenuFAB);
         offerFAB = findViewById(R.id.offerEventFAB);
         editFAB = findViewById(R.id.editEventTypeFAB);
@@ -89,12 +89,5 @@ public class EventActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
         });
-    }
-
-    public void goToCreateEvent(View view) {
-        Intent intent = new Intent(getApplicationContext(), CreateEventActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-        finish();
     }
 }
