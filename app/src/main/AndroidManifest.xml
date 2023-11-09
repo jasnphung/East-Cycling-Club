@@ -19,9 +19,6 @@
             android:name=".UserList"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".CreateEventActivity"
             android:exported="false" />
         <activity

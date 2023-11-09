@@ -1,65 +1,39 @@
 package com.example.eastcyclingclub;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
-import android.os.Bundle;
+public class UserList extends ArrayAdapter<HelperClass> {
+    private Activity context;
+    List<HelperClass> helperClasses;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-
-public class UserList extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    DatabaseReference database;
-    MyAdapter myAdapter;
-    ArrayList<HelperClass> list;
+    public UserList(Activity context, List<HelperClass> helperClasses) {
+        super(context, R.layout.activity_user_list, helperClasses);
+        this.context = context;
+        this.helperClasses = helperClasses;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View listViewItem = inflater.inflate(R.layout.activity_user_list, null, true);
 
-        recyclerView = findViewById(R.id.userList);
-        database = FirebaseDatabase.getInstance().getReference("users");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView textViewEmail= (TextView) listViewItem.findViewById(R.id.textViewEmail);
+        TextView textViewPassword = (TextView) listViewItem.findViewById(R.id.textViewPassword);
+        TextView textViewRole = (TextView) listViewItem.findViewById(R.id.textViewRole);
 
-        list = new ArrayList<>();
-        myAdapter = new MyAdapter(this,list);
-        recyclerView.setAdapter(myAdapter);
-
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                    HelperClass helperClass = dataSnapshot.getValue(HelperClass.class);
-                    list.add(helperClass);
-
-
-                }
-                myAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+        HelperClass helperClass = helperClasses.get(position);
+        textViewName.setText(helperClass.getName());
+        textViewRole.setText(helperClass.getRole());
+        textViewEmail.setText(helperClass.getEmail());
+        textViewPassword.setText(helperClass.getPassword());
+        return listViewItem;
     }
 }
