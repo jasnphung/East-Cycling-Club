@@ -3,13 +3,11 @@
     <string name="menu">Select an Option</string>
 
     <string-array name="AccountOptions">
-        <item></item>
         <item>Cycling Club Owner</item>
         <item>Participant</item>
     </string-array>
 
     <string-array name="EventOptions">
-        <item></item>
         <item>Time Trial</item>
         <item>Hill Climb</item>
         <item>Road Stage Race</item>
@@ -18,7 +16,6 @@
     </string-array>
 
     <string-array name="DifficultyLevelOptions">
-        <item></item>
         <item>Beginner</item>
         <item>Easy</item>
         <item>Road Stage Race</item>

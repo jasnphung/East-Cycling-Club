@@ -28,56 +28,62 @@
                 android:id="@+id/icon"
                 android:layout_width="fill_parent"
                 android:layout_height="250dp"
+                android:layout_marginBottom="10dp"
                 android:contentDescription="TODO"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
-                android:src="@mipmap/grimpeurslogo_foreground"
-                />
+                android:src="@drawable/grimpeurs_logo_hd" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textSize="36sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/sf_pro"
+                android:text="Welcome Back!"
                 android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/royal_blue"/>
+                android:textColor="@color/royal_blue"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/login_username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/login_username"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/royalblue_border"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
-                android:hint="Username"
-                android:inputType="textPersonName"
                 android:drawableLeft="@drawable/baseline_person_pin_24"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:fontFamily="@font/sf_pro"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/login_password"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/royalblue_border"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Password"
-                android:inputType="textPassword"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:fontFamily="@font/sf_pro"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black" />
 
             <Button
+                android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Login"
-                android:id="@+id/login_button"
-                android:textSize="18sp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/royal_blue"
-                app:cornerRadius = "20dp"/>
+                android:fontFamily="@font/sf_pro"
+                android:text="Login"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"

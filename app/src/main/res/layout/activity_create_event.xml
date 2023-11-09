@@ -15,57 +15,171 @@
         android:layout_marginStart="20dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
-            android:padding="20dp"
             android:background="@drawable/royalblue_border">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Event Type"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sf_pro"
+                android:text="Offer Event Type"
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/sf_pro"
                 android:text="Event Details"
+                android:textColor="@color/royal_blue"
                 android:textSize="20sp"
-                android:textColor="@color/royal_blue"/>
+                app:layout_constraintBottom_toTopOf="@+id/eventtype_dropdown_menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
             <Spinner
                 android:id="@+id/eventtype_dropdown_menu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/royalblue_border"
-                android:drawablePadding="8dp"
-                android:padding="8dp"
-                android:spinnerMode="dropdown" />
-            <ScrollView
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintBottom_toTopOf="@+id/difficultySwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/difficultySwitch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Create Event Type"
-                android:id="@+id/create_eventtypebuttton"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set difficulty"
                 android:textSize="18sp"
-                android:layout_marginTop="30dp"
+                app:layout_constraintBottom_toTopOf="@+id/minimumAgeSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventtype_dropdown_menu"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/minimumAgeSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set minimum age"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/paceSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/difficultySwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/paceSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set pace"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/routeDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minimumAgeSwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/routeDetails"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set route details"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/create_eventtypebuttton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/paceSwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <Button
+                android:id="@+id/create_eventtypebuttton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/royal_blue"
-                app:cornerRadius = "20dp"/>
+                android:fontFamily="@font/sf_pro"
+                android:text="Offer Event Type"
+                android:textSize="18sp"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/routeDetails" />
 
 
-
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 

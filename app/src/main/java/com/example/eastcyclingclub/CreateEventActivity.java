@@ -17,9 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateEventActivity extends AppCompatActivity {
+import java.lang.reflect.Array;
 
-    Spinner eventType;
+public class CreateEventActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
 
@@ -28,6 +28,13 @@ public class CreateEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        // Dropdown menu for the event type
+        Spinner eventType = findViewById(R.id.eventtype_dropdown_menu);
+        ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
+        eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        eventType.setAdapter(eventAdapter);
+
+        /*
         eventType = findViewById(R.id.eventtype_dropdown_menu);
         ArrayAdapter<CharSequence> eventAdapter = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
         eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -37,6 +44,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.spnr_difficultylevel);
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        */
     }
 }

@@ -24,16 +24,16 @@ public class UserList extends ArrayAdapter<HelperClass> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.activity_user_list, null, true);
 
-        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView textViewName =  (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView textViewRole = (TextView) listViewItem.findViewById(R.id.textViewRole);
         TextView textViewEmail= (TextView) listViewItem.findViewById(R.id.textViewEmail);
         TextView textViewPassword = (TextView) listViewItem.findViewById(R.id.textViewPassword);
-        TextView textViewRole = (TextView) listViewItem.findViewById(R.id.textViewRole);
 
         HelperClass helperClass = helperClasses.get(position);
-        textViewName.setText(helperClass.getName());
-        textViewRole.setText(helperClass.getRole());
-        textViewEmail.setText(helperClass.getEmail());
-        textViewPassword.setText(helperClass.getPassword());
+        textViewName.setText("Name: " + helperClass.getName());
+        textViewRole.setText("Role: " + helperClass.getRole());
+        textViewEmail.setText("Email: " + helperClass.getEmail());
+        textViewPassword.setText("Password: " + helperClass.getPassword());
         return listViewItem;
     }
 }
