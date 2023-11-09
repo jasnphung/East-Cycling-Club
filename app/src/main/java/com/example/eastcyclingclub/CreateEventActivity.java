@@ -1,27 +1,21 @@
 package com.example.eastcyclingclub;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Array;
 
 public class CreateEventActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    Button returnToEventsBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +27,15 @@ public class CreateEventActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
+
+        // Return to events button
+        returnToEventsBTN = findViewById(R.id.returnToEventsButton);
+        returnToEventsBTN.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+            finish();
+        });
 
         /*
         eventType = findViewById(R.id.eventtype_dropdown_menu);
