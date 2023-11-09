@@ -168,13 +168,12 @@ public class AccountActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
     }
 
-    private boolean deleteProduct(String username) {
+    private void deleteProduct(String username) {
         //getting the specified users reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(username);
         //removing users
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
-        return true;
     }
 
 

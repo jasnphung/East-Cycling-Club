@@ -56,12 +56,17 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                 String password = signupPassword.getText().toString();
                 String role = spinner.getSelectedItem().toString();
 
-                HelperClass helperClass = new HelperClass(name, email, username, password, role);
-                reference.child(username).setValue(helperClass);
+                if( verifyElementsAreNonEmpty(name, email, password, username) ){
+                    HelperClass helperClass = new HelperClass(name, email, username, password, role);
+                    reference.child(username).setValue(helperClass);
 
-                Toast.makeText(SignupActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
+                    Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(SignupActivity.this, "ERROR: missing information", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -91,5 +96,34 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    private boolean verifyElementsAreNonEmpty(String name, String email, String pwd, String userName){
+
+        boolean allCredentialsAreValid = true;
+
+        if( name.isEmpty() ){
+            signupName.setError("Invalid credentials");
+            signupName.requestFocus();
+            allCredentialsAreValid = false;
+        }
+        if( email.isEmpty() ){
+            signupEmail.setError("Invalid credentials");
+            signupEmail.requestFocus();
+            allCredentialsAreValid = false;
+        }
+        if( userName.isEmpty() ){
+            signupUsername.setError("Invalid credentials");
+            signupUsername.requestFocus();
+            allCredentialsAreValid = false;
+        }
+        if( pwd.isEmpty() ){
+            signupPassword.setError("Invalid credentials");
+            signupPassword.requestFocus();
+            allCredentialsAreValid = false;
+        }
+
+        return allCredentialsAreValid;
     }
 }

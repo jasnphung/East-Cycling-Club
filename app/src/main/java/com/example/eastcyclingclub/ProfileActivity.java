@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,11 +16,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
 public class ProfileActivity extends AppCompatActivity {
 
     TextView profileName, profileRole,profileUsername;
     TextView titleName, titleUsername;
-    Button editProfile;
+    Button editProfile, logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
         editProfile = findViewById(R.id.editButton);
+        logout = findViewById(R.id.logoutButton);
 
         showAllUserData();
 
@@ -37,6 +40,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 passUserData();
+            }
+        });
+
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             }
         });
 

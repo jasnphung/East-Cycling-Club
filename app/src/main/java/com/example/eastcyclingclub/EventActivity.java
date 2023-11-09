@@ -30,6 +30,7 @@ public class EventActivity extends AppCompatActivity {
             if (id==R.id.event){
                 return true;
             }if (id==R.id.profile){
+
                 startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();

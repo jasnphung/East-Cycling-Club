@@ -44,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (loginUsername.getText().toString().equals("admin") && loginPassword.getText().toString().equals("admin")) {
                         Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
+                        // clear text fields
+                        loginUsername.setText("");
+                        loginPassword.setText("");
 
                         Intent intent = new Intent(LoginActivity.this, EventActivity.class);
 
@@ -104,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginUsername.setError(null);
                     String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
-                    if (passwordFromDB.equals(userPassword)) {
+                    if ( passwordFromDB != null && passwordFromDB.equals(userPassword)) {
                         loginUsername.setError(null);
 
                         String nameFromDB = snapshot.child(userUsername).child("name").getValue(String.class);
