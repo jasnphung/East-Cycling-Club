@@ -11,8 +11,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.app.AlertDialog;
 
-import android.text.TextUtils;
-
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -36,7 +34,7 @@ public class AccountActivity extends AppCompatActivity {
 
     ListView listViewUsers;
 
-    List<HelperClass> helperClasses;
+    List<UserListHelperClass> userListHelperClasses;
 
     DatabaseReference databaseUsers;
 
@@ -70,15 +68,15 @@ public class AccountActivity extends AppCompatActivity {
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
 
-        helperClasses = new ArrayList<>();
+        userListHelperClasses = new ArrayList<>();
 
         //adding an onclicklistener to button
 
         listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HelperClass helperClass = helperClasses.get(i);
-                showUpdateDeleteDialog(helperClass.getName(), helperClass.getEmail(),helperClass.getUsername(), helperClass.getEmail(), helperClass.getRole());
+                UserListHelperClass userListHelperClass = userListHelperClasses.get(i);
+                showUpdateDeleteDialog(userListHelperClass.getName(), userListHelperClass.getEmail(), userListHelperClass.getUsername(), userListHelperClass.getEmail(), userListHelperClass.getRole());
                 return true;
             }
         });
@@ -93,18 +91,18 @@ public class AccountActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 //clearing the previous artist list
-                helperClasses.clear();
+                userListHelperClasses.clear();
 
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting users
-                    HelperClass helperClass = postSnapshot.getValue(HelperClass.class);
+                    UserListHelperClass userListHelperClass = postSnapshot.getValue(UserListHelperClass.class);
                     //adding users to the list
-                    helperClasses.add(helperClass);
+                    userListHelperClasses.add(userListHelperClass);
                 }
 
                 //creating adapter
-                UserList userAdapter = new UserList(AccountActivity.this, helperClasses);
+                UserList userAdapter = new UserList(AccountActivity.this, userListHelperClasses);
                 //attaching adapter to the listview
                 listViewUsers.setAdapter(userAdapter);
             }
@@ -163,8 +161,8 @@ public class AccountActivity extends AppCompatActivity {
         //getting the specified users reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(username);
         //updating users
-        HelperClass helperClass = new HelperClass(name, email, username, password, role);
-        dR.setValue(helperClass);
+        UserListHelperClass userListHelperClass = new UserListHelperClass(name, email, username, password, role);
+        dR.setValue(userListHelperClass);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
     }
 
@@ -175,16 +173,4 @@ public class AccountActivity extends AppCompatActivity {
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

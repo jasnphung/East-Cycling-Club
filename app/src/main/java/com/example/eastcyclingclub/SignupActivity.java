@@ -57,8 +57,8 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                 String role = spinner.getSelectedItem().toString();
 
                 if( verifyElementsAreNonEmpty(name, email, password, username) ){
-                    HelperClass helperClass = new HelperClass(name, email, username, password, role);
-                    reference.child(username).setValue(helperClass);
+                    UserListHelperClass userListHelperClass = new UserListHelperClass(name, email, username, password, role);
+                    reference.child(username).setValue(userListHelperClass);
 
                     Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);

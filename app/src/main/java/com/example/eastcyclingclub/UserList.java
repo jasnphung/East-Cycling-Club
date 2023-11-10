@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class UserList extends ArrayAdapter<HelperClass> {
+public class UserList extends ArrayAdapter<UserListHelperClass> {
     private Activity context;
-    List<HelperClass> helperClasses;
+    List<UserListHelperClass> userListHelperClasses;
 
-    public UserList(Activity context, List<HelperClass> helperClasses) {
-        super(context, R.layout.activity_user_list, helperClasses);
+    public UserList(Activity context, List<UserListHelperClass> userListHelperClasses) {
+        super(context, R.layout.activity_user_list, userListHelperClasses);
         this.context = context;
-        this.helperClasses = helperClasses;
+        this.userListHelperClasses = userListHelperClasses;
     }
 
     @Override
@@ -29,11 +29,11 @@ public class UserList extends ArrayAdapter<HelperClass> {
         TextView textViewEmail= (TextView) listViewItem.findViewById(R.id.textViewEmail);
         TextView textViewPassword = (TextView) listViewItem.findViewById(R.id.textViewPassword);
 
-        HelperClass helperClass = helperClasses.get(position);
-        textViewName.setText("Name: " + helperClass.getName());
-        textViewRole.setText("Role: " + helperClass.getRole());
-        textViewEmail.setText("Email: " + helperClass.getEmail());
-        textViewPassword.setText("Password: " + helperClass.getPassword());
+        UserListHelperClass userListHelperClass = userListHelperClasses.get(position);
+        textViewName.setText("Name: " + userListHelperClass.getName());
+        textViewRole.setText("Role: " + userListHelperClass.getRole());
+        textViewEmail.setText("Email: " + userListHelperClass.getEmail());
+        textViewPassword.setText("Password: " + userListHelperClass.getPassword());
         return listViewItem;
     }
 }

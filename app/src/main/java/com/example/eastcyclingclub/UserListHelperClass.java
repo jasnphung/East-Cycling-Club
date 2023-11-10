@@ -1,8 +1,6 @@
 package com.example.eastcyclingclub;
 
-import android.widget.Spinner;
-
-public class HelperClass {
+public class UserListHelperClass {
         String name, email, username, password, role;
         public String getName() {
             return name;
@@ -34,14 +32,14 @@ public class HelperClass {
         public void setRole(String role) {
         this.role = role;
     }
-        public HelperClass(String name, String email, String username, String password, String role) {
+        public UserListHelperClass(String name, String email, String username, String password, String role) {
             this.name = name;
             this.email = email;
             this.username = username;
             this.password = password;
             this.role = role;
         }
-        public HelperClass() {
+        public UserListHelperClass() {
         }
 
 }

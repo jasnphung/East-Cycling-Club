@@ -51,35 +51,38 @@ public class CreateEventActivity extends AppCompatActivity {
             finish();
         });
 
-        // Makes sure at least 1 option is selected
+        // Variables for making sure at least 1 option is selected
         difficultySC = findViewById(R.id.difficultySwitch);
         minimumAgeSC = findViewById(R.id.minimumAgeSwitch);
         paceSC = findViewById(R.id.paceSwitch);
         routeDetailsSC = findViewById(R.id.routeDetailsSwitch);
-
         createEventTypeBTN = findViewById(R.id.createEventTypeButtton);
 
         createEventTypeBTN.setOnClickListener(view -> {
+            // Checks if at least one option is selected: if so, allows event creation, if not, outputs warning message
             if (difficultySC.isChecked() || minimumAgeSC.isChecked() || paceSC.isChecked() || routeDetailsSC.isChecked()) {
-                // Allow creation
-
                 // Grab event details from user input
-                String eventName = eventType.getSelectedItem().toString();
                 String selectedEventType = eventType.getSelectedItem().toString();
 
                 // Create an instance of the EventCreateHelperClass with event details
-                EventCreateHelperClass helper = new EventCreateHelperClass(eventName, String.valueOf(minimumAgeSC.isChecked()), String.valueOf(paceSC.isChecked()), selectedEventType, String.valueOf(difficultySC.isChecked()));
-
-                // Generate a unique key for the event
-                // String eventId = reference.push().getKey();
-                String eventId = selectedEventType;
+                EventListHelperClass helper = new EventListHelperClass(selectedEventType, String.valueOf(difficultySC.isChecked()), String.valueOf(minimumAgeSC.isChecked()), String.valueOf(paceSC.isChecked()), String.valueOf(routeDetailsSC.isChecked()));
 
                 // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
-                reference.child(eventId).setValue(helper);
+                reference.child(selectedEventType).setValue(helper);
                 Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
             }
             else {
-                // Error message
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
+                builder.setTitle("Try again!");
+                builder.setMessage("Please select at least 1 option.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
