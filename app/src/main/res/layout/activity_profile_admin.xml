@@ -10,119 +10,16 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="295dp"
+        android:layout_width="fill_parent"
         android:layout_height="125dp"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:layout_marginStart="50dp"
-        android:text="Welcome! Logged in as:"
+        android:fontFamily="@font/sf_pro"
+        android:gravity="center"
+        android:text="Admin"
         android:textColor="@color/royal_blue"
-        android:textSize="48sp"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-
-    <!-- navbar below -->
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="125dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="2dp"
-        android:background="@drawable/royalblue_border"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/profileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="name"
-                android:textAlignment="center"
-                android:textColor="@color/royal_blue"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:alpha="0.5"
-            android:background="@color/lavender" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/profileRole"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="role"
-                android:textAlignment="center"
-                android:textColor="@color/royal_blue"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:alpha="0.5"
-            android:background="@color/lavender" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/profileUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="username"
-                android:textAlignment="center"
-                android:textColor="@color/royal_blue"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:alpha="0.5"
-            android:background="@color/lavender" />
-
-
-    </LinearLayout>
+        android:textSize="48dp"
+        android:translationY="-80dp" />
 
     <Button
         android:id="@+id/logoutButton"
@@ -133,12 +30,11 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/royal_blue"
-        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/sf_pro"
         android:text="Logout"
         android:textSize="18sp"
-        app:cornerRadius="20dp"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.7" />
+        app:cornerRadius="20dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

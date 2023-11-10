@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,6 +23,7 @@ public class ProfileAdminActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                Toast.makeText(ProfileAdminActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ProfileAdminActivity.this, LoginActivity.class));
             }
         });

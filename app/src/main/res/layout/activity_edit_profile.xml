@@ -62,19 +62,6 @@
 
 
             <EditText
-                android:id="@+id/editUsername"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_person_pin_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="@font/sf_pro"
-                android:hint="Username"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-            <EditText
                 android:id="@+id/editPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

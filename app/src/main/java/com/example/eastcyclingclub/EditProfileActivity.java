@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    EditText editName, editEmail, editUsername, editPassword;
+    EditText editName, editEmail, editPassword;
     Button saveButton;
     String nameUser, emailUser, usernameUser, passwordUser;
     DatabaseReference reference;
@@ -28,7 +28,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
-        editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         saveButton = findViewById(R.id.saveButton);
 
@@ -88,7 +87,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editName.setText(nameUser);
         editEmail.setText(emailUser);
-        editUsername.setText(usernameUser);
         editPassword.setText(passwordUser);
     }
 }
