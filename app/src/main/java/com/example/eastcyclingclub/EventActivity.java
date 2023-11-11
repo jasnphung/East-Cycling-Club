@@ -84,7 +84,7 @@ public class EventActivity extends AppCompatActivity {
         expandFAB.setOnClickListener(view -> {
             if (!areAllFABsVisible) {
                 offerFAB.show();
-                editFAB.show();
+                // editFAB.show();
                 offerText.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.VISIBLE);
 
@@ -92,7 +92,7 @@ public class EventActivity extends AppCompatActivity {
             }
             else {
                 offerFAB.hide();
-                editFAB.hide();
+                // editFAB.hide();
                 offerText.setVisibility(View.GONE);
                 editText.setVisibility(View.GONE);
 
@@ -116,6 +116,7 @@ public class EventActivity extends AppCompatActivity {
             finish();
         });
 
+        databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
         eventListHelperClasses = new ArrayList<>();
