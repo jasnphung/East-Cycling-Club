@@ -22,6 +22,7 @@
         android:id="@+id/listViewEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomNavigation"
         android:layout_below="@+id/textView"></ListView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
