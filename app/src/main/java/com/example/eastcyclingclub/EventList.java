@@ -31,7 +31,7 @@ public class EventList extends ArrayAdapter<EventListHelperClass>{
         TextView textViewRouteDetails = (TextView) listViewItem.findViewById(R.id.textViewRouteDetails);
 
         EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-        textViewEventName.setText("Type: " + eventListHelperClass.getName());
+        textViewEventName.setText("Event name: " + eventListHelperClass.getName());
         textViewDifficulty.setText("Difficulty setting: " + eventListHelperClass.getDifficulty());
         textViewMinimumAge.setText("Minimum age setting: " + eventListHelperClass.getMinimumAge());
         textViewPace.setText("Pace setting: " + eventListHelperClass.getPace());

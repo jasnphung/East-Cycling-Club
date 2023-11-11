@@ -27,7 +27,7 @@ public class EditEventTypesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_edit_event_types);
 
         // Dropdown menu for the event type
-        Spinner eventType = findViewById(R.id.editEventName);
+        Spinner eventType = findViewById(R.id.editEventType);
         ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);

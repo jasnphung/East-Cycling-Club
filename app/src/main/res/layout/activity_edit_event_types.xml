@@ -39,13 +39,13 @@
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
                 android:textSize="30sp"
-                app:layout_constraintBottom_toTopOf="@id/editEventName"
+                app:layout_constraintBottom_toTopOf="@id/editEventType"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/editEventName"
+                android:id="@+id/editEventType"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -81,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editEventName"
+                app:layout_constraintTop_toBottomOf="@+id/editEventType"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
 

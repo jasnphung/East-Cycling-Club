@@ -33,7 +33,7 @@ public class CreateEventActivity extends AppCompatActivity {
         reference = database.getReference("events");
 
         // Dropdown menu for the event type
-        Spinner eventType = findViewById(R.id.editEventName);
+        Spinner eventType = findViewById(R.id.editEventType);
         ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
@@ -66,6 +66,11 @@ public class CreateEventActivity extends AppCompatActivity {
                 // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
                 reference.child(selectedEventType).setValue(helper);
                 Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                finish();
             }
             else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);

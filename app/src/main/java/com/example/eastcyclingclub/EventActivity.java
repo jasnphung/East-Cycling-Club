@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -115,7 +116,6 @@ public class EventActivity extends AppCompatActivity {
             finish();
         });
 
-        databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
         eventListHelperClasses = new ArrayList<>();
