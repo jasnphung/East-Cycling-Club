@@ -7,13 +7,9 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +33,7 @@ public class CreateEventActivity extends AppCompatActivity {
         reference = database.getReference("events");
 
         // Dropdown menu for the event type
-        Spinner eventType = findViewById(R.id.eventtype_dropdown_menu);
+        Spinner eventType = findViewById(R.id.editEventName);
         ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);

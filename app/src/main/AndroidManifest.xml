@@ -40,6 +40,9 @@
             android:name=".EditEventTypesActivity"
             android:exported="false" />
         <activity
+            android:name=".UpdateEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>

@@ -1,60 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/offerEventConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center"
+    tools:context=".UpdateEventActivity">
 
-
-    <EditText
-        android:id="@+id/editTextDifficulty"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/offerEventCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro"
-        android:hint="Enter Difficulty" />
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTextMinimumAge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro"
-        android:hint="Enter Minimum Age" />
-
-    <EditText
-        android:id="@+id/editTextPace"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro"
-        android:hint="Enter Pace" />
-
-    <EditText
-        android:id="@+id/editTextRouteDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro"
-        android:hint="Enter Route Details" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonUpdateEvent"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ConstraintLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_pro"
-            android:text="Update" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/royalblue_border">
 
-        <Button
-            android:id="@+id/buttonDeleteEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_pro"
-            android:text="Delete" />
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sf_pro"
+                android:text="Edit Event Offering"
+                android:textAlignment="center"
+                android:textColor="@color/royal_blue"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/eventName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/eventName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/sf_pro"
+                android:hint="Event Name"
+                android:textColor="@color/royal_blue"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/difficultySwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/difficultySwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set difficulty"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/minimumAgeSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventName"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/minimumAgeSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set minimum age"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/paceSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/difficultySwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/paceSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set pace"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/routeDetailsSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minimumAgeSwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/routeDetailsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/royalblue_border"
+                android:fontFamily="@font/sf_pro"
+                android:padding="10dp"
+                android:text="Set route details"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/paceSwitch"
+                app:switchPadding="20dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/buttonContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routeDetailsSwitch">
+
+                    <Button
+                        android:id="@+id/editEventButton"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/royal_blue"
+                        android:fontFamily="@font/sf_pro"
+                        android:text="Edit Event Type"
+                        android:textSize="18sp"
+                        app:cornerRadius="20dp"
+                        app:layout_constraintEnd_toStartOf="@+id/deleteEventButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/deleteEventButton"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/royal_blue"
+                        android:fontFamily="@font/sf_pro"
+                        android:text="Delete Event Type"
+                        android:textSize="18sp"
+                        app:cornerRadius="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/editEventButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/returnToEventsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/royal_blue"
+        android:fontFamily="@font/sf_pro"
+        android:text="Return to events"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/offerEventCardView" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

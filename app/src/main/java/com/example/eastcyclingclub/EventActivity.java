@@ -124,7 +124,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-                showUpdateDeleteDialog(eventListHelperClass.getName(), eventListHelperClass.getDifficulty(), eventListHelperClass.getMinimumAge(), eventListHelperClass.getPace(), eventListHelperClass.getRouteDetails());
+                showUpdateDeleteDialog(eventListHelperClass.getName(), String.valueOf(eventListHelperClass.getDifficulty()), String.valueOf(eventListHelperClass.getMinimumAge()), String.valueOf(eventListHelperClass.getPace()), String.valueOf(eventListHelperClass.getRouteDetails()));
                 return true;
             }
         });
@@ -155,59 +155,16 @@ public class EventActivity extends AppCompatActivity {
     }
 
     private void showUpdateDeleteDialog(String eventName, String difficultyOnOff, String minimumAgeOnOff, String paceOnOff, String routeDetailsOnOff) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.update_event, null);
-        dialogBuilder.setView(dialogView);
+        Intent intent = new Intent(getApplicationContext(), UpdateEventActivity.class);
 
-        final EditText editTextDifficulty = (EditText) dialogView.findViewById(R.id.editTextDifficulty);
-        final EditText editTextMinimumAge = (EditText) dialogView.findViewById(R.id.editTextMinimumAge);
-        final EditText editTextPace = (EditText) dialogView.findViewById(R.id.editTextPace);
-        final EditText editTextRouteDetails = (EditText) dialogView.findViewById(R.id.editTextRouteDetails);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateEvent);
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteEvent);
+        intent.putExtra("nameKey", eventName);
+        intent.putExtra("difficultyKey", difficultyOnOff);
+        intent.putExtra("minimumAgeKey", minimumAgeOnOff);
+        intent.putExtra("paceKey", paceOnOff);
+        intent.putExtra("routeDetailsKey", routeDetailsOnOff);
 
-        dialogBuilder.setTitle(eventName);
-        final AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String difficultyOnOff = editTextDifficulty.getText().toString().trim();
-                String minimumAgeOnOff = editTextMinimumAge.getText().toString().trim();
-                String paceOnOff = editTextPace.getText().toString().trim();
-                String routeDetailsOnOff = editTextRouteDetails.getText().toString().trim();
-                if (difficultyOnOff.matches("") || minimumAgeOnOff.matches("") || paceOnOff.matches("") || routeDetailsOnOff.matches("")) {
-                    Toast.makeText(getApplicationContext(), "Cannot Update with empty fields", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    updateProduct(eventName, difficultyOnOff, minimumAgeOnOff, paceOnOff, routeDetailsOnOff);
-                    alertDialog.dismiss();
-                }
-            }
-        });
-
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteProduct(eventName);
-                alertDialog.dismiss();
-            }
-        });
-    }
-
-    private void updateProduct(String eventNameOnOff, String difficultyOnOff, String minimumAgeOnOff, String paceOnOff, String routeDetailsOnOff) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventNameOnOff);
-
-        EventListHelperClass eventListHelperClass = new EventListHelperClass(eventNameOnOff, difficultyOnOff, minimumAgeOnOff, paceOnOff, routeDetailsOnOff);
-        dR.setValue(eventListHelperClass);
-        Toast.makeText(getApplicationContext(), "Event Type Updated", Toast.LENGTH_LONG).show();
-    }
-
-    private void deleteProduct(String eventNameOnOff) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventNameOnOff);
-        dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Event type deleted", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+        finish();
     }
 }

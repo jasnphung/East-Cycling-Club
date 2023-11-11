@@ -31,11 +31,11 @@ public class EventList extends ArrayAdapter<EventListHelperClass>{
         TextView textViewRouteDetails = (TextView) listViewItem.findViewById(R.id.textViewRouteDetails);
 
         EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-        textViewEventName.setText("Name: " + eventListHelperClass.getName());
-        textViewDifficulty.setText("Difficulty: " + eventListHelperClass.getDifficulty());
-        textViewMinimumAge.setText("Minimum age: " + eventListHelperClass.getMinimumAge());
-        textViewPace.setText("Pace: " + eventListHelperClass.getPace());
-        textViewRouteDetails.setText("Route details: " + eventListHelperClass.getRouteDetails());
+        textViewEventName.setText("Type: " + eventListHelperClass.getName());
+        textViewDifficulty.setText("Difficulty setting: " + eventListHelperClass.getDifficulty());
+        textViewMinimumAge.setText("Minimum age setting: " + eventListHelperClass.getMinimumAge());
+        textViewPace.setText("Pace setting: " + eventListHelperClass.getPace());
+        textViewRouteDetails.setText("Route details setting: " + eventListHelperClass.getRouteDetails());
 
         return listViewItem;
     }
