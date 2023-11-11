@@ -86,7 +86,7 @@ public class EventActivity extends AppCompatActivity {
                 offerFAB.show();
                 // editFAB.show();
                 offerText.setVisibility(View.VISIBLE);
-                editText.setVisibility(View.VISIBLE);
+                //editText.setVisibility(View.VISIBLE);
 
                 areAllFABsVisible = true;
             }
@@ -94,7 +94,7 @@ public class EventActivity extends AppCompatActivity {
                 offerFAB.hide();
                 // editFAB.hide();
                 offerText.setVisibility(View.GONE);
-                editText.setVisibility(View.GONE);
+                //editText.setVisibility(View.GONE);
 
                 areAllFABsVisible = false;
             }
