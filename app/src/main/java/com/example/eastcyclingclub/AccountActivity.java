@@ -76,7 +76,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 UserListHelperClass userListHelperClass = userListHelperClasses.get(i);
-                showUpdateDeleteDialog(userListHelperClass.getName(), userListHelperClass.getEmail(), userListHelperClass.getUsername(), userListHelperClass.getEmail(), userListHelperClass.getRole());
+                showUpdateDeleteDialog(userListHelperClass.getName(), userListHelperClass.getEmail(), userListHelperClass.getUsername(), userListHelperClass.getPassword(), userListHelperClass.getRole());
                 return true;
             }
         });
@@ -115,7 +115,7 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    private void showUpdateDeleteDialog(String name, String email, String username,String password ,  String role) {
+    private void showUpdateDeleteDialog(String name, String email, String username, String password , String role) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -123,12 +123,15 @@ public class AccountActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
+        editTextName.setText(name);
         final EditText editTextEmail = (EditText) dialogView.findViewById(R.id.editTextEmail);
+        editTextEmail.setText(email);
         final EditText editTextPassword = (EditText) dialogView.findViewById(R.id.editTextPassword);
+        editTextPassword.setText(password);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateUser);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteUser);
 
-        dialogBuilder.setTitle(name);
+        dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
@@ -142,7 +145,7 @@ public class AccountActivity extends AppCompatActivity {
                 if (name.matches("")||email.matches("")||password.matches("")){
                     Toast.makeText(getApplicationContext(), "Cannot Update with empty fields", Toast.LENGTH_LONG).show();
                 }else{
-                    updateProduct(name, email, username,password, role);
+                    updateProduct(name, email, username, password, role);
                     b.dismiss();
                 }
             }
@@ -157,7 +160,7 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
-    private void updateProduct(String name, String email, String username, String password, String role) {
+    private void updateProduct(String name, String email,String username, String password, String role) {
         //getting the specified users reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(username);
         //updating users

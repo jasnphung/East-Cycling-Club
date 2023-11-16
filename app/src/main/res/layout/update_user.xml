@@ -9,22 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sf_pro"
-        android:hint="Enter Name" />
-
+        android:hint="Enter New Name" />
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sf_pro"
-        android:hint="Enter Email" />
+        android:hint="Enter New Email" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sf_pro"
-        android:hint="Enter Password" />
+        android:hint="Enter New Password" />
 
     <LinearLayout
         android:layout_width="match_parent"
