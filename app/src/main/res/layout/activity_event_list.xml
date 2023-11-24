@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textViewEventName"
+        android:id="@+id/textViewEventType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -33,7 +33,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/textViewPace"
+        android:id="@+id/textViewMaximumAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -43,13 +43,13 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/textViewRouteDetails"
+        android:id="@+id/textViewPace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
         android:fontFamily="@font/sf_pro"
         android:text=""
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
 </LinearLayout>

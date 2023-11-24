@@ -24,18 +24,18 @@ public class EventList extends ArrayAdapter<EventListHelperClass>{
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.activity_event_list, null, true);
 
-        TextView textViewEventName = (TextView) listViewItem.findViewById(R.id.textViewEventName);
+        TextView textViewEventType = (TextView) listViewItem.findViewById(R.id.textViewEventType);
         TextView textViewDifficulty = (TextView) listViewItem.findViewById(R.id.textViewDifficulty);
         TextView textViewMinimumAge = (TextView) listViewItem.findViewById(R.id.textViewMinimumAge);
+        TextView textViewMaximumAge = (TextView) listViewItem.findViewById(R.id.textViewMaximumAge);
         TextView textViewPace = (TextView) listViewItem.findViewById(R.id.textViewPace);
-        TextView textViewRouteDetails = (TextView) listViewItem.findViewById(R.id.textViewRouteDetails);
 
         EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-        textViewEventName.setText("Event name: " + eventListHelperClass.getName());
-        textViewDifficulty.setText("Difficulty setting: " + eventListHelperClass.getDifficulty());
-        textViewMinimumAge.setText("Minimum age setting: " + eventListHelperClass.getMinimumAge());
-        textViewPace.setText("Pace setting: " + eventListHelperClass.getPace());
-        textViewRouteDetails.setText("Route details setting: " + eventListHelperClass.getRouteDetails());
+        textViewEventType.setText("Event Type: " + eventListHelperClass.getEventType());
+        textViewDifficulty.setText("Difficulty: " + eventListHelperClass.getDifficulty());
+        textViewMinimumAge.setText("Minimum Age: " + eventListHelperClass.getMinimumAge());
+        textViewMaximumAge.setText("Maximum Age: " + eventListHelperClass.getMaximumAge());
+        textViewPace.setText("Pace Needed: " + eventListHelperClass.getPace());
 
         return listViewItem;
     }

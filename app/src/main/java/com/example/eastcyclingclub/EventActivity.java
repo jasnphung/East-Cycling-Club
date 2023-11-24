@@ -54,7 +54,6 @@ public class EventActivity extends AppCompatActivity {
             if (id==R.id.event){
                 return true;
             }if (id==R.id.profile){
-
                 startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -108,13 +107,13 @@ public class EventActivity extends AppCompatActivity {
             finish();
         });
 
-        // From current layout to edit event layout
-        editFAB.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), EditEventTypesActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-            finish();
-        });
+//        // From current layout to edit event layout
+//        editFAB.setOnClickListener(view -> {
+//            Intent intent = new Intent(getApplicationContext(), EditEventTypesActivity.class);
+//            startActivity(intent);
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+//            finish();
+//        });
 
         databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
@@ -125,7 +124,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-                showUpdateDeleteDialog(eventListHelperClass.getName(), String.valueOf(eventListHelperClass.getDifficulty()), String.valueOf(eventListHelperClass.getMinimumAge()), String.valueOf(eventListHelperClass.getPace()), String.valueOf(eventListHelperClass.getRouteDetails()));
+                showUpdateDeleteDialog(eventListHelperClass.getEventType(), eventListHelperClass.getDifficulty() , eventListHelperClass.getMinimumAge(), eventListHelperClass.getMaximumAge(), eventListHelperClass.getPace());
                 return true;
             }
         });
@@ -155,14 +154,14 @@ public class EventActivity extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDeleteDialog(String eventName, String difficultyOnOff, String minimumAgeOnOff, String paceOnOff, String routeDetailsOnOff) {
-        Intent intent = new Intent(getApplicationContext(), UpdateEventActivity.class);
+    private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
+        Intent intent = new Intent(EventActivity.this, UpdateEventActivity.class);
 
-        intent.putExtra("nameKey", eventName);
-        intent.putExtra("difficultyKey", difficultyOnOff);
-        intent.putExtra("minimumAgeKey", minimumAgeOnOff);
-        intent.putExtra("paceKey", paceOnOff);
-        intent.putExtra("routeDetailsKey", routeDetailsOnOff);
+        intent.putExtra("eventTypeKey", eventType);
+        intent.putExtra("difficultyKey", difficultyLevel);
+        intent.putExtra("minimumAgeKey", minimumAge);
+        intent.putExtra("maximumAgeKey", maximumAge);
+        intent.putExtra("paceKey", pace);
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     Button createEventTypeBTN, returnToEventsBTN;
 
-    SwitchCompat difficultySC, minimumAgeSC, paceSC, routeDetailsSC;
+    EditText minAge, maxAge, pace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,18 @@ public class CreateEventActivity extends AppCompatActivity {
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
 
+        //Dropdown menu for difficulty level selection
+        Spinner difficultyLevel = findViewById(R.id.difficultyLevel);
+        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.spnr_eventtype);
+        difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        difficultyLevel.setAdapter(difficultyAdapter);
+
+        // Variables for making admin-specified fields
+        minAge = findViewById(R.id.minAge);
+        maxAge = findViewById(R.id.maxAge);
+        pace = findViewById(R.id.pace);
+        createEventTypeBTN = findViewById(R.id.createEventTypeButtton);
+
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
@@ -47,21 +60,23 @@ public class CreateEventActivity extends AppCompatActivity {
             finish();
         });
 
-        // Variables for making sure at least 1 option is selected
-        difficultySC = findViewById(R.id.difficultySwitch);
-        minimumAgeSC = findViewById(R.id.minimumAgeSwitch);
-        paceSC = findViewById(R.id.paceSwitch);
-        routeDetailsSC = findViewById(R.id.routeDetailsSwitch);
-        createEventTypeBTN = findViewById(R.id.createEventTypeButtton);
+
 
         createEventTypeBTN.setOnClickListener(view -> {
-            // Checks if at least one option is selected: if so, allows event creation, if not, outputs warning message
-            if (difficultySC.isChecked() || minimumAgeSC.isChecked() || paceSC.isChecked() || routeDetailsSC.isChecked()) {
-                // Grab event details from user input
-                String selectedEventType = eventType.getSelectedItem().toString();
+
+            //grab information from user input
+            String minAgeText = minAge.getText().toString();
+            String maxAgeText = maxAge.getText().toString();
+            String paceText = pace.getText().toString();
+            String selectedDifficultyLevel = difficultyLevel.getSelectedItem().toString();
+            String selectedEventType = eventType.getSelectedItem().toString();
+
+
+            // Checks if at least one option is entered: if so, allows event creation, if not, outputs warning message
+            if ((!minAgeText.isEmpty() || !maxAgeText.isEmpty() || !paceText.isEmpty()) && (!selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type"))) {
 
                 // Create an instance of the EventCreateHelperClass with event details
-                EventListHelperClass helper = new EventListHelperClass(selectedEventType, String.valueOf(difficultySC.isChecked()), String.valueOf(minimumAgeSC.isChecked()), String.valueOf(paceSC.isChecked()), String.valueOf(routeDetailsSC.isChecked()));
+                EventListHelperClass helper = new EventListHelperClass(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
 
                 // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
                 reference.child(selectedEventType).setValue(helper);
@@ -75,7 +90,7 @@ public class CreateEventActivity extends AppCompatActivity {
             else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
                 builder.setTitle("Try again!");
-                builder.setMessage("Please select at least 1 option.");
+                builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

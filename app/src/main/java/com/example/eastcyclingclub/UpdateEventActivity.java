@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,40 +22,75 @@ import com.google.firebase.database.FirebaseDatabase;
 public class UpdateEventActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
-    TextView eventName;
+    TextView eventType;
     Button editEventBTN, deleteEventBTN, returnToEventsBTN;
-    SwitchCompat difficultySC, minimumAgeSC, paceSC, routeDetailsSC;
+    EditText minAge, maxAge, pace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_event);
 
-        Intent intent = getIntent();
-        String nameValue = intent.getStringExtra("nameKey");
-        String difficultyValue = intent.getStringExtra("difficultyKey");
-        String minimumAgeValue = intent.getStringExtra("minimumAgeKey");
-        String paceValue = intent.getStringExtra("paceKey");
-        String routeDetailsValue = intent.getStringExtra("routeDetailsKey");
+        String eventTypeValue, minimumAgeValue, maximumAgeValue, paceValue;
 
-        eventName = findViewById(R.id.eventName);
-        difficultySC = findViewById(R.id.difficultySwitch);
-        minimumAgeSC = findViewById(R.id.minimumAgeSwitch);
-        paceSC = findViewById(R.id.paceSwitch);
-        routeDetailsSC = findViewById(R.id.routeDetailsSwitch);
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                eventTypeValue = null;
+                minimumAgeValue = null;
+                maximumAgeValue = null;
+                paceValue = null;
+            } else {
+                eventTypeValue = extras.getString("eventTypeKey");
+                minimumAgeValue = extras.getString("minimumAgeKey");
+                maximumAgeValue = extras.getString("maximumAgeKey");
+                paceValue = extras.getString("paceKey");
+            }
+
+        } else {
+            eventTypeValue = (String) savedInstanceState.getSerializable("eventTypeKey");
+            minimumAgeValue = (String) savedInstanceState.getSerializable("minimumAgeKey");
+            maximumAgeValue = (String) savedInstanceState.getSerializable("maximumAgeKey");
+            paceValue = (String) savedInstanceState.getSerializable("paceKey");
+        }
+
+
+        //Dropdown menu for difficulty level selection
+        Spinner difficultyLevel = findViewById(R.id.difficultyLevel);
+        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.spnr_eventtype);
+        difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        difficultyLevel.setAdapter(difficultyAdapter);
+
         editEventBTN = findViewById(R.id.editEventButton);
         deleteEventBTN = findViewById(R.id.deleteEventButton);
 
-        eventName.setText(nameValue);
-        difficultySC.setChecked(Boolean.parseBoolean(difficultyValue));
-        minimumAgeSC.setChecked(Boolean.parseBoolean(minimumAgeValue));
-        paceSC.setChecked(Boolean.parseBoolean(paceValue));
-        routeDetailsSC.setChecked(Boolean.parseBoolean(routeDetailsValue));
+        eventType = (TextView) findViewById(R.id.eventType);
+        eventType.setText(eventTypeValue);
+
+        //setting fields to previously entered values for editing
+        if (minimumAgeValue != null) {
+            minAge = findViewById(R.id.minAge);
+            minAge.setText(minimumAgeValue);
+        }
+        if (maximumAgeValue != null) {
+            maxAge = findViewById(R.id.maxAge);
+            maxAge.setText(maximumAgeValue);
+        }
+        if (paceValue != null) {
+            pace = findViewById(R.id.pace);
+            pace.setText(paceValue);
+        }
 
         editEventBTN.setOnClickListener(view -> {
+
+            String minAgeText = minAge.getText().toString();
+            String maxAgeText = maxAge.getText().toString();
+            String paceText = pace.getText().toString();
+            String selectedDifficultyLevel = difficultyLevel.getSelectedItem().toString();
+
             // Checks if at least one option is selected: if so, allows event creation, if not, outputs warning message
-            if (difficultySC.isChecked() || minimumAgeSC.isChecked() || paceSC.isChecked() || routeDetailsSC.isChecked()) {
-                updateProduct(nameValue, difficultySC.isChecked(), minimumAgeSC.isChecked(), paceSC.isChecked(), routeDetailsSC.isChecked());
+            if (!selectedDifficultyLevel.equals("Select Difficulty Level") && (!minAgeText.isEmpty() || maxAgeText.isEmpty() ||paceText.isEmpty())) {
+                updateProduct(eventTypeValue, selectedDifficultyLevel, minAgeText, maxAgeText, paceText);
                 Toast.makeText(UpdateEventActivity.this, "Event updated", Toast.LENGTH_SHORT).show();
 
                 Intent intent2 = new Intent(getApplicationContext(), EventActivity.class);
@@ -64,7 +100,7 @@ public class UpdateEventActivity extends AppCompatActivity {
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UpdateEventActivity.this);
                 builder.setTitle("Try again!");
-                builder.setMessage("Please select at least 1 option.");
+                builder.setMessage("Ensure that difficulty level is specified");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -79,8 +115,8 @@ public class UpdateEventActivity extends AppCompatActivity {
         deleteEventBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteProduct(nameValue);
-                Toast.makeText(UpdateEventActivity.this, "Event delete", Toast.LENGTH_LONG).show();
+                deleteProduct(eventTypeValue);
+                Toast.makeText(UpdateEventActivity.this, "Event Deleted", Toast.LENGTH_LONG).show();
                 Intent intent3 = new Intent(getApplicationContext(), EventActivity.class);
                 startActivity(intent3);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
@@ -98,16 +134,16 @@ public class UpdateEventActivity extends AppCompatActivity {
         });
     }
 
-    private void updateProduct(String eventNameOnOff, Boolean difficultyOnOff, Boolean minimumAgeOnOff, Boolean paceOnOff, Boolean routeDetailsOnOff) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventNameOnOff);
+    private void updateProduct(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventType);
 
-        EventListHelperClass eventListHelperClass = new EventListHelperClass(eventNameOnOff, String.valueOf(difficultyOnOff), String.valueOf(minimumAgeOnOff), String.valueOf(paceOnOff), String.valueOf(routeDetailsOnOff));
+        EventListHelperClass eventListHelperClass = new EventListHelperClass(eventType,difficultyLevel, minimumAge, pace, maximumAge);
         dR.setValue(eventListHelperClass);
         Toast.makeText(getApplicationContext(), "Event Type Updated", Toast.LENGTH_LONG).show();
     }
 
-    private void deleteProduct(String eventNameOnOff) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventNameOnOff);
+    private void deleteProduct(String eventType) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventType);
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Event type deleted", Toast.LENGTH_LONG).show();
     }

@@ -34,32 +34,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/sf_pro"
-                android:text="Edit Event Offering"
+                android:text="Edit Event Type"
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
                 android:textSize="30sp"
-                app:layout_constraintBottom_toTopOf="@+id/eventName"
+                app:layout_constraintBottom_toTopOf="@+id/eventType"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/eventName"
+                android:id="@+id/eventType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Event Name"
+                android:hint="Event Type"
                 android:textColor="@color/royal_blue"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/difficultySwitch"
+                app:layout_constraintBottom_toTopOf="@+id/difficultyLevel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Title" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/difficultySwitch"
+            <Spinner
+                android:id="@+id/difficultyLevel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -67,84 +68,81 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/royalblue_border"
-                android:fontFamily="@font/sf_pro"
+                android:drawablePadding="10dp"
                 android:padding="10dp"
-                android:text="Set difficulty"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/minimumAgeSwitch"
+                android:spinnerMode="dropdown"
+                app:layout_constraintBottom_toTopOf="@+id/minMaxAge"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eventName"
-                app:switchPadding="20dp"
-                app:thumbTint="@color/switch_thumb"
-                app:trackTint="@color/switch_track" />
+                app:layout_constraintTop_toBottomOf="@+id/eventType" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/minimumAgeSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/royalblue_border"
-                android:fontFamily="@font/sf_pro"
-                android:padding="10dp"
-                android:text="Set minimum age"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/paceSwitch"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/difficultySwitch"
-                app:switchPadding="20dp"
-                app:thumbTint="@color/switch_thumb"
-                app:trackTint="@color/switch_track" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/paceSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/royalblue_border"
-                android:fontFamily="@font/sf_pro"
-                android:padding="10dp"
-                android:text="Set pace"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/routeDetailsSwitch"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minimumAgeSwitch"
-                app:switchPadding="20dp"
-                app:thumbTint="@color/switch_thumb"
-                app:trackTint="@color/switch_track" />
+            <LinearLayout
+                android:id="@+id/minMaxAge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/pace"
+                app:layout_constraintTop_toBottomOf="@+id/difficultyLevel"
+                tools:layout_editor_absoluteX="32dp">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/routeDetailsSwitch"
+                <EditText
+                    android:id="@+id/minAge"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_weight="2"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/royalblue_border"
+                    android:fontFamily="@font/sf_pro"
+                    android:hint="Minimum Age"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@+id/difficultyLevel" />
+
+                <EditText
+                    android:id="@+id/maxAge"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:layout_height="50dp"
+                    android:layout_toRightOf="@+id/minAge"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/royalblue_border"
+                    android:fontFamily="@font/sf_pro"
+                    android:hint="Maximum Age"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/difficultyLevel" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/pace"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/royalblue_border"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/sf_pro"
+                android:hint="Pace"
+                android:inputType="text"
+                android:padding="8dp"
+                android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/royalblue_border"
-                android:fontFamily="@font/sf_pro"
-                android:padding="10dp"
-                android:text="Set route details"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
+                app:layout_constraintBottom_toTopOf="@id/buttonContainer"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/paceSwitch"
-                app:switchPadding="20dp"
-                app:thumbTint="@color/switch_thumb"
-                app:trackTint="@color/switch_track" />
+                app:layout_constraintTop_toBottomOf="@+id/minMaxAge" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/buttonContainer"
@@ -157,7 +155,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeDetailsSwitch">
+                    app:layout_constraintTop_toBottomOf="@+id/pace">
 
                     <Button
                         android:id="@+id/editEventButton"
@@ -198,6 +196,7 @@
         android:backgroundTint="@color/royal_blue"
         android:fontFamily="@font/sf_pro"
         android:text="Return to events"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

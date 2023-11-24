@@ -3,11 +3,13 @@
     <string name="menu">Select an Option</string>
 
     <string-array name="AccountOptions">
+        <item>Select Account Type</item>
         <item>Cycling Club Owner</item>
         <item>Participant</item>
     </string-array>
 
     <string-array name="EventOptions">
+        <item>Select Event Type</item>
         <item>Time Trial</item>
         <item>Hill Climb</item>
         <item>Road Stage Race</item>
@@ -16,11 +18,12 @@
     </string-array>
 
     <string-array name="DifficultyLevelOptions">
+        <item>Select Difficulty Level</item>
         <item>Beginner</item>
         <item>Easy</item>
-        <item>Road Stage Race</item>
-        <item>Road Race</item>
-        <item>Group Rides</item>
+        <item>Medium</item>
+        <item>Hard</item>
+        <item>Extreme</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

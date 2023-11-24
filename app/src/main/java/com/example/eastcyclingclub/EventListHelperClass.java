@@ -1,29 +1,46 @@
 package com.example.eastcyclingclub;
 
 public class EventListHelperClass {
-    String name, difficultyOnOff, minimumAgeOnOff, paceOnOff, routeDetailsOnOff;
+    String eventType, difficultyLevel, minimumAge, maximumAge, pace;
 
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
+    public String getEventType() {return eventType;}
+    public void setEventType(String eventType) {this.eventType = eventType;}
+    public String getDifficulty() {return difficultyLevel;}
+    public void setDifficulty(String difficultyLevel) {this.difficultyLevel = difficultyLevel;}
 
-    public String getDifficulty() {return difficultyOnOff;}
-    public void setDifficulty(String difficultyOnOff) {this.difficultyOnOff = difficultyOnOff;}
+    public String getMinimumAge() {
+        if ((minimumAge == null) || (minimumAge.isEmpty())) {
+            return "No Requirement Set";
+        }
 
-    public String getMinimumAge() {return minimumAgeOnOff;}
-    public void setMinimumAge(String minimumAgeOnOff) {this.minimumAgeOnOff = minimumAgeOnOff;}
+        return minimumAge;
+    }
+    public void setMinimumAge(String minimumAge) {this.minimumAge = minimumAge;}
 
-    public String getPace() {return paceOnOff;}
-    public void setPace(String paceOnOff) {this.paceOnOff = paceOnOff;}
+    public String getMaximumAge() {
+        if ((maximumAge == null) || (maximumAge.isEmpty())) {
+            return "No Requirement Set";
+        }
 
-    public String getRouteDetails() {return routeDetailsOnOff;}
-    public void setRouteDetails(String routeDetailsOnOff) {this.routeDetailsOnOff = routeDetailsOnOff;}
+        return maximumAge;
+    }
+    public void setMaximumAge(String maximumAge) {this.maximumAge = maximumAge;}
 
-    public EventListHelperClass(String name, String difficultyOnOff, String minimumAgeOnOff, String paceOnOff, String routeDetailsOnOff) {
-        this.name = name;
-        this.difficultyOnOff = difficultyOnOff;
-        this.minimumAgeOnOff = minimumAgeOnOff;
-        this.paceOnOff = paceOnOff;
-        this.routeDetailsOnOff = routeDetailsOnOff;
+    public String getPace() {
+        if ((pace == null) || (pace.isEmpty())) {
+            return "No Requirement Set";
+        }
+        return pace ;
+    }
+    public void setPace(String pace) {this.pace = pace;}
+
+
+    public EventListHelperClass(String eventType, String difficultyLevel, String minimumAge, String pace, String maximumAge) {
+        this.eventType = eventType;
+        this.difficultyLevel = difficultyLevel;
+        this.minimumAge = minimumAge;
+        this.maximumAge = maximumAge;
+        this.pace = pace;
     }
     public EventListHelperClass() {}
 }

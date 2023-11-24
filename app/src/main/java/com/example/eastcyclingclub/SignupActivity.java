@@ -40,7 +40,6 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.spnr_accounttype);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setPrompt("Select an Account Type");
         spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +55,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                 String password = signupPassword.getText().toString();
                 String role = spinner.getSelectedItem().toString();
 
-                if( verifyElementsAreNonEmpty(name, email, password, username) ){
+                if( verifyElementsAreNonEmpty(name, email, password, username, role) ){
                     UserListHelperClass userListHelperClass = new UserListHelperClass(name, email, username, password, role);
                     reference.child(username).setValue(userListHelperClass);
 
@@ -99,7 +98,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-    private boolean verifyElementsAreNonEmpty(String name, String email, String pwd, String userName){
+    private boolean verifyElementsAreNonEmpty(String name, String email, String pwd, String userName, String role){
 
         boolean allCredentialsAreValid = true;
 
@@ -121,6 +120,10 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         if( pwd.isEmpty() ){
             signupPassword.setError("Invalid credentials");
             signupPassword.requestFocus();
+            allCredentialsAreValid = false;
+        }
+        if (role.equals("Select Account Type")) {
+            spinner.requestFocus();
             allCredentialsAreValid = false;
         }
 
