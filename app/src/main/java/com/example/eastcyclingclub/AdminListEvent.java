@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AdminListEvent extends ArrayAdapter<AdminHelperClassEventList>{
+public class AdminListEvent extends ArrayAdapter<AdminHelperClassEvent>{
     private Activity context;
-    List<AdminHelperClassEventList> adminHelperClassEventLists;
+    List<AdminHelperClassEvent> adminHelperClassEvents;
 
-    public AdminListEvent(Activity context, List<AdminHelperClassEventList> adminHelperClassEventLists) {
-        super(context, R.layout.admin_list_event, adminHelperClassEventLists);
+    public AdminListEvent(Activity context, List<AdminHelperClassEvent> adminHelperClassEvents) {
+        super(context, R.layout.admin_list_event, adminHelperClassEvents);
         this.context = context;
-        this.adminHelperClassEventLists = adminHelperClassEventLists;
+        this.adminHelperClassEvents = adminHelperClassEvents;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class AdminListEvent extends ArrayAdapter<AdminHelperClassEventList>{
         TextView textViewMaximumAge = (TextView) listViewItem.findViewById(R.id.textViewMaximumAge);
         TextView textViewPace = (TextView) listViewItem.findViewById(R.id.textViewPace);
 
-        AdminHelperClassEventList adminHelperClassEventList = adminHelperClassEventLists.get(position);
-        textViewEventType.setText("Event Type: " + adminHelperClassEventList.getEventType());
-        textViewDifficulty.setText("Difficulty: " + adminHelperClassEventList.getDifficulty());
-        textViewMinimumAge.setText("Minimum Age: " + adminHelperClassEventList.getMinimumAge());
-        textViewMaximumAge.setText("Maximum Age: " + adminHelperClassEventList.getMaximumAge());
-        textViewPace.setText("Pace Needed: " + adminHelperClassEventList.getPace());
+        AdminHelperClassEvent adminHelperClassEvent = adminHelperClassEvents.get(position);
+        textViewEventType.setText("Event Type: " + adminHelperClassEvent.getEventType());
+        textViewDifficulty.setText("Difficulty: " + adminHelperClassEvent.getDifficulty());
+        textViewMinimumAge.setText("Minimum Age: " + adminHelperClassEvent.getMinimumAge());
+        textViewMaximumAge.setText("Maximum Age: " + adminHelperClassEvent.getMaximumAge());
+        textViewPace.setText("Pace Needed: " + adminHelperClassEvent.getPace());
 
         return listViewItem;
     }

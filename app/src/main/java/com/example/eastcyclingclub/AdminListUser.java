@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AdminListUser extends ArrayAdapter<AdminHelperClassUserList> {
+public class AdminListUser extends ArrayAdapter<GeneralHelperClassUser> {
     private Activity context;
-    List<AdminHelperClassUserList> adminHelperClassUserLists;
+    List<GeneralHelperClassUser> generalHelperClassUsers;
 
-    public AdminListUser(Activity context, List<AdminHelperClassUserList> adminHelperClassUserLists) {
-        super(context, R.layout.admin_list_user, adminHelperClassUserLists);
+    public AdminListUser(Activity context, List<GeneralHelperClassUser> generalHelperClassUsers) {
+        super(context, R.layout.admin_list_user, generalHelperClassUsers);
         this.context = context;
-        this.adminHelperClassUserLists = adminHelperClassUserLists;
+        this.generalHelperClassUsers = generalHelperClassUsers;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class AdminListUser extends ArrayAdapter<AdminHelperClassUserList> {
         TextView textViewEmail= (TextView) listViewItem.findViewById(R.id.textViewEmail);
         TextView textViewPassword = (TextView) listViewItem.findViewById(R.id.textViewPassword);
 
-        AdminHelperClassUserList adminHelperClassUserList = adminHelperClassUserLists.get(position);
-        textViewName.setText(adminHelperClassUserList.getName());
-        textViewUsername.setText("Username: " + adminHelperClassUserList.getUsername());
-        textViewRole.setText("Role: " + adminHelperClassUserList.getRole());
-        textViewEmail.setText("Email: " + adminHelperClassUserList.getEmail());
-        textViewPassword.setText("Password: " + adminHelperClassUserList.getPassword());
+        GeneralHelperClassUser generalHelperClassUser = generalHelperClassUsers.get(position);
+        textViewName.setText(generalHelperClassUser.getName());
+        textViewUsername.setText("Username: " + generalHelperClassUser.getUsername());
+        textViewRole.setText("Role: " + generalHelperClassUser.getRole());
+        textViewEmail.setText("Email: " + generalHelperClassUser.getEmail());
+        textViewPassword.setText("Password: " + generalHelperClassUser.getPassword());
         return listViewItem;
     }
 }

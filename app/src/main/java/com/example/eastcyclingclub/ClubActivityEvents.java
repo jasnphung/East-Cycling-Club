@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClubEventsActivity extends AppCompatActivity {
+public class ClubActivityEvents extends AppCompatActivity {
 
     // Variables for the expanding button
     FloatingActionButton expandFAB, offerFAB;
@@ -28,7 +28,7 @@ public class ClubEventsActivity extends AppCompatActivity {
 
     ListView listViewEvents;
 
-    List<AdminHelperClassEventList> adminHelperClassEventLists;
+    List<AdminHelperClassEvent> adminHelperClassEvents;
 
     DatabaseReference databaseEvents;
 
@@ -37,14 +37,30 @@ public class ClubEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.club_activity_events);
 
+        // Getting the current user's username
+        String userUsername;
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                userUsername = null;
+            } else {
+                userUsername = extras.getString("userUsernameKey");
+            }
+        } else {
+            userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
+        }
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.event);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id==R.id.event){
+            if (id == R.id.event){
                 return true;
-            }if (id==R.id.profile){
-                startActivity(new Intent(getApplicationContext(), ClubActivityProfile.class));
+            }if (id == R.id.profile){
+                Intent intent = new Intent(getApplicationContext(), ClubActivityProfile.class);
+                intent.putExtra("userUsernameKey", userUsername);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }
@@ -89,13 +105,13 @@ public class ClubEventsActivity extends AppCompatActivity {
         databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
-        adminHelperClassEventLists = new ArrayList<>();
+        adminHelperClassEvents = new ArrayList<>();
 
         listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AdminHelperClassEventList adminHelperClassEventList = adminHelperClassEventLists.get(position);
-                showUpdateDeleteDialog(adminHelperClassEventList.getEventType(), adminHelperClassEventList.getDifficulty() , adminHelperClassEventList.getMinimumAge(), adminHelperClassEventList.getMaximumAge(), adminHelperClassEventList.getPace());
+                AdminHelperClassEvent adminHelperClassEvent = adminHelperClassEvents.get(position);
+                showUpdateDeleteDialog(adminHelperClassEvent.getEventType(), adminHelperClassEvent.getDifficulty() , adminHelperClassEvent.getMinimumAge(), adminHelperClassEvent.getMaximumAge(), adminHelperClassEvent.getPace());
                 return true;
             }
         });
@@ -109,7 +125,7 @@ public class ClubEventsActivity extends AppCompatActivity {
 
     //todo needs to be updated for cycling club owner fields
     private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
-        Intent intent = new Intent(ClubEventsActivity.this, AdminActivityUpdateEvent.class);
+        Intent intent = new Intent(ClubActivityEvents.this, AdminActivityUpdateEvent.class);
 
         intent.putExtra("eventTypeKey", eventType);
         intent.putExtra("difficultyKey", difficultyLevel);

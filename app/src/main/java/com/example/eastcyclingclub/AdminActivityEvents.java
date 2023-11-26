@@ -31,7 +31,7 @@ public class AdminActivityEvents extends AppCompatActivity {
 
     ListView listViewEvents;
 
-    List<AdminHelperClassEventList> adminHelperClassEventLists;
+    List<AdminHelperClassEvent> adminHelperClassEvents;
 
     DatabaseReference databaseEvents;
 
@@ -101,13 +101,13 @@ public class AdminActivityEvents extends AppCompatActivity {
         databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
-        adminHelperClassEventLists = new ArrayList<>();
+        adminHelperClassEvents = new ArrayList<>();
 
         listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AdminHelperClassEventList adminHelperClassEventList = adminHelperClassEventLists.get(position);
-                showUpdateDeleteDialog(adminHelperClassEventList.getEventType(), adminHelperClassEventList.getDifficulty() , adminHelperClassEventList.getMinimumAge(), adminHelperClassEventList.getMaximumAge(), adminHelperClassEventList.getPace());
+                AdminHelperClassEvent adminHelperClassEvent = adminHelperClassEvents.get(position);
+                showUpdateDeleteDialog(adminHelperClassEvent.getEventType(), adminHelperClassEvent.getDifficulty() , adminHelperClassEvent.getMinimumAge(), adminHelperClassEvent.getMaximumAge(), adminHelperClassEvent.getPace());
                 return true;
             }
         });
@@ -119,14 +119,14 @@ public class AdminActivityEvents extends AppCompatActivity {
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                adminHelperClassEventLists.clear();
+                adminHelperClassEvents.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    AdminHelperClassEventList adminHelperClassEventList = postSnapshot.getValue(AdminHelperClassEventList.class);
-                    adminHelperClassEventLists.add(adminHelperClassEventList);
+                    AdminHelperClassEvent adminHelperClassEvent = postSnapshot.getValue(AdminHelperClassEvent.class);
+                    adminHelperClassEvents.add(adminHelperClassEvent);
                 }
 
-                AdminListEvent eventAdapter = new AdminListEvent(AdminActivityEvents.this, adminHelperClassEventLists);
+                AdminListEvent eventAdapter = new AdminListEvent(AdminActivityEvents.this, adminHelperClassEvents);
                 listViewEvents.setAdapter(eventAdapter);
             }
 

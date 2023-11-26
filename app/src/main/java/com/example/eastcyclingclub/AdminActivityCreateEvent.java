@@ -75,7 +75,7 @@ public class AdminActivityCreateEvent extends AppCompatActivity {
             if ((!minAgeText.isEmpty() || !maxAgeText.isEmpty() || !paceText.isEmpty()) && (!selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type"))) {
 
                 // Create an instance of the EventCreateHelperClass with event details
-                AdminHelperClassEventList helper = new AdminHelperClassEventList(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
+                AdminHelperClassEvent helper = new AdminHelperClassEvent(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
 
                 // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
                 reference.child(selectedEventType).setValue(helper);

@@ -30,12 +30,12 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_activity_signup);
 
-        signupName = findViewById(R.id.signup_name);
-        signupEmail = findViewById(R.id.signup_email);
-        signupUsername = findViewById(R.id.signup_username);
-        signupPassword = findViewById(R.id.signup_password);
+        signupName = findViewById(R.id.phoneNumber);
+        signupEmail = findViewById(R.id.mainContact);
+        signupUsername = findViewById(R.id.instagramUsername);
+        signupPassword = findViewById(R.id.facebookLink);
         loginRedirectText = findViewById(R.id.loginRedirectText);
-        signupButton = findViewById(R.id.signup_button);
+        signupButton = findViewById(R.id.completeProfile);
         spinner = findViewById(R.id.dropdown_menu);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.general_spinner_account_type);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -56,8 +56,8 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
                 String role = spinner.getSelectedItem().toString();
 
                 if( verifyElementsAreNonEmpty(name, email, password, username, role) ){
-                    AdminHelperClassUserList adminHelperClassUserList = new AdminHelperClassUserList(name, email, username, password, role);
-                    reference.child(username).setValue(adminHelperClassUserList);
+                    GeneralHelperClassUser generalHelperClassUser = new GeneralHelperClassUser(name, email, username, password, role);
+                    reference.child(username).setValue(generalHelperClassUser);
 
                     Toast.makeText(GeneralActivitySignup.this, "Signup successful!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(GeneralActivitySignup.this, GeneralActivityLogin.class);

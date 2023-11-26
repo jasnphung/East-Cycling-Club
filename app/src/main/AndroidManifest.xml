@@ -13,10 +13,13 @@
         android:theme="@style/Theme.EastCyclingClub"
         tools:targetApi="31">
         <activity
+            android:name=".ClubActivityCompleteProfile"
+            android:exported="false" />
+        <activity
             android:name=".ClubActivityAssociateEvent"
             android:exported="false" />
         <activity
-            android:name=".ClubEventsActivity"
+            android:name=".ClubActivityEvents"
             android:exported="false" />
         <activity
             android:name=".AdminActivityEvents"

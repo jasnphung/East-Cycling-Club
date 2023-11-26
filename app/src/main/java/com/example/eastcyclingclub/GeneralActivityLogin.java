@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,10 @@ public class GeneralActivityLogin extends AppCompatActivity {
     Button loginButton;
     TextView signupRedirectText;
 
+    // For app-wide use
+
+    String currentLoginUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +45,8 @@ public class GeneralActivityLogin extends AppCompatActivity {
             public void onClick(View view) {
                 if (!validateUsername() | !validatePassword()) {
 
-                } else {
+                }
+                else {
                     if (loginUsername.getText().toString().equals("admin") && loginPassword.getText().toString().equals("admin")) {
                         Toast.makeText(GeneralActivityLogin.this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
@@ -51,7 +57,8 @@ public class GeneralActivityLogin extends AppCompatActivity {
                         Intent intent = new Intent(GeneralActivityLogin.this, AdminActivityEvents.class);
 
                         startActivity(intent);
-                    }else{
+                    }
+                    else {
                         checkUser();
                     }
                 }
@@ -107,7 +114,7 @@ public class GeneralActivityLogin extends AppCompatActivity {
                     loginUsername.setError(null);
                     String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
-                    if ( passwordFromDB != null && passwordFromDB.equals(userPassword)) {
+                    if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
                         loginUsername.setError(null);
 
                         String nameFromDB = snapshot.child(userUsername).child("name").getValue(String.class);
@@ -115,8 +122,29 @@ public class GeneralActivityLogin extends AppCompatActivity {
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
 
                         if (roleFromDB.equals("Cycling Club Owner")) {
-                            Intent intent = new Intent(GeneralActivityLogin.this, ClubEventsActivity.class);
-                            startActivity(intent);
+                            // Checking if their profile is completed (at least
+                            // 1 social media link and phone number is entered)
+                            if (((snapshot.child(userUsername).child("instagramUsername").exists() && snapshot.child(userUsername).child("instagramUsername").getValue() != null) ||
+                                    (snapshot.child(userUsername).child("twitterUsername").exists() && snapshot.child(userUsername).child("twitterUsername").getValue() != null) ||
+                                    (snapshot.child(userUsername).child("facebookLink").exists() && snapshot.child(userUsername).child("facebookLink").getValue() != null)) &&
+                                    (snapshot.child(userUsername).child("phoneNumber").exists() && snapshot.child(userUsername).child("phoneNumber").getValue() != null)) {
+
+                                Log.d("TAG", "Profile completed");
+
+                                Intent intent = new Intent(GeneralActivityLogin.this, ClubActivityEvents.class);
+                                intent.putExtra("userUsernameKey", userUsername);
+                                startActivity(intent);
+                            }
+                            // If not, sends the user to a page to fill out the required information
+                            else {
+                                Log.d("TAG", "Profile not completed");
+
+                                Toast.makeText(GeneralActivityLogin.this, "Profile incomplete!", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(GeneralActivityLogin.this, ClubActivityCompleteProfile.class);
+                                intent.putExtra("userUsernameKey", userUsername);
+                                startActivity(intent);
+                            }
                         }
                         else {
                             Intent intent = new Intent(GeneralActivityLogin.this, ClubActivityProfile.class);

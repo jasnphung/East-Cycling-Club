@@ -34,7 +34,7 @@ public class AdminActivityUsers extends AppCompatActivity {
 
     ListView listViewUsers;
 
-    List<AdminHelperClassUserList> adminHelperClassUserLists;
+    List<GeneralHelperClassUser> generalHelperClassUsers;
 
     DatabaseReference databaseUsers;
 
@@ -68,15 +68,15 @@ public class AdminActivityUsers extends AppCompatActivity {
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
 
-        adminHelperClassUserLists = new ArrayList<>();
+        generalHelperClassUsers = new ArrayList<>();
 
         //adding an onclicklistener to button
 
         listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                AdminHelperClassUserList adminHelperClassUserList = adminHelperClassUserLists.get(i);
-                showUpdateDeleteDialog(adminHelperClassUserList.getName(), adminHelperClassUserList.getEmail(), adminHelperClassUserList.getUsername(), adminHelperClassUserList.getPassword(), adminHelperClassUserList.getRole());
+                GeneralHelperClassUser generalHelperClassUser = generalHelperClassUsers.get(i);
+                showUpdateDeleteDialog(generalHelperClassUser.getName(), generalHelperClassUser.getEmail(), generalHelperClassUser.getUsername(), generalHelperClassUser.getPassword(), generalHelperClassUser.getRole());
                 return true;
             }
         });
@@ -91,18 +91,18 @@ public class AdminActivityUsers extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 //clearing the previous artist list
-                adminHelperClassUserLists.clear();
+                generalHelperClassUsers.clear();
 
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting users
-                    AdminHelperClassUserList adminHelperClassUserList = postSnapshot.getValue(AdminHelperClassUserList.class);
+                    GeneralHelperClassUser generalHelperClassUser = postSnapshot.getValue(GeneralHelperClassUser.class);
                     //adding users to the list
-                    adminHelperClassUserLists.add(adminHelperClassUserList);
+                    generalHelperClassUsers.add(generalHelperClassUser);
                 }
 
                 //creating adapter
-                AdminListUser userAdapter = new AdminListUser(AdminActivityUsers.this, adminHelperClassUserLists);
+                AdminListUser userAdapter = new AdminListUser(AdminActivityUsers.this, generalHelperClassUsers);
                 //attaching adapter to the listview
                 listViewUsers.setAdapter(userAdapter);
             }
@@ -164,8 +164,8 @@ public class AdminActivityUsers extends AppCompatActivity {
         //getting the specified users reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(username);
         //updating users
-        AdminHelperClassUserList adminHelperClassUserList = new AdminHelperClassUserList(name, email, username, password, role);
-        dR.setValue(adminHelperClassUserList);
+        GeneralHelperClassUser generalHelperClassUser = new GeneralHelperClassUser(name, email, username, password, role);
+        dR.setValue(generalHelperClassUser);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
     }
 

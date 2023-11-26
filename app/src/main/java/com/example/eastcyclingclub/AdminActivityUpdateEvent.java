@@ -135,8 +135,8 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
     private void updateProduct(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventType);
 
-        AdminHelperClassEventList adminHelperClassEventList = new AdminHelperClassEventList(eventType,difficultyLevel, minimumAge, pace, maximumAge);
-        dR.setValue(adminHelperClassEventList);
+        AdminHelperClassEvent adminHelperClassEvent = new AdminHelperClassEvent(eventType,difficultyLevel, minimumAge, pace, maximumAge);
+        dR.setValue(adminHelperClassEvent);
         Toast.makeText(getApplicationContext(), "Event Type Updated", Toast.LENGTH_LONG).show();
     }
 

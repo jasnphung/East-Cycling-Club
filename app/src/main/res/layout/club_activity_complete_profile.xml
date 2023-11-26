@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".GeneralActivitySignup">
+    tools:context=".ClubActivityCompleteProfile">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,23 +28,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro"
-                android:text="Sign Up"
+                android:text="Complete Your Profile"
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
-                android:textSize="36sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/royalblue_border"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Name"
-                android:inputType="text"
+                android:hint="Phone number (required)"
+                android:inputType="phone"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
@@ -54,14 +54,25 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Email"
+                android:hint="Name of main contact"
                 android:inputType="text|textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sf_pro"
+                android:gravity="center"
+                android:text="Add at least 1 social media contact"
+                android:textColor="#0D1245"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/instagramUsername"
@@ -69,10 +80,24 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_person_pin_24"
+                android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Username"
+                android:hint="Instagram username"
+                android:inputType="text"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/twitterUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/royalblue_border"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/sf_pro"
+                android:hint="Twitter username"
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/black" />
@@ -83,47 +108,24 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Password"
+                android:hint="Facebook link"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/black" />
-
-            <Spinner
-                android:id="@+id/dropdown_menu"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/royalblue_border"
-                android:drawablePadding="8dp"
-                android:padding="8dp"
-                android:prompt="@string/menu"
-                android:spinnerMode="dropdown" />
 
             <Button
                 android:id="@+id/completeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/royal_blue"
                 android:fontFamily="@font/sf_pro"
-                android:text="Sign Up"
+                android:text="Complete Profile"
                 android:textSize="18sp"
                 app:cornerRadius="30dp" />
-
-            <TextView
-                android:id="@+id/loginRedirectText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/sf_pro"
-                android:text="Already an user? Login"
-                android:textColor="@color/royal_blue"
-                android:textSize="18sp" />
 
         </LinearLayout>
 

@@ -61,7 +61,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ClubEventsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -174,8 +174,8 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    AdminHelperClassEventList adminHelperClassEventList = item.getValue(AdminHelperClassEventList.class);
-                    eventTypeList.add(adminHelperClassEventList.getEventType());
+                    AdminHelperClassEvent adminHelperClassEvent = item.getValue(AdminHelperClassEvent.class);
+                    eventTypeList.add(adminHelperClassEvent.getEventType());
                 }
                 eventAdapter.notifyDataSetChanged();
             }
