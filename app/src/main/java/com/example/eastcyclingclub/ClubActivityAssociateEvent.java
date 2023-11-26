@@ -3,7 +3,9 @@ package com.example.eastcyclingclub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +39,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
     TextView date;
     EditText numParticipants;
     String userUsername;
+    EditText eventName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
         date = findViewById(R.id.eventDate);
         numParticipants = findViewById(R.id.numParticipants);
         createEventTypeBTN = findViewById(R.id.createEventTypeButtton);
+        eventName = findViewById(R.id.eventName);
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance();
@@ -107,39 +112,48 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             String dateEvent = date.getText().toString();
             String participants = numParticipants.getText().toString();
             String selectedEventType = eventType.getSelectedItem().toString();
+            String nameOfEvent = eventName.getText().toString();
 
             //TODO -> edit the following logic below so that each event created of an event type is assigned to the CYCLING
             //TODO -> CLUB OWNER'S ACCOUNT. Make sure all fields are specific and valid
 
-//            // Checks if at least one option is entered: if so, allows event creation, if not, outputs warning message
-//            if ((!minAgeText.isEmpty() || !maxAgeText.isEmpty() || !paceText.isEmpty()) && (!selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type"))) {
-//
-//                // Create an instance of the EventCreateHelperClass with event details
-//                EventListHelperClass helper = new EventListHelperClass(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
-//
-//                // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
-//                reference.child(selectedEventType).setValue(helper);
-//                Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
-//                intent.putExtra("userUsernameKey", userUsername);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-//                finish();
-//            }
-//            else {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
-//                builder.setTitle("Try again!");
-//                builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
-//            }
+            // Checks if at least one option is entered: if so, allows event creation, if not, outputs warning message
+
+            boolean allFieldsEmpty =
+                       ( dateEvent.length() == 0  )
+                    && ( participants.length() == 0 )
+                    && ( selectedEventType.length() == 0 )
+                    && ( nameOfEvent.length() == 0 );
+
+
+            if ( !allFieldsEmpty ) {
+
+                DatabaseReference clubOwnerEvents = database.getReference( userUsername+" events" ).child( selectedEventType );
+                clubOwnerEvents.child("date").setValue(dateEvent);
+                clubOwnerEvents.child("number of participants").setValue(participants);
+                clubOwnerEvents.child("name of event").setValue(nameOfEvent);
+
+                Toast.makeText(ClubActivityAssociateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
+                intent.putExtra("userUsernameKey", userUsername);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                finish();
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ClubActivityAssociateEvent.this);
+                builder.setTitle("Try again!");
+                builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
         });
     }
     private String intMonthToWord(int x) {

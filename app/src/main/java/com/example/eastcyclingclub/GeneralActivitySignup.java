@@ -98,6 +98,7 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
     }
 
 
+
     private boolean verifyElementsAreNonEmpty(String name, String email, String pwd, String userName, String role){
 
         boolean allCredentialsAreValid = true;
