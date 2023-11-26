@@ -62,7 +62,7 @@
 
 
             <EditText
-                android:id="@+id/editPassword"
+                android:id="@+id/editUsername"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"

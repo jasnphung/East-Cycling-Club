@@ -28,7 +28,7 @@ public class GeneralActivityEditProfile extends AppCompatActivity {
 
         editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
+        editPassword = findViewById(R.id.editUsername);
         saveButton = findViewById(R.id.saveButton);
 
         showData();

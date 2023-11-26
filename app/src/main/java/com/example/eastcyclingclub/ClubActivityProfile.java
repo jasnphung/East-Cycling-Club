@@ -31,7 +31,6 @@ public class ClubActivityProfile extends AppCompatActivity {
         setContentView(R.layout.club_activity_profile);
 
         // Getting the current user's username
-
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -80,10 +79,13 @@ public class ClubActivityProfile extends AppCompatActivity {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                passUserData();
+                Intent intent = new Intent(getApplicationContext(), ClubActivityEditProfile.class);
+                intent.putExtra("userUsernameKey", userUsername);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                finish();
             }
         });
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,16 +155,16 @@ public class ClubActivityProfile extends AppCompatActivity {
                         facebookLink.setText("Facebook link: " + facebookLinkFromDatabase[0]);
                     }
 
-                    Log.d("TAG", "Values retrieved");
+                    Log.d("TAG", "Profile values retrieved");
                 }
                 else {
-                    Log.d("TAG", "Values do not exist");
+                    Log.d("TAG", "Profile values do not exist");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("TAG", "Error retrieving values", databaseError.toException());
+                Log.d("TAG", "Error retrieving profile values", databaseError.toException());
             }
         });
     }
@@ -184,7 +186,7 @@ public class ClubActivityProfile extends AppCompatActivity {
                     String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
                     String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
-                    Intent intent = new Intent(ClubActivityProfile.this, GeneralActivityEditProfile.class);
+                    Intent intent = new Intent(ClubActivityProfile.this, ClubActivityEditProfile.class);
 
                     intent.putExtra("name", nameFromDB);
                     intent.putExtra("email", emailFromDB);

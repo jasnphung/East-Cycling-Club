@@ -109,6 +109,7 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
                 Toast.makeText(ClubActivityCompleteProfile.this, "Profile Completed!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
+                intent.putExtra("userUsernameKey", userUsername);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
