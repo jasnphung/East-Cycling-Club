@@ -114,14 +114,21 @@ public class LoginActivity extends AppCompatActivity {
                         String roleFromDB = snapshot.child(userUsername).child("role").getValue(String.class);
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
 
-                        Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                        if (roleFromDB.equals("Cycling Club Owner")) {
+                            Intent intent = new Intent(LoginActivity.this, ClubEventsActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
 
-                        intent.putExtra("name", nameFromDB);
-                        intent.putExtra("role", roleFromDB);
-                        intent.putExtra("username",usernameFromDB);
+                            intent.putExtra("name", nameFromDB);
+                            intent.putExtra("role", roleFromDB);
+                            intent.putExtra("username",usernameFromDB);
 
 
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
+
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();

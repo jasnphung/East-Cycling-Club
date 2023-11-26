@@ -2,6 +2,7 @@ package com.example.eastcyclingclub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,16 +12,16 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends AppCompatActivity {
+public class ClubEventsActivity extends AppCompatActivity {
 
     // Variables for the expanding button
     FloatingActionButton expandFAB, offerFAB;
@@ -38,7 +39,7 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eventtypes);
+        setContentView(R.layout.activity_club_events);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.event);
@@ -47,11 +48,7 @@ public class EventActivity extends AppCompatActivity {
             if (id==R.id.event){
                 return true;
             }if (id==R.id.profile){
-                startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-                finish();
-            }if (id==R.id.account){
-                startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }
@@ -63,28 +60,22 @@ public class EventActivity extends AppCompatActivity {
         offerFAB = findViewById(R.id.offerEventFAB);
 
         offerText = findViewById(R.id.offerEventText);
-        editText = findViewById(R.id.editEventTypeText);
 
         offerFAB.setVisibility(View.GONE);
         offerText.setVisibility(View.GONE);
-        editText.setVisibility(View.GONE);
 
         areAllFABsVisible = false;
 
         expandFAB.setOnClickListener(view -> {
             if (!areAllFABsVisible) {
                 offerFAB.show();
-                // editFAB.show();
                 offerText.setVisibility(View.VISIBLE);
-                //editText.setVisibility(View.VISIBLE);
 
                 areAllFABsVisible = true;
             }
             else {
                 offerFAB.hide();
-                // editFAB.hide();
                 offerText.setVisibility(View.GONE);
-                //editText.setVisibility(View.GONE);
 
                 areAllFABsVisible = false;
             }
@@ -92,12 +83,13 @@ public class EventActivity extends AppCompatActivity {
 
         // From current layout to creating event layout
         offerFAB.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), CreateEventActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AssociateEventActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
         });
 
+        //TODO: alter from here to retrieve associated events from the specific CLUB OWNER ACCOUNT as the database reference
         databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
@@ -116,29 +108,12 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        databaseEvents.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                eventListHelperClasses.clear();
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    EventListHelperClass eventListHelperClass = postSnapshot.getValue(EventListHelperClass.class);
-                    eventListHelperClasses.add(eventListHelperClass);
-                }
-
-                EventList eventAdapter = new EventList(EventActivity.this, eventListHelperClasses);
-                listViewEvents.setAdapter(eventAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
+
+    //todo needs to be updated for cycling club owner fields
     private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
-        Intent intent = new Intent(EventActivity.this, UpdateEventActivity.class);
+        Intent intent = new Intent(ClubEventsActivity.this, UpdateEventActivity.class);
 
         intent.putExtra("eventTypeKey", eventType);
         intent.putExtra("difficultyKey", difficultyLevel);
