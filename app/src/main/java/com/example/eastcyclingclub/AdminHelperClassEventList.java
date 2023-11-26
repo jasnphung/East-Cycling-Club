@@ -1,6 +1,6 @@
 package com.example.eastcyclingclub;
 
-public class EventListHelperClass {
+public class AdminHelperClassEventList {
     String eventType, difficultyLevel, minimumAge, maximumAge, pace;
 
     public String getEventType() {return eventType;}
@@ -35,12 +35,12 @@ public class EventListHelperClass {
     public void setPace(String pace) {this.pace = pace;}
 
 
-    public EventListHelperClass(String eventType, String difficultyLevel, String minimumAge, String pace, String maximumAge) {
+    public AdminHelperClassEventList(String eventType, String difficultyLevel, String minimumAge, String pace, String maximumAge) {
         this.eventType = eventType;
         this.difficultyLevel = difficultyLevel;
         this.minimumAge = minimumAge;
         this.maximumAge = maximumAge;
         this.pace = pace;
     }
-    public EventListHelperClass() {}
+    public AdminHelperClassEventList() {}
 }

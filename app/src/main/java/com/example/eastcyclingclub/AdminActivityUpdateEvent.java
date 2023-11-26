@@ -2,7 +2,6 @@ package com.example.eastcyclingclub;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,11 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.Firebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class UpdateEventActivity extends AppCompatActivity {
+public class AdminActivityUpdateEvent extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
     TextView eventType;
@@ -29,7 +27,7 @@ public class UpdateEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_event);
+        setContentView(R.layout.admin_activity_update_event);
 
         String eventTypeValue, minimumAgeValue, maximumAgeValue, paceValue;
 
@@ -57,7 +55,7 @@ public class UpdateEventActivity extends AppCompatActivity {
 
         //Dropdown menu for difficulty level selection
         Spinner difficultyLevel = findViewById(R.id.difficultyLevel);
-        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.spnr_eventtype);
+        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.admin_spinner_event_type);
         difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         difficultyLevel.setAdapter(difficultyAdapter);
 
@@ -91,14 +89,14 @@ public class UpdateEventActivity extends AppCompatActivity {
             // Checks if at least one option is selected: if so, allows event creation, if not, outputs warning message
             if (!selectedDifficultyLevel.equals("Select Difficulty Level") && (!minAgeText.isEmpty() || maxAgeText.isEmpty() ||paceText.isEmpty())) {
                 updateProduct(eventTypeValue, selectedDifficultyLevel, minAgeText, maxAgeText, paceText);
-                Toast.makeText(UpdateEventActivity.this, "Event updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminActivityUpdateEvent.this, "Event updated", Toast.LENGTH_SHORT).show();
 
-                Intent intent2 = new Intent(getApplicationContext(), EventActivity.class);
+                Intent intent2 = new Intent(getApplicationContext(), AdminActivityEvents.class);
                 startActivity(intent2);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateEventActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivityUpdateEvent.this);
                 builder.setTitle("Try again!");
                 builder.setMessage("Ensure that difficulty level is specified");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -116,8 +114,8 @@ public class UpdateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteProduct(eventTypeValue);
-                Toast.makeText(UpdateEventActivity.this, "Event Deleted", Toast.LENGTH_LONG).show();
-                Intent intent3 = new Intent(getApplicationContext(), EventActivity.class);
+                Toast.makeText(AdminActivityUpdateEvent.this, "Event Deleted", Toast.LENGTH_LONG).show();
+                Intent intent3 = new Intent(getApplicationContext(), AdminActivityEvents.class);
                 startActivity(intent3);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -127,7 +125,7 @@ public class UpdateEventActivity extends AppCompatActivity {
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
-            Intent intent1 = new Intent(getApplicationContext(), EventActivity.class);
+            Intent intent1 = new Intent(getApplicationContext(), AdminActivityEvents.class);
             startActivity(intent1);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -137,8 +135,8 @@ public class UpdateEventActivity extends AppCompatActivity {
     private void updateProduct(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("events").child(eventType);
 
-        EventListHelperClass eventListHelperClass = new EventListHelperClass(eventType,difficultyLevel, minimumAge, pace, maximumAge);
-        dR.setValue(eventListHelperClass);
+        AdminHelperClassEventList adminHelperClassEventList = new AdminHelperClassEventList(eventType,difficultyLevel, minimumAge, pace, maximumAge);
+        dR.setValue(adminHelperClassEventList);
         Toast.makeText(getApplicationContext(), "Event Type Updated", Toast.LENGTH_LONG).show();
     }
 

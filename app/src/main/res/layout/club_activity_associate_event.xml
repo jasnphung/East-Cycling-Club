@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".CreateEventActivity">
+    tools:context=".AdminActivityCreateEvent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/offerEventCardView"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/sf_pro"
-                android:text="Create Event Offering"
+                android:text="Associate Event"
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
                 android:textSize="30sp"
@@ -52,14 +52,14 @@
                 android:text="Event Details"
                 android:textColor="@color/royal_blue"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/editEventType"
+                app:layout_constraintBottom_toTopOf="@+id/pickEventType"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Title" />
 
             <Spinner
-                android:id="@+id/editEventType"
+                android:id="@+id/pickEventType"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -71,98 +71,69 @@
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toTopOf="@+id/difficultyLevel"
+                app:layout_constraintBottom_toTopOf="@+id/eventName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventDetails" />
 
-
-            <Spinner
-                android:id="@+id/difficultyLevel"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <EditText
+                android:id="@+id/eventName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/royalblue_border"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toTopOf="@+id/minMaxAge"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/sf_pro"
+                android:hint="Event Name"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editEventType" />
+                app:layout_constraintTop_toBottomOf="@+id/pickEventType" />
 
-
-            <LinearLayout
-                android:id="@+id/minMaxAge"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/pace"
-                app:layout_constraintTop_toBottomOf="@+id/difficultyLevel"
-                tools:layout_editor_absoluteX="32dp">
-
-                <EditText
-                    android:id="@+id/minAge"
-                    android:layout_width="0dp"
-                    android:gravity="center"
-                    android:layout_weight="2"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/royalblue_border"
-                    android:fontFamily="@font/sf_pro"
-                    android:hint="Minimum Age"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@+id/difficultyLevel" />
-
-                <EditText
-                    android:id="@+id/maxAge"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:layout_height="50dp"
-                    android:layout_toRightOf="@+id/minAge"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/royalblue_border"
-                    android:fontFamily="@font/sf_pro"
-                    android:hint="Maximum Age"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="@+id/difficultyLevel" />
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/pace"
+            <TextView
+                android:id="@+id/eventDate"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/royalblue_border"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Pace"
-                android:inputType="text"
+                android:hint="Date"
+                android:textSize="18sp"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toTopOf="@id/createEventTypeButtton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minMaxAge" />
+                app:layout_constraintTop_toBottomOf="@+id/eventName" />
+
+
+            <EditText
+                android:id="@+id/numParticipants"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/royalblue_border"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/sf_pro"
+                android:hint="Max Partipants Allowed"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventDate" />
 
             <Button
                 android:id="@+id/createEventTypeButtton"
@@ -173,13 +144,15 @@
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/royal_blue"
                 android:fontFamily="@font/sf_pro"
-                android:text="Offer Event Type"
+                android:text="Associate Event to Club"
                 android:textSize="18sp"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minMaxAge" />
+                app:layout_constraintTop_toBottomOf="@+id/numParticipants"
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/returnToEventsButton"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventActivity">
+    tools:context=".AdminActivityEvents">
 
     <TextView
         android:id="@+id/textView"
@@ -13,7 +13,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/sf_pro"
-        android:text="List of Active Events:"
+        android:text="Events Offered"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -41,7 +41,7 @@
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu_admin" />
+        app:menu="@menu/bottom_menu_clubowner" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/expandMenuFAB"
@@ -68,18 +68,6 @@
         app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Button"
         app:srcCompat="@drawable/baseline_offer" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editEventTypeFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/offerEventFAB"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
-        android:clickable="true"
-        app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Button"
-        app:srcCompat="@drawable/baseline_edit" />
-
     <TextView
         android:id="@+id/offerEventText"
         android:layout_width="wrap_content"
@@ -92,20 +80,6 @@
         android:layout_toStartOf="@+id/offerEventFAB"
         android:fontFamily="@font/sf_pro"
         android:gravity="center"
-        android:text="Offer Event" />
-
-    <TextView
-        android:id="@+id/editEventTypeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/editEventTypeFAB"
-        android:layout_alignBottom="@+id/editEventTypeFAB"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toStartOf="@+id/editEventTypeFAB"
-        android:fontFamily="@font/sf_pro"
-        android:gravity="center"
-        android:text="Edit Event Types" />
+        android:text="Associate Event" />
 
 </RelativeLayout>

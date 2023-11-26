@@ -1,11 +1,9 @@
 package com.example.eastcyclingclub;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,21 +13,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.eastcyclingclub.R.id;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AssociateEventActivity extends AppCompatActivity {
+public class ClubActivityAssociateEvent extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -45,7 +39,7 @@ public class AssociateEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_associate_event);
+        setContentView(R.layout.club_activity_associate_event);
 
 
         date = findViewById(R.id.eventDate);
@@ -59,7 +53,7 @@ public class AssociateEventActivity extends AppCompatActivity {
         // Dropdown menu for the event type, pulling from firebase depending on which are being offered or not
         eventType = findViewById(R.id.pickEventType);
         eventTypeList = new ArrayList<>();
-        eventAdapter  = new ArrayAdapter<CharSequence>(AssociateEventActivity.this, R.layout.spnr_eventtype, eventTypeList);
+        eventAdapter  = new ArrayAdapter<CharSequence>(ClubActivityAssociateEvent.this, R.layout.admin_spinner_event_type, eventTypeList);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
         showData();
@@ -82,7 +76,7 @@ public class AssociateEventActivity extends AppCompatActivity {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
-                DatePickerDialog dialog = new DatePickerDialog(AssociateEventActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(ClubActivityAssociateEvent.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         date.setText(intMonthToWord(month)+ " " + String.valueOf(dayOfMonth) + " " + String.valueOf(year));
@@ -180,8 +174,8 @@ public class AssociateEventActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    EventListHelperClass eventListHelperClass = item.getValue(EventListHelperClass.class);
-                    eventTypeList.add(eventListHelperClass.getEventType());
+                    AdminHelperClassEventList adminHelperClassEventList = item.getValue(AdminHelperClassEventList.class);
+                    eventTypeList.add(adminHelperClassEventList.getEventType());
                 }
                 eventAdapter.notifyDataSetChanged();
             }

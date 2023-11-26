@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity {
+public class GeneralActivityLogin extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
     Button loginButton;
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.general_activity_login);
 
         loginUsername = findViewById(R.id.login_username);
         loginPassword = findViewById(R.id.login_password);
@@ -42,13 +42,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     if (loginUsername.getText().toString().equals("admin") && loginPassword.getText().toString().equals("admin")) {
-                        Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GeneralActivityLogin.this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
                         // clear text fields
                         loginUsername.setText("");
                         loginPassword.setText("");
 
-                        Intent intent = new Intent(LoginActivity.this, EventActivity.class);
+                        Intent intent = new Intent(GeneralActivityLogin.this, AdminActivityEvents.class);
 
                         startActivity(intent);
                     }else{
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                Intent intent = new Intent(GeneralActivityLogin.this, GeneralActivitySignup.class);
                 startActivity(intent);
             }
         });
@@ -115,11 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
 
                         if (roleFromDB.equals("Cycling Club Owner")) {
-                            Intent intent = new Intent(LoginActivity.this, ClubEventsActivity.class);
+                            Intent intent = new Intent(GeneralActivityLogin.this, ClubEventsActivity.class);
                             startActivity(intent);
                         }
                         else {
-                            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                            Intent intent = new Intent(GeneralActivityLogin.this, ClubActivityProfile.class);
 
                             intent.putExtra("name", nameFromDB);
                             intent.putExtra("role", roleFromDB);

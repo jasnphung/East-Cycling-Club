@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +16,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class ClubActivityProfile extends AppCompatActivity {
 
     TextView profileName, profileRole,profileUsername;
     TextView titleName, titleUsername;
@@ -26,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.club_activity_profile);
 
         profileName = findViewById(R.id.profileName);
         profileRole = findViewById(R.id.profileRole);
@@ -47,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                startActivity(new Intent(ClubActivityProfile.this, GeneralActivityLogin.class));
             }
         });
 
@@ -83,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
                     String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
                     String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
-                    Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                    Intent intent = new Intent(ClubActivityProfile.this, GeneralActivityEditProfile.class);
 
                     intent.putExtra("name", nameFromDB);
                     intent.putExtra("email", emailFromDB);

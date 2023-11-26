@@ -7,24 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-public class UserList extends ArrayAdapter<UserListHelperClass> {
+public class AdminListUser extends ArrayAdapter<AdminHelperClassUserList> {
     private Activity context;
-    List<UserListHelperClass> userListHelperClasses;
+    List<AdminHelperClassUserList> adminHelperClassUserLists;
 
-    public UserList(Activity context, List<UserListHelperClass> userListHelperClasses) {
-        super(context, R.layout.activity_user_list, userListHelperClasses);
+    public AdminListUser(Activity context, List<AdminHelperClassUserList> adminHelperClassUserLists) {
+        super(context, R.layout.admin_list_user, adminHelperClassUserLists);
         this.context = context;
-        this.userListHelperClasses = userListHelperClasses;
+        this.adminHelperClassUserLists = adminHelperClassUserLists;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.activity_user_list, null, true);
+        View listViewItem = inflater.inflate(R.layout.admin_list_user, null, true);
 
         TextView textViewName =  (TextView) listViewItem.findViewById(R.id.textViewName);
         TextView textViewUsername = (TextView) listViewItem.findViewById(R.id.textViewUserName);
@@ -32,12 +30,12 @@ public class UserList extends ArrayAdapter<UserListHelperClass> {
         TextView textViewEmail= (TextView) listViewItem.findViewById(R.id.textViewEmail);
         TextView textViewPassword = (TextView) listViewItem.findViewById(R.id.textViewPassword);
 
-        UserListHelperClass userListHelperClass = userListHelperClasses.get(position);
-        textViewName.setText(userListHelperClass.getName());
-        textViewUsername.setText("Username: " + userListHelperClass.getUsername());
-        textViewRole.setText("Role: " + userListHelperClass.getRole());
-        textViewEmail.setText("Email: " + userListHelperClass.getEmail());
-        textViewPassword.setText("Password: " + userListHelperClass.getPassword());
+        AdminHelperClassUserList adminHelperClassUserList = adminHelperClassUserLists.get(position);
+        textViewName.setText(adminHelperClassUserList.getName());
+        textViewUsername.setText("Username: " + adminHelperClassUserList.getUsername());
+        textViewRole.setText("Role: " + adminHelperClassUserList.getRole());
+        textViewEmail.setText("Email: " + adminHelperClassUserList.getEmail());
+        textViewPassword.setText("Password: " + adminHelperClassUserList.getPassword());
         return listViewItem;
     }
 }

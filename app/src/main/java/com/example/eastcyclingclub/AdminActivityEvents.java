@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends AppCompatActivity {
+public class AdminActivityEvents extends AppCompatActivity {
 
     // Variables for the expanding button
     FloatingActionButton expandFAB, offerFAB;
@@ -31,14 +31,14 @@ public class EventActivity extends AppCompatActivity {
 
     ListView listViewEvents;
 
-    List<EventListHelperClass> eventListHelperClasses;
+    List<AdminHelperClassEventList> adminHelperClassEventLists;
 
     DatabaseReference databaseEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eventtypes);
+        setContentView(R.layout.admin_activity_events);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.event);
@@ -47,11 +47,11 @@ public class EventActivity extends AppCompatActivity {
             if (id==R.id.event){
                 return true;
             }if (id==R.id.profile){
-                startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminActivityProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }if (id==R.id.account){
-                startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminActivityUsers.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }
@@ -92,7 +92,7 @@ public class EventActivity extends AppCompatActivity {
 
         // From current layout to creating event layout
         offerFAB.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), CreateEventActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AdminActivityCreateEvent.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -101,13 +101,13 @@ public class EventActivity extends AppCompatActivity {
         databaseEvents = FirebaseDatabase.getInstance().getReference("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
-        eventListHelperClasses = new ArrayList<>();
+        adminHelperClassEventLists = new ArrayList<>();
 
         listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                EventListHelperClass eventListHelperClass = eventListHelperClasses.get(position);
-                showUpdateDeleteDialog(eventListHelperClass.getEventType(), eventListHelperClass.getDifficulty() , eventListHelperClass.getMinimumAge(), eventListHelperClass.getMaximumAge(), eventListHelperClass.getPace());
+                AdminHelperClassEventList adminHelperClassEventList = adminHelperClassEventLists.get(position);
+                showUpdateDeleteDialog(adminHelperClassEventList.getEventType(), adminHelperClassEventList.getDifficulty() , adminHelperClassEventList.getMinimumAge(), adminHelperClassEventList.getMaximumAge(), adminHelperClassEventList.getPace());
                 return true;
             }
         });
@@ -119,14 +119,14 @@ public class EventActivity extends AppCompatActivity {
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                eventListHelperClasses.clear();
+                adminHelperClassEventLists.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    EventListHelperClass eventListHelperClass = postSnapshot.getValue(EventListHelperClass.class);
-                    eventListHelperClasses.add(eventListHelperClass);
+                    AdminHelperClassEventList adminHelperClassEventList = postSnapshot.getValue(AdminHelperClassEventList.class);
+                    adminHelperClassEventLists.add(adminHelperClassEventList);
                 }
 
-                EventList eventAdapter = new EventList(EventActivity.this, eventListHelperClasses);
+                AdminListEvent eventAdapter = new AdminListEvent(AdminActivityEvents.this, adminHelperClassEventLists);
                 listViewEvents.setAdapter(eventAdapter);
             }
 
@@ -138,7 +138,7 @@ public class EventActivity extends AppCompatActivity {
     }
 
     private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
-        Intent intent = new Intent(EventActivity.this, UpdateEventActivity.class);
+        Intent intent = new Intent(AdminActivityEvents.this, AdminActivityUpdateEvent.class);
 
         intent.putExtra("eventTypeKey", eventType);
         intent.putExtra("difficultyKey", difficultyLevel);

@@ -29,12 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AccountActivity extends AppCompatActivity {
+public class AdminActivityUsers extends AppCompatActivity {
 
 
     ListView listViewUsers;
 
-    List<UserListHelperClass> userListHelperClasses;
+    List<AdminHelperClassUserList> adminHelperClassUserLists;
 
     DatabaseReference databaseUsers;
 
@@ -42,7 +42,7 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.admin_activity_users);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.account);
@@ -50,11 +50,11 @@ public class AccountActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id==R.id.event){
-                startActivity(new Intent(getApplicationContext(), EventActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminActivityEvents.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }if (id==R.id.profile){
-                startActivity(new Intent(getApplicationContext(), ProfileAdminActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminActivityProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }if (id==R.id.account){
@@ -68,15 +68,15 @@ public class AccountActivity extends AppCompatActivity {
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
 
-        userListHelperClasses = new ArrayList<>();
+        adminHelperClassUserLists = new ArrayList<>();
 
         //adding an onclicklistener to button
 
         listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                UserListHelperClass userListHelperClass = userListHelperClasses.get(i);
-                showUpdateDeleteDialog(userListHelperClass.getName(), userListHelperClass.getEmail(), userListHelperClass.getUsername(), userListHelperClass.getPassword(), userListHelperClass.getRole());
+                AdminHelperClassUserList adminHelperClassUserList = adminHelperClassUserLists.get(i);
+                showUpdateDeleteDialog(adminHelperClassUserList.getName(), adminHelperClassUserList.getEmail(), adminHelperClassUserList.getUsername(), adminHelperClassUserList.getPassword(), adminHelperClassUserList.getRole());
                 return true;
             }
         });
@@ -91,18 +91,18 @@ public class AccountActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 //clearing the previous artist list
-                userListHelperClasses.clear();
+                adminHelperClassUserLists.clear();
 
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting users
-                    UserListHelperClass userListHelperClass = postSnapshot.getValue(UserListHelperClass.class);
+                    AdminHelperClassUserList adminHelperClassUserList = postSnapshot.getValue(AdminHelperClassUserList.class);
                     //adding users to the list
-                    userListHelperClasses.add(userListHelperClass);
+                    adminHelperClassUserLists.add(adminHelperClassUserList);
                 }
 
                 //creating adapter
-                UserList userAdapter = new UserList(AccountActivity.this, userListHelperClasses);
+                AdminListUser userAdapter = new AdminListUser(AdminActivityUsers.this, adminHelperClassUserLists);
                 //attaching adapter to the listview
                 listViewUsers.setAdapter(userAdapter);
             }
@@ -119,7 +119,7 @@ public class AccountActivity extends AppCompatActivity {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.update_user, null);
+        final View dialogView = inflater.inflate(R.layout.admin_activity_update_user, null);
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
@@ -164,8 +164,8 @@ public class AccountActivity extends AppCompatActivity {
         //getting the specified users reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(username);
         //updating users
-        UserListHelperClass userListHelperClass = new UserListHelperClass(name, email, username, password, role);
-        dR.setValue(userListHelperClass);
+        AdminHelperClassUserList adminHelperClassUserList = new AdminHelperClassUserList(name, email, username, password, role);
+        dR.setValue(adminHelperClassUserList);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
     }
 

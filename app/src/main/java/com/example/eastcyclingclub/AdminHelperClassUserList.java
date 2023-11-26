@@ -1,6 +1,6 @@
 package com.example.eastcyclingclub;
 
-public class UserListHelperClass {
+public class AdminHelperClassUserList {
         String name, email, username, password, role;
         public String getName() {
             return name;
@@ -32,14 +32,14 @@ public class UserListHelperClass {
         public void setRole(String role) {
         this.role = role;
     }
-        public UserListHelperClass(String name, String email, String username, String password, String role) {
+        public AdminHelperClassUserList(String name, String email, String username, String password, String role) {
             this.name = name;
             this.email = email;
             this.username = username;
             this.password = password;
             this.role = role;
         }
-        public UserListHelperClass() {
+        public AdminHelperClassUserList() {
         }
 
 }

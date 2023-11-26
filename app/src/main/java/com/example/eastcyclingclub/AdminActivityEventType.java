@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class EditEventTypesActivity extends AppCompatActivity{
+public class AdminActivityEventType extends AppCompatActivity{
     FirebaseDatabase database;
     DatabaseReference reference;
     Button returnToEventsBTN;
@@ -24,11 +24,11 @@ public class EditEventTypesActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_event_types);
+        setContentView(R.layout.admin_activity_edit_event_types);
 
         // Dropdown menu for the event type
         Spinner eventType = findViewById(R.id.editEventType);
-        ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
+        ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.admin_spinner_event_type);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
 
@@ -70,7 +70,7 @@ public class EditEventTypesActivity extends AppCompatActivity{
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AdminActivityEvents.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();

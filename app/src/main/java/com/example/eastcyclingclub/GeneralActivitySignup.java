@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class GeneralActivitySignup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText signupName, signupUsername, signupEmail, signupPassword;
     TextView loginRedirectText;
@@ -28,7 +28,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.general_activity_signup);
 
         signupName = findViewById(R.id.signup_name);
         signupEmail = findViewById(R.id.signup_email);
@@ -37,7 +37,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
         spinner = findViewById(R.id.dropdown_menu);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.spnr_accounttype);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.general_spinner_account_type);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
@@ -56,15 +56,15 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                 String role = spinner.getSelectedItem().toString();
 
                 if( verifyElementsAreNonEmpty(name, email, password, username, role) ){
-                    UserListHelperClass userListHelperClass = new UserListHelperClass(name, email, username, password, role);
-                    reference.child(username).setValue(userListHelperClass);
+                    AdminHelperClassUserList adminHelperClassUserList = new AdminHelperClassUserList(name, email, username, password, role);
+                    reference.child(username).setValue(adminHelperClassUserList);
 
-                    Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                    Toast.makeText(GeneralActivitySignup.this, "Signup successful!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(GeneralActivitySignup.this, GeneralActivityLogin.class);
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(SignupActivity.this, "ERROR: missing information", Toast.LENGTH_LONG).show();
+                    Toast.makeText(GeneralActivitySignup.this, "ERROR: missing information", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -72,7 +72,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                Intent intent = new Intent(GeneralActivitySignup.this, GeneralActivityLogin.class);
                 startActivity(intent);
             }
         });

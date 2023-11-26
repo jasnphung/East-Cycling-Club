@@ -2,7 +2,6 @@ package com.example.eastcyclingclub;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateEventActivity extends AppCompatActivity {
+public class AdminActivityCreateEvent extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
 
@@ -27,7 +26,7 @@ public class CreateEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event);
+        setContentView(R.layout.admin_activity_create_event);
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance();
@@ -35,13 +34,13 @@ public class CreateEventActivity extends AppCompatActivity {
 
         // Dropdown menu for the event type
         Spinner eventType = findViewById(R.id.editEventType);
-        ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.spnr_eventtype);
+        ArrayAdapter<CharSequence> eventAdapter  = ArrayAdapter.createFromResource(this, R.array.EventOptions, R.layout.admin_spinner_event_type);
         eventAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         eventType.setAdapter(eventAdapter);
 
         //Dropdown menu for difficulty level selection
         Spinner difficultyLevel = findViewById(R.id.difficultyLevel);
-        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.spnr_eventtype);
+        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.admin_spinner_event_type);
         difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         difficultyLevel.setAdapter(difficultyAdapter);
 
@@ -54,7 +53,7 @@ public class CreateEventActivity extends AppCompatActivity {
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AdminActivityEvents.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -76,19 +75,19 @@ public class CreateEventActivity extends AppCompatActivity {
             if ((!minAgeText.isEmpty() || !maxAgeText.isEmpty() || !paceText.isEmpty()) && (!selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type"))) {
 
                 // Create an instance of the EventCreateHelperClass with event details
-                EventListHelperClass helper = new EventListHelperClass(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
+                AdminHelperClassEventList helper = new AdminHelperClassEventList(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
 
                 // Store the event information in the Firebase Realtime Database under the "events" node with a unique key
                 reference.child(selectedEventType).setValue(helper);
-                Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminActivityCreateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminActivityEvents.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
             }
             else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivityCreateEvent.this);
                 builder.setTitle("Try again!");
                 builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
