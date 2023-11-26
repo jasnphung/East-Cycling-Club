@@ -46,6 +46,7 @@
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/editProfile"
         android:backgroundTint="@color/royal_blue"
+        android:fontFamily="@font/sf_pro"
         android:gravity="center"
         android:text="Change Picture"
         android:textAlignment="center"

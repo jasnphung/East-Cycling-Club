@@ -35,12 +35,23 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 
     TextView date;
     EditText numParticipants;
+    String userUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.club_activity_associate_event);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                userUsername = null;
+            } else {
+                userUsername = extras.getString("userUsernameKey");
+            }
+        } else {
+            userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
+        }
 
         date = findViewById(R.id.eventDate);
         numParticipants = findViewById(R.id.numParticipants);
@@ -62,6 +73,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
+            intent.putExtra("userUsernameKey", userUsername);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -109,7 +121,8 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 //                reference.child(selectedEventType).setValue(helper);
 //                Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
 //
-//                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+//                Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
+//                intent.putExtra("userUsernameKey", userUsername);
 //                startActivity(intent);
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
 //                finish();

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,6 +25,7 @@ public class ClubActivityProfile extends AppCompatActivity {
     TextView profileName, profileRole, profileUsername, phoneNumber, mainContact, instagramUsername, twitterUsername, facebookLink;
     Button editProfile, logout;
     String userUsername;
+    ImageView clubPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,9 @@ public class ClubActivityProfile extends AppCompatActivity {
         instagramUsername = findViewById(R.id.instagramUsername);
         twitterUsername = findViewById(R.id.twitterUsername);
         facebookLink = findViewById(R.id.facebookLink);
+
+        // TODO: Implement club picture display
+        clubPicture = findViewById(R.id.clubPicture);
 
         editProfile = findViewById(R.id.editButton);
         logout = findViewById(R.id.logoutButton);
@@ -165,42 +170,6 @@ public class ClubActivityProfile extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("TAG", "Error retrieving profile values", databaseError.toException());
-            }
-        });
-    }
-
-    public void passUserData(){
-        String userUsername = profileUsername.getText().toString().trim();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
-
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()){
-
-                    String nameFromDB = snapshot.child(userUsername).child("name").getValue(String.class);
-                    String emailFromDB = snapshot.child(userUsername).child("email").getValue(String.class);
-                    String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
-                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
-
-                    Intent intent = new Intent(ClubActivityProfile.this, ClubActivityEditProfile.class);
-
-                    intent.putExtra("name", nameFromDB);
-                    intent.putExtra("email", emailFromDB);
-                    intent.putExtra("username", usernameFromDB);
-                    intent.putExtra("password", passwordFromDB);
-
-                    startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

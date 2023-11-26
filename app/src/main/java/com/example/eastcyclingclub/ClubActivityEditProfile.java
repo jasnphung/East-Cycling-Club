@@ -23,7 +23,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
     EditText editName, editEmail, editUsername, editPassword, editPhoneNumber, editMainContact, editInstagramUsername, editTwitterUsername, editFacebookLink;
     Button saveButton, changePictureTextButton;
     ImageButton changePictureImageButton;
-    String name, email, username, password, phoneNumber, mainContact, instagramUsername, twitterUsername, facebookLink;
     FirebaseDatabase database;
     DatabaseReference reference;
     String userUsername;
@@ -60,6 +59,8 @@ public class ClubActivityEditProfile extends AppCompatActivity {
         editFacebookLink = findViewById(R.id.editFacebookLink);
 
         saveButton = findViewById(R.id.saveButton);
+
+        // TODO: Implement club picture upload and display
         changePictureTextButton = findViewById(R.id.changePictureTextButton);
         changePictureImageButton = findViewById(R.id.changePictureImageButton);
 
@@ -194,7 +195,7 @@ public class ClubActivityEditProfile extends AppCompatActivity {
                 specificUserReference.child("twitterUsername").setValue(editTwitterUsernameText);
                 specificUserReference.child("facebookLink").setValue(editFacebookLinkText);
 
-                Toast.makeText(ClubActivityEditProfile.this, "Profile Edited!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClubActivityEditProfile.this, "Profile Saved!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), ClubActivityProfile.class);
                 intent.putExtra("userUsernameKey", userUsername);

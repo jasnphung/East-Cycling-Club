@@ -96,6 +96,7 @@ public class ClubActivityEvents extends AppCompatActivity {
         // From current layout to creating event layout
         offerFAB.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), ClubActivityAssociateEvent.class);
+            intent.putExtra("userUsernameKey", userUsername);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
@@ -111,7 +112,7 @@ public class ClubActivityEvents extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 AdminHelperClassEvent adminHelperClassEvent = adminHelperClassEvents.get(position);
-                showUpdateDeleteDialog(adminHelperClassEvent.getEventType(), adminHelperClassEvent.getDifficulty() , adminHelperClassEvent.getMinimumAge(), adminHelperClassEvent.getMaximumAge(), adminHelperClassEvent.getPace());
+                showUpdateDeleteDialog(adminHelperClassEvent.getEventType(), adminHelperClassEvent.getDifficulty() , adminHelperClassEvent.getMinimumAge(), adminHelperClassEvent.getMaximumAge(), adminHelperClassEvent.getPace(), userUsername);
                 return true;
             }
         });
@@ -124,7 +125,7 @@ public class ClubActivityEvents extends AppCompatActivity {
 
 
     //todo needs to be updated for cycling club owner fields
-    private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace) {
+    private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace, String userUsername) {
         Intent intent = new Intent(ClubActivityEvents.this, AdminActivityUpdateEvent.class);
 
         intent.putExtra("eventTypeKey", eventType);
@@ -132,6 +133,7 @@ public class ClubActivityEvents extends AppCompatActivity {
         intent.putExtra("minimumAgeKey", minimumAge);
         intent.putExtra("maximumAgeKey", maximumAge);
         intent.putExtra("paceKey", pace);
+        intent.putExtra("userUsernameKey", userUsername);
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
