@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class GeneralActivitySignup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText signupName, signupUsername, signupEmail, signupPassword;
@@ -117,6 +120,9 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
             signupUsername.setError("Invalid credentials");
             signupUsername.requestFocus();
             allCredentialsAreValid = false;
+        }if (!validateEmail(signupEmail.getText().toString())){
+            signupEmail.setError("Invalid Email");
+            allCredentialsAreValid = false;
         }
         if( pwd.isEmpty() ){
             signupPassword.setError("Invalid credentials");
@@ -129,5 +135,11 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
         }
 
         return allCredentialsAreValid;
+    }
+
+    boolean validateEmail(String input) {
+        Pattern p = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
     }
 }

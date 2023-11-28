@@ -97,23 +97,6 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-
-        <EditText
-            android:id="@+id/editUsername"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/royalblue_border"
-            android:drawableLeft="@drawable/baseline_person_pin_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/sf_pro"
-            android:gravity="center_vertical"
-            android:hint="Username"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
         <EditText
             android:id="@+id/editPassword"
             android:layout_width="match_parent"

@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ClubActivityEditProfile extends AppCompatActivity {
     EditText editName, editEmail, editUsername, editPassword, editPhoneNumber, editMainContact, editInstagramUsername, editTwitterUsername, editFacebookLink;
     Button saveButton, changePictureTextButton;
@@ -50,7 +53,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
         editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
-        editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editMainContact = findViewById(R.id.editMainContact);
@@ -68,7 +70,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
         final String[] nameFromDatabase = new String[1];
         final String[] emailFromDatabase = new String[1];
-        final String[] usernameFromDatabase = new String[1];
         final String[] passwordFromDatabase = new String[1];
         final String[] phoneNumberFromDatabase = new String[1];
         final String[] mainContactFromDatabase = new String[1];
@@ -81,7 +82,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     nameFromDatabase[0] = dataSnapshot.child("name").getValue(String.class);
                     emailFromDatabase[0] = dataSnapshot.child("email").getValue(String.class);
-                    usernameFromDatabase[0] = dataSnapshot.child("username").getValue(String.class);
                     passwordFromDatabase[0] = dataSnapshot.child("password").getValue(String.class);
                     phoneNumberFromDatabase[0] = dataSnapshot.child("phoneNumber").getValue(String.class);
                     mainContactFromDatabase[0] = dataSnapshot.child("mainContact").getValue(String.class);
@@ -96,10 +96,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
                     if (emailFromDatabase[0] != null) {
                         editEmail.setText(emailFromDatabase[0]);
-                    }
-
-                    if (usernameFromDatabase[0] != null) {
-                        editUsername.setText(usernameFromDatabase[0]);
                     }
 
                     if (passwordFromDatabase[0] != null) {
@@ -142,7 +138,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
         saveButton.setOnClickListener(view -> {
             String editNameText = editName.getText().toString();
             String editEmailText = editEmail.getText().toString();
-            String editUsernameText = editUsername.getText().toString();
             String editPasswordText = editPassword.getText().toString();
             String editPhoneNumberText = editPhoneNumber.getText().toString();
             String editMainContactText = editMainContact.getText().toString();
@@ -150,7 +145,9 @@ public class ClubActivityEditProfile extends AppCompatActivity {
             String editTwitterUsernameText = editTwitterUsername.getText().toString();
             String editFacebookLinkText = editFacebookLink.getText().toString();
 
-            if (editNameText.isEmpty() || editEmailText.isEmpty() || editUsernameText.isEmpty() || editPasswordText.isEmpty() || editPhoneNumberText.isEmpty() || (editInstagramUsernameText.isEmpty() && editTwitterUsernameText.isEmpty() && editFacebookLinkText.isEmpty())) {
+
+
+            if (editNameText.isEmpty() || editEmailText.isEmpty() || editPasswordText.isEmpty() || editPhoneNumberText.isEmpty() || (editInstagramUsernameText.isEmpty() && editTwitterUsernameText.isEmpty() && editFacebookLinkText.isEmpty())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ClubActivityEditProfile.this);
                 builder.setTitle("Try again!");
                 StringBuilder message = new StringBuilder("Please make sure you have the following entered:");
@@ -159,9 +156,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
                 }
                 if (editEmailText.isEmpty()) {
                     message.append("\n\t- An email");
-                }
-                if (editUsernameText.isEmpty()) {
-                    message.append("\n\t- A username");
                 }
                 if (editPasswordText.isEmpty()) {
                     message.append("\n\t- A password");
@@ -181,13 +175,25 @@ public class ClubActivityEditProfile extends AppCompatActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }else if(!validateMobile(editPhoneNumber.getText().toString())){
+                editPhoneNumber.setError("Invalid Phone Number");
+            }
+            else if(!validateMobile(editMainContact.getText().toString())){
+                    editMainContact.setError("Invalid Mobile Number");
+            }else if (!validateEmail(editEmail.getText().toString())){
+                editEmail.setError("Invalid Email");
+            }else if (!validateIGUsername(editInstagramUsername.getText().toString())){
+                editInstagramUsername.setError("Invalid IG Username");
+            }else if (!validateTwitterUsername(editTwitterUsername.getText().toString())){
+                editTwitterUsername.setError("Invalid Twitter Username");
+            }else if (!validateFacebookLink(editFacebookLink.getText().toString())){
+                editFacebookLink.setError("Invalid Facebook Link");
             }
             else {
                 DatabaseReference specificUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername);
 
                 specificUserReference.child("name").setValue(editNameText);
                 specificUserReference.child("email").setValue(editEmailText);
-                specificUserReference.child("username").setValue(editUsernameText);
                 specificUserReference.child("password").setValue(editPasswordText);
                 specificUserReference.child("phoneNumber").setValue(editPhoneNumberText);
                 specificUserReference.child("mainContact").setValue(editMainContactText);
@@ -206,4 +212,32 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
         });
     }
+    boolean validateMobile(String input) {
+        Pattern p = Pattern.compile("[6-9][0-9]{9}");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateEmail(String input) {
+        Pattern p = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateIGUsername(String input) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._]{1,30}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateTwitterUsername(String input) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._]{1,30}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateFacebookLink(String input) {
+        Pattern p = Pattern.compile("^(https?:\\/\\/)?(www\\.)?facebook\\.com\\/[a-zA-Z0-9.-]+\\/?$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+
+
+
 }

@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ClubActivityCompleteProfile extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -96,6 +99,15 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }else if(!validateMobile(phoneNumber.getText().toString())){
+                phoneNumber.setError("Invalid Phone Number");
+            }
+            else if (!validateIGUsername(instagramUsername.getText().toString())){
+                instagramUsername.setError("Invalid IG Username");
+            }else if (!validateTwitterUsername(twitterUsername.getText().toString())){
+                twitterUsername.setError("Invalid Twitter Username");
+            }else if (!validateFacebookLink(facebookLink.getText().toString())){
+                facebookLink.setError("Invalid Facebook Link");
             }
             else {
                 DatabaseReference specificUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername);
@@ -115,5 +127,25 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    boolean validateMobile(String input) {
+        Pattern p = Pattern.compile("[6-9][0-9]{9}");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateIGUsername(String input) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._]{1,30}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateTwitterUsername(String input) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._]{1,30}$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+    boolean validateFacebookLink(String input) {
+        Pattern p = Pattern.compile("^(https?:\\/\\/)?(www\\.)?facebook\\.com\\/[a-zA-Z0-9.-]+\\/?$");
+        Matcher m = p.matcher(input);
+        return m.matches();
     }
 }
