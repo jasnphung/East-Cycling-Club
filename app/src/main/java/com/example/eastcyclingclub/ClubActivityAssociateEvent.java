@@ -1,8 +1,5 @@
 package com.example.eastcyclingclub;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -16,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,10 +36,10 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 
     Button createEventTypeBTN, returnToEventsBTN;
 
-    TextView date;
-    EditText numParticipants;
+    TextView eventDateText;
+    EditText maxParticipantsText;
     String userUsername;
-    EditText eventName;
+    EditText eventNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +57,10 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
         }
 
-        date = findViewById(R.id.eventDate);
-        numParticipants = findViewById(R.id.numParticipants);
+        eventDateText = findViewById(R.id.eventDate);
+        maxParticipantsText = findViewById(R.id.numParticipants);
         createEventTypeBTN = findViewById(R.id.createEventTypeButtton);
-        eventName = findViewById(R.id.eventName);
+        eventNameText = findViewById(R.id.eventName);
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance();
@@ -86,7 +86,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 
 
         //logic for showing a date picker dialog and selecting date that event will be held
-        date.setOnClickListener(new View.OnClickListener() {
+        eventDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -96,7 +96,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
                 DatePickerDialog dialog = new DatePickerDialog(ClubActivityAssociateEvent.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date.setText(intMonthToWord(month)+ " " + String.valueOf(dayOfMonth) + " " + String.valueOf(year));
+                        eventDateText.setText(intMonthToWord(month)+ " " + String.valueOf(dayOfMonth) + " " + String.valueOf(year));
                     }
                 }, year, month, day);
 
@@ -109,10 +109,10 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 
             //grab information from user input
 
-            String dateEvent = date.getText().toString();
-            String participants = numParticipants.getText().toString();
+            String eventDate = eventDateText.getText().toString();
+            String maxParticipants = maxParticipantsText.getText().toString();
             String selectedEventType = eventType.getSelectedItem().toString();
-            String nameOfEvent = eventName.getText().toString();
+            String eventName = eventNameText.getText().toString();
 
             //TODO -> edit the following logic below so that each event created of an event type is assigned to the CYCLING
             //TODO -> CLUB OWNER'S ACCOUNT. Make sure all fields are specific and valid
@@ -120,18 +120,20 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             // Checks if at least one option is entered: if so, allows event creation, if not, outputs warning message
 
             boolean allFieldsEmpty =
-                       ( dateEvent.length() == 0  )
-                    && ( participants.length() == 0 )
-                    && ( selectedEventType.length() == 0 )
-                    && ( nameOfEvent.length() == 0 );
+                    ( eventDate.length() == 0  )
+                            && ( maxParticipants.length() == 0 )
+                            && ( selectedEventType.length() == 0 )
+                            && ( eventName.length() == 0 );
 
 
-            if ( !allFieldsEmpty ) {
+            if (!allFieldsEmpty) {
 
-                DatabaseReference clubOwnerEvents = database.getReference( userUsername+" events" ).child( selectedEventType );
-                clubOwnerEvents.child("date").setValue(dateEvent);
-                clubOwnerEvents.child("number of participants").setValue(participants);
-                clubOwnerEvents.child("name of event").setValue(nameOfEvent);
+                DatabaseReference specificUserEventsReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername).child("events");
+                DatabaseReference clubOwnerEvents = specificUserEventsReference.child(selectedEventType);
+
+                ClubHelperClassEvent helper = new ClubHelperClassEvent(selectedEventType, eventName, eventDate, maxParticipants);
+
+                specificUserEventsReference.child(selectedEventType).setValue(helper);
 
                 Toast.makeText(ClubActivityAssociateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
 
