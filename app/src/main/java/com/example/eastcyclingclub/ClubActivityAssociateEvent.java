@@ -129,11 +129,11 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             if (!allFieldsEmpty) {
 
                 DatabaseReference specificUserEventsReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername).child("events");
-                DatabaseReference clubOwnerEvents = specificUserEventsReference.child(selectedEventType);
+                DatabaseReference clubOwnerEvents = specificUserEventsReference.child(eventName);
 
                 ClubHelperClassEvent helper = new ClubHelperClassEvent(selectedEventType, eventName, eventDate, maxParticipants);
 
-                specificUserEventsReference.child(selectedEventType).setValue(helper);
+                specificUserEventsReference.child(eventName).setValue(helper);
 
                 Toast.makeText(ClubActivityAssociateEvent.this, "Event Created Successfully!", Toast.LENGTH_SHORT).show();
 

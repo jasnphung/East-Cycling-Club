@@ -94,12 +94,13 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
         editEventBTN.setOnClickListener(view -> {
 
             String dateText = date.getText().toString();
-            String eventNameText = eventName.getText().toString();
+            String oldEventName = eventNameValue;
+            String newEventName = eventName.getText().toString();
             String maxParticipantsText = maxParticipants.getText().toString();
 
             // Checks if all options are selected: if so, allows event creation, if not, outputs warning message
-            if (!dateText.isEmpty() && !eventNameText.isEmpty() && !maxParticipantsText.isEmpty()) {
-                updateProduct(eventTypeValue, eventNameText, maxParticipantsText, dateText, userUsernameValue);
+            if (!dateText.isEmpty() && !newEventName.isEmpty() && !maxParticipantsText.isEmpty()) {
+                updateProduct(eventTypeValue, newEventName, oldEventName, maxParticipantsText, dateText, userUsernameValue);
                 Toast.makeText(ClubActivityUpdateEvent.this, "Event Updated", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(getApplicationContext(), ClubActivityEvents.class);
                 intent2.putExtra("userUsernameKey", userUsernameValue);
@@ -124,7 +125,7 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
         deleteEventBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteProduct(userUsernameValue, eventTypeValue);
+                deleteProduct(userUsernameValue, eventNameValue);
                 Toast.makeText(ClubActivityUpdateEvent.this, "Event Deleted", Toast.LENGTH_LONG).show();
                 Intent intent3 = new Intent(getApplicationContext(), ClubActivityEvents.class);
                 intent3.putExtra("userUsernameKey", userUsernameValue);
@@ -137,22 +138,29 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
         // Return to events button
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
-            Intent intent1 = new Intent(getApplicationContext(), AdminActivityEvents.class);
+            Intent intent1 = new Intent(getApplicationContext(), ClubActivityEvents.class);
             startActivity(intent1);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
         });
     }
 
-    private void updateProduct(String eventType, String eventName, String maxParticipants, String date, String userUsername) {
+    private void updateProduct(String eventType, String newEventName, String oldEventName, String maxParticipants, String date, String userUsername) {
         DatabaseReference specificUserEventsReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername).child("events");
-        ClubHelperClassEvent clubHelperClassEvent = new ClubHelperClassEvent(eventType, eventName, date, maxParticipants);
-        specificUserEventsReference.child(eventType).setValue(clubHelperClassEvent);
-        Toast.makeText(getApplicationContext(), "Event Updated", Toast.LENGTH_LONG).show();
+        if (newEventName.equals(oldEventName)){
+            ClubHelperClassEvent clubHelperClassEvent = new ClubHelperClassEvent(eventType, newEventName, date, maxParticipants);
+            specificUserEventsReference.child(newEventName).setValue(clubHelperClassEvent);
+            Toast.makeText(getApplicationContext(), "Event Updated", Toast.LENGTH_LONG).show();
+        }else{
+            deleteProduct(userUsername, oldEventName);
+            ClubHelperClassEvent clubHelperClassEvent = new ClubHelperClassEvent(eventType, newEventName, date, maxParticipants);
+            specificUserEventsReference.child(newEventName).setValue(clubHelperClassEvent);
+            Toast.makeText(getApplicationContext(), "Event Updated", Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void deleteProduct(String userUsername, String eventType) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("events").child(eventType);
+    private void deleteProduct(String userUsername, String eventName) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("events").child(eventName);
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_LONG).show();
     }
