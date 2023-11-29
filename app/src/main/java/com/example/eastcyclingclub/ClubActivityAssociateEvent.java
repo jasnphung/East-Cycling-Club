@@ -135,7 +135,7 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
 
                 specificUserEventsReference.child(selectedEventType).setValue(helper);
 
-                Toast.makeText(ClubActivityAssociateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClubActivityAssociateEvent.this, "Event Created Successfully!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), ClubActivityEvents.class);
                 intent.putExtra("userUsernameKey", userUsername);

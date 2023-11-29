@@ -43,7 +43,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Phone number (required)"
+                android:hint="Phone Number (required)"
                 android:inputType="phone"
                 android:padding="8dp"
                 android:textColor="@color/black" />
@@ -57,7 +57,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Name of main contact"
+                android:hint="Name of Main Contact"
                 android:inputType="text|textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/black" />
@@ -70,7 +70,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/sf_pro"
                 android:gravity="center"
-                android:text="Add at least 1 social media contact"
+                android:text="Social Media Links"
                 android:textColor="#0D1245"
                 android:textSize="18sp" />
 
@@ -83,7 +83,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Instagram username"
+                android:hint="Instagram Username"
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/black" />
@@ -97,7 +97,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Twitter username"
+                android:hint="X (formerly Twitter) Username"
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/black" />
@@ -111,7 +111,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Facebook link"
+                android:hint="Facebook Link"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/black" />

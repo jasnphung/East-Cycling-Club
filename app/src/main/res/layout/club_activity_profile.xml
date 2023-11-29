@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Phone number"
+            android:text="Phone Number"
             android:textSize="20sp" />
 
         <TextView
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Main contact"
+            android:text="Main Contact"
             android:textSize="20sp" />
 
         <TextView
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Instagram username"
+            android:text="Instagram Username"
             android:textSize="20sp" />
 
         <TextView
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Twitter username"
+            android:text="Twitter Username"
             android:textSize="20sp" />
 
         <TextView
@@ -122,7 +122,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Facebook link"
+            android:text="Facebook Link"
             android:textSize="20sp" />
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.example.eastcyclingclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public class ClubActivityEvents extends AppCompatActivity {
     FloatingActionButton expandFAB, offerFAB;
     TextView offerText, editText;
     Boolean areAllFABsVisible;
+
+    String userUsername;
     ListView listViewEvents;
     List<ClubHelperClassEvent> clubHelperClassEvents;
     DatabaseReference databaseEvents;
@@ -34,9 +37,6 @@ public class ClubActivityEvents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.club_activity_events);
-
-        // Getting the current user's username
-        String userUsername;
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -100,26 +100,24 @@ public class ClubActivityEvents extends AppCompatActivity {
             finish();
         });
 
-        //TODO: alter from here to retrieve associated events from the specific CLUB OWNER ACCOUNT as the database reference
         databaseEvents = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("events");
         listViewEvents = (ListView) findViewById(R.id.listViewEvents);
 
         clubHelperClassEvents = new ArrayList<>();
 
-//        listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                AdminHelperClassEvent adminHelperClassEvent = adminHelperClassEvents.get(position);
-//                showUpdateDeleteDialog(adminHelperClassEvent.getEventType(), adminHelperClassEvent.getDifficulty() , adminHelperClassEvent.getMinimumAge(), adminHelperClassEvent.getMaximumAge(), adminHelperClassEvent.getPace(), userUsername);
-//                return true;
-//            }
-//        });
+       listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ClubHelperClassEvent clubOwnerEventsHelperClass = clubHelperClassEvents.get(position);
+                showUpdateDeleteDialog(clubOwnerEventsHelperClass.getEventType(),clubOwnerEventsHelperClass.getEventDate(), clubOwnerEventsHelperClass.getEventName() , clubOwnerEventsHelperClass.getMaxParticipants(), userUsername);
+                return true;
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,16 +139,13 @@ public class ClubActivityEvents extends AppCompatActivity {
         });
     }
 
-
-    //todo needs to be updated for cycling club owner fields
-    private void showUpdateDeleteDialog(String eventType, String difficultyLevel, String minimumAge, String maximumAge, String pace, String userUsername) {
-        Intent intent = new Intent(ClubActivityEvents.this, AdminActivityUpdateEvent.class);
+    private void showUpdateDeleteDialog(String eventType, String date, String eventName, String maxParticipants, String userUsername) {
+        Intent intent = new Intent(ClubActivityEvents.this, ClubActivityUpdateEvent.class);
 
         intent.putExtra("eventTypeKey", eventType);
-        intent.putExtra("difficultyKey", difficultyLevel);
-        intent.putExtra("minimumAgeKey", minimumAge);
-        intent.putExtra("maximumAgeKey", maximumAge);
-        intent.putExtra("paceKey", pace);
+        intent.putExtra("dateKey", date);
+        intent.putExtra("eventNameKey", eventName);
+        intent.putExtra("maxParticipantsKey", maxParticipants);
         intent.putExtra("userUsernameKey", userUsername);
 
         startActivity(intent);
