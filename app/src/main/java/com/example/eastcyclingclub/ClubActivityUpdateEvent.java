@@ -98,8 +98,21 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
             String newEventName = eventName.getText().toString();
             String maxParticipantsText = maxParticipants.getText().toString();
 
+            if (dateText.equals(dateValue) && (newEventName.equals(oldEventName)) && (maxParticipantsText.equals(maxParticipantsValue)))  {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ClubActivityUpdateEvent.this);
+                builder.setTitle("Try Again!");
+                builder.setMessage("No Edits Detected");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
             // Checks if all options are selected: if so, allows event creation, if not, outputs warning message
-            if (!dateText.isEmpty() && !newEventName.isEmpty() && !maxParticipantsText.isEmpty()) {
+            else if (!dateText.isEmpty() && !newEventName.isEmpty() && !maxParticipantsText.isEmpty()) {
                 updateProduct(eventTypeValue, newEventName, oldEventName, maxParticipantsText, dateText, userUsernameValue);
                 Toast.makeText(ClubActivityUpdateEvent.this, "Event Updated", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(getApplicationContext(), ClubActivityEvents.class);
