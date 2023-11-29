@@ -152,6 +152,7 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
         returnToEventsBTN = findViewById(R.id.returnToEventsButton);
         returnToEventsBTN.setOnClickListener(view -> {
             Intent intent1 = new Intent(getApplicationContext(), ClubActivityEvents.class);
+            intent1.putExtra("userUsernameKey", userUsernameValue);
             startActivity(intent1);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             finish();
