@@ -129,7 +129,7 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
         });
     }
     boolean validateMobile(String input) {
-        Pattern p = Pattern.compile("[6-9][0-9]{9}");
+        Pattern p = Pattern.compile("^(\\+\\d{1,2}\\s?)?1?\\-?\\.?\\s?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$");
         Matcher m = p.matcher(input);
         return m.matches();
     }
