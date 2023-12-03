@@ -147,12 +147,11 @@ public class GeneralActivityLogin extends AppCompatActivity {
                             }
                         }
                         else {
-                            Intent intent = new Intent(GeneralActivityLogin.this, ClubActivityProfile.class);
+                            Intent intent = new Intent(GeneralActivityLogin.this, ParticipantActivityEvents.class);
 
                             intent.putExtra("name", nameFromDB);
                             intent.putExtra("role", roleFromDB);
                             intent.putExtra("username",usernameFromDB);
-
 
                             startActivity(intent);
                         }

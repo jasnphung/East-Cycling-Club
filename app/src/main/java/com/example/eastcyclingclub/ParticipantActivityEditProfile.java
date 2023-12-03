@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class GeneralActivityEditProfile extends AppCompatActivity {
+public class ParticipantActivityEditProfile extends AppCompatActivity {
 
     EditText editName, editEmail, editPassword;
     Button saveButton;
@@ -22,7 +22,7 @@ public class GeneralActivityEditProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.general_activity_edit_profile);
+        setContentView(R.layout.participant_activity_edit_profile);
 
         reference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -37,9 +37,9 @@ public class GeneralActivityEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isNameChanged() || isPasswordChanged() || isEmailChanged()){
-                    Toast.makeText(GeneralActivityEditProfile.this, "Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ParticipantActivityEditProfile.this, "Saved", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(GeneralActivityEditProfile.this, "No Changes Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ParticipantActivityEditProfile.this, "No Changes Found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
