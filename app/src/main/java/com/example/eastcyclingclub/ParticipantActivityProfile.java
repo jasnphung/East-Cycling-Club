@@ -75,7 +75,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         profileName = findViewById(R.id.profileName);
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
-        welcomeText = findViewById(R.id.)
+        welcomeText = findViewById(R.id.welcomeText);
 
         editProfile = findViewById(R.id.editButton);
         logout = findViewById(R.id.logoutButton);
