@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ParticipantActivityEvents extends AppCompatActivity {
 
-    String userUsername, userName, userRole;
+    String userUsername, userName, userRole, userPassword;
     ListView listViewEvents;
     DatabaseReference databaseEvents;
 
@@ -38,15 +38,18 @@ public class ParticipantActivityEvents extends AppCompatActivity {
                 userUsername = null;
                 userName = null;
                 userRole = null;
+                userPassword = null;
             } else {
                 userUsername = extras.getString("username");
                 userName = extras.getString("name");
                 userRole = extras.getString("role");
+                userPassword = extras.getString("password");
             }
         } else {
             userUsername = (String) savedInstanceState.getSerializable("username");
             userName = (String) savedInstanceState.getSerializable("name");
             userRole = (String) savedInstanceState.getSerializable("role");
+            userPassword = (String) savedInstanceState.getSerializable("password");
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -60,6 +63,7 @@ public class ParticipantActivityEvents extends AppCompatActivity {
                 intent.putExtra("username", userUsername);
                 intent.putExtra("name", userName);
                 intent.putExtra("role", userRole);
+                intent.putExtra("password", userPassword);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();

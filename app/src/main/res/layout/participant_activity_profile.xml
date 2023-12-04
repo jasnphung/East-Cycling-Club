@@ -28,7 +28,6 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="104dp"
         android:background="@drawable/royalblue_border"
         android:orientation="vertical"
         android:padding="10dp"

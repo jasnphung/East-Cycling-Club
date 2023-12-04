@@ -150,6 +150,7 @@ public class GeneralActivityLogin extends AppCompatActivity {
                             Intent intent = new Intent(GeneralActivityLogin.this, ParticipantActivityEvents.class);
 
                             intent.putExtra("name", nameFromDB);
+                            intent.putExtra("password", passwordFromDB);
                             intent.putExtra("role", roleFromDB);
                             intent.putExtra("username",usernameFromDB);
 

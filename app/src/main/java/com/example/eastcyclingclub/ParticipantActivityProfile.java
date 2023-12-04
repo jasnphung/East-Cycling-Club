@@ -28,7 +28,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
     DatabaseReference reference;
     TextView profileName, profileRole, profileUsername, welcomeText;
     Button editProfile, logout;
-    String userUsername, userName, userRole;
+    String userUsername, userName, userRole, userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +40,19 @@ public class ParticipantActivityProfile extends AppCompatActivity {
             if (extras == null) {
                 userUsername = null;
                 userName = null;
+                userPassword = null;
                 userRole = null;
             } else {
                 userUsername = extras.getString("username");
                 userName = extras.getString("name");
+                userPassword = extras.getString("password");
                 userRole = extras.getString("role");
             }
         } else {
             userUsername = (String) savedInstanceState.getSerializable("username");
             userName = (String) savedInstanceState.getSerializable("name");
             userRole = (String) savedInstanceState.getSerializable("role");
+            userPassword = (String) savedInstanceState.getSerializable("password");
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -58,6 +61,10 @@ public class ParticipantActivityProfile extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.event) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityEvents.class);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("role", userRole);
+                intent.putExtra("password", userPassword);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -75,8 +82,9 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         profileName = findViewById(R.id.profileName);
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
-        welcomeText = findViewById(R.id.welcomeText);
 
+        welcomeText = findViewById(R.id.welcomeText);
+        welcomeText.setText("Welcome Back\n" + userName);
         editProfile = findViewById(R.id.editButton);
         logout = findViewById(R.id.logoutButton);
 
@@ -86,9 +94,9 @@ public class ParticipantActivityProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityEditProfile.class);
-                intent.putExtra("usernameFromDB", userUsername);
-                intent.putExtra("nameFromDB", userName);
-                intent.putExtra("roleFromDB", userRole);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
