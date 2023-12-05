@@ -39,6 +39,7 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
         signupPassword = findViewById(R.id.facebookLink);
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.completeProfile);
+
         spinner = findViewById(R.id.dropdown_menu);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AccountOptions, R.layout.general_spinner_account_type);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -99,8 +100,6 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
 
     }
-
-
 
     private boolean verifyElementsAreNonEmpty(String name, String email, String pwd, String userName, String role){
 

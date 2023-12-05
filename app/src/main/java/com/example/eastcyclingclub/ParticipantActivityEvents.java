@@ -81,24 +81,24 @@ public class ParticipantActivityEvents extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        databaseEvents.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                clubHelperClassEvents.clear();
-//
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    ClubHelperClassEvent clubHelperClassEvent = postSnapshot.getValue(ClubHelperClassEvent.class);
-////                    clubHelperClassEvents.add(clubHelperClassEvent);
-//                }
-//
-////                ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, clubHelperClassEvents);
-////                listViewEvents.setAdapter(eventAdapter);
-//            }
+        databaseEvents.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                clubHelperClassEvents.clear();
 
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ClubHelperClassEvent clubHelperClassEvent = postSnapshot.getValue(ClubHelperClassEvent.class);
+//                    clubHelperClassEvents.add(clubHelperClassEvent);
+                }
+
+//                ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, clubHelperClassEvents);
+//                listViewEvents.setAdapter(eventAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
