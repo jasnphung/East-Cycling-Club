@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterViewAnimator;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,11 +33,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     ListView listViewEventsP;
     DatabaseReference databaseEvents;
 
-    List<ParticipantHelperClassEvent> participantHelperClassEvents;
+    List<ClubHelperClassEvent> clubHelperClassEvents;
 
     Spinner spinner;
 
     SearchView searchView;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +103,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
        listViewEventsP = (ListView) findViewById(R.id.listViewEventsP);
 
+
+
+
+
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -112,9 +124,15 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     }
 
 
-    public void searchList(String text){
+    public boolean searchList(String text){
+        // no point in searching if its an empty string
+        if( text.isEmpty() ){ return false; }
+
+        ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
+        boolean elementFound = false;
+
         if (spinner.getSelectedItem().toString().equals("Event Name")){
-            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
+
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -126,9 +144,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                             for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
-                                        if (participantHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(participantHelperClassEvent);
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(clubHelperClassEvent);
                                         }
                                     }
                                 }
@@ -137,7 +155,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                     }
                     Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
 
-                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
                     Log.d("TAG", "onDataChange: Adapter set");
@@ -149,9 +167,8 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 }
             });
 
-        }
-        else if (spinner.getSelectedItem().toString().equals("Event Type")){
-            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
+        }else if (spinner.getSelectedItem().toString().equals("Event Type")){
+
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -160,12 +177,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         if (postSnapshot.hasChildren()) {
-                            for (DataSnapshot postPostSnapshot : postSnapshot.getChildren()) {
-                                if (postPostSnapshot.hasChildren()) {
-                                    for (DataSnapshot eventSnapshot : postPostSnapshot.getChildren()) {
-                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
-                                        if (participantHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(participantHelperClassEvent);
+                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+                                if (postpostSnapshot.hasChildren()) {
+                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(clubHelperClassEvent);
                                         }
                                     }
                                 }
@@ -173,7 +190,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
-                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
 
@@ -183,32 +200,15 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                 }
             });
+
         }
-        else if (spinner.getSelectedItem().toString().equals("Clubs")) {
-            List<GeneralHelperClassUser> generalHelperClassUsers = new ArrayList<>();
-            databaseEvents.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    generalHelperClassUsers.clear();
 
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) { // getting users
-                        GeneralHelperClassUser generalHelperClassUser = postSnapshot.getValue(GeneralHelperClassUser.class);
-
-                        if (generalHelperClassUser.getRole().contains("Cycling Club Owner") && generalHelperClassUser.getName().toLowerCase().contains(text.toLowerCase())) {
-                            generalHelperClassUsers.add(generalHelperClassUser);
-                        }
-                    }
-
-                    ParticipantListClub userAdapter = new ParticipantListClub(ParticipantActivityEvents.this, generalHelperClassUsers);
-                    listViewEventsP.setAdapter(userAdapter);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+        // checks to see if at least one element is found
+        if( !searchList.isEmpty() ){
+            elementFound = true;
         }
+
+        return  elementFound;
     }
 
 
@@ -218,16 +218,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         // Depending on the selected item, perform actions accordingly
         if (selectedItem.equals("Event Type")) {
             // Perform actions specific to "Join a Club"
-            Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
-        }
-        // Perform actions specific to "Participants"
-        else if (selectedItem.equals("Event Name")) {
-                Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
-        }
-        else if (selectedItem.equals("Clubs")) {
-            Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(this, "event type selected", Toast.LENGTH_SHORT).show();
+        } else // Perform actions specific to "Participants"
+            if (selectedItem.equals("Event Name"))
+                Toast.makeText(this, "event name selected", Toast.LENGTH_SHORT).show();
     }
+
 
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
@@ -240,14 +236,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                participantHelperClassEvents.clear();
+//                clubHelperClassEvents.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ParticipantHelperClassEvent participantHelperClassEvent = postSnapshot.getValue(ParticipantHelperClassEvent.class);
-//                    participantHelperClassEvents.add(participantHelperClassEvent);
+                    ClubHelperClassEvent clubHelperClassEvent = postSnapshot.getValue(ClubHelperClassEvent.class);
+//                    clubHelperClassEvents.add(clubHelperClassEvent);
                 }
 
-//                ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, participantHelperClassEvents);
+//                ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, clubHelperClassEvents);
 //                listViewEvents.setAdapter(eventAdapter);
             }
 

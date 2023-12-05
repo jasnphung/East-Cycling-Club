@@ -3,6 +3,7 @@ package com.example.eastcyclingclub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ParticipantActivityEditProfile extends AppCompatActivity {
 
     EditText editName, editEmail, editPassword;
@@ -29,6 +33,8 @@ public class ParticipantActivityEditProfile extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    public ParticipantActivityEditProfile(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,30 +72,34 @@ public class ParticipantActivityEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!editName.getText().toString().isEmpty() && !editEmail.getText().toString().isEmpty() && !editPassword.getText().toString().isEmpty()) {
-                    reference.child(usernameUser).child("name").setValue(editName.getText().toString());
-                    reference.child(usernameUser).child("email").setValue(editEmail.getText().toString());
-                    reference.child(usernameUser).child("password").setValue(editPassword.getText().toString());
+                String name = editName.getText().toString();
+                String email = editEmail.getText().toString();
+                String password = editPassword.getText().toString();
+
+                if ( allCredentialsAreValid(name, email, password) ) {
+                    reference.child(usernameUser).child("name").setValue( name );
+                    reference.child(usernameUser).child("email").setValue( email );
+                    reference.child(usernameUser).child("password").setValue( password );
                     Toast.makeText(ParticipantActivityEditProfile.this, "Saved", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(ParticipantActivityEditProfile.this, ParticipantActivityProfile.class);
 
-                    intent.putExtra("name", editName.getText().toString());
+                    intent.putExtra("name", name );
                     intent.putExtra("username", usernameUser);
-                    intent.putExtra("email", editEmail.getText().toString());
-                    intent.putExtra("password", editPassword.getText().toString());
+                    intent.putExtra("email", email );
+                    intent.putExtra("password", password);
                     intent.putExtra("role", roleUser);
 
                     startActivity(intent);
-                } else if (editName.getText().toString().isEmpty()) {
+                } else if ( name.isEmpty() ) {
                     editName.setError("No Name Specified");
                     editName.requestFocus();
                 }
-                else if (editEmail.getText().toString().isEmpty()) {
+                else if ( email.isEmpty() ) {
                     editEmail.setError("No Email Specified");
                     editEmail.requestFocus();
                 }
-                else if (editPassword.getText().toString().isEmpty()) {
+                else if ( password.isEmpty() ) {
                     editPassword.setError("No Password Specified");
                     editPassword.requestFocus();
                 }
@@ -99,6 +109,19 @@ public class ParticipantActivityEditProfile extends AppCompatActivity {
             }
         });
     }
+
+    public boolean allCredentialsAreValid(String newUserName, String newEmail, String newPassword){
+
+        String emailRegex = "^[a-zA-Z0-9][a-zA-Z0-9_]+@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)";
+
+        Pattern pattern = Pattern.compile(emailRegex, Pattern.UNICODE_CASE);
+        Matcher matcher = pattern.matcher(newEmail);
+
+        // makes sure the email is valid, username is non-empty, and password is non-empty
+        return ( matcher.matches() && !( newUserName.isEmpty() ) && !( newPassword.isEmpty() ) );
+    }
+
+
 
 //    private boolean isNameChanged() {
 //        if (!nameUser.equals(editName.getText().toString())) {
@@ -127,6 +150,7 @@ public class ParticipantActivityEditProfile extends AppCompatActivity {
 //    }
 
     public void showUserData() {
+        if( usernameUser == null ){ return; }
 
         DatabaseReference specificUserReference = database.getInstance().getReference().child("users").child(usernameUser);
 
@@ -135,31 +159,41 @@ public class ParticipantActivityEditProfile extends AppCompatActivity {
         final String[] passwordFromDatabase = new String[1];
         final String[] roleFromDatabase = new String[1];
 
-        specificUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    nameFromDatabase[0] = dataSnapshot.child("name").getValue(String.class);
-                    emailFromDatabase[0] = dataSnapshot.child("email").getValue(String.class);
-                    passwordFromDatabase[0] = dataSnapshot.child("password").getValue(String.class);
-                    roleFromDatabase[0] = dataSnapshot.child("role").getValue(String.class);
+            public void run() {
+                specificUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            nameFromDatabase[0] = dataSnapshot.child("name").getValue(String.class);
+                            emailFromDatabase[0] = dataSnapshot.child("email").getValue(String.class);
+                            passwordFromDatabase[0] = dataSnapshot.child("password").getValue(String.class);
+                            roleFromDatabase[0] = dataSnapshot.child("role").getValue(String.class);
 
-                    editName.setText(nameFromDatabase[0]);
-                    editEmail.setText(emailFromDatabase[0]);
-                    editPassword.setText(passwordFromDatabase[0]);
-                    roleUser = roleFromDatabase[0];
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    editName.setText(nameFromDatabase[0]);
+                                    editEmail.setText(emailFromDatabase[0]);
+                                    editPassword.setText(passwordFromDatabase[0]);
+                                    roleUser = roleFromDatabase[0];
+                                }
+                            });
 
-                    Log.d("TAG", "Profile values retrieved");
-                } else {
-                    Log.d("TAG", "Profile values do not exist");
-                }
+                            Log.d("TAG", "Profile values retrieved");
+                        } else {
+                            Log.d("TAG", "Profile values do not exist");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d("TAG", "Error retrieving profile values", databaseError.toException());
+                    }
+                });
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("TAG", "Error retrieving profile values", databaseError.toException());
-            }
-        });
-
+        }).start();
     }
+
 }
