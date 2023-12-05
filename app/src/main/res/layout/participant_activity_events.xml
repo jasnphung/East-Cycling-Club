@@ -5,24 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+
+    <SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/sf_pro"
-        android:text="Events Available"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/searchoptions"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/royalblue_border"
+        android:drawablePadding="8dp"
+        android:padding="8dp"
+        android:prompt="@string/menu"
+        android:spinnerMode="dropdown" />
 
     <ListView
-        android:id="@+id/listViewEvents"
+        android:id="@+id/listViewEventsP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottomNavigation"
-        android:layout_below="@+id/textView"/>
+        android:layout_below="@id/searchoptions" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

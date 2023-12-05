@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClubListEvent extends ArrayAdapter<ClubHelperClassEvent> {
@@ -35,5 +36,9 @@ public class ClubListEvent extends ArrayAdapter<ClubHelperClassEvent> {
         textViewMaxParticipants.setText("Max participants: " + clubHelperClassEvent.getMaxParticipants());
 
         return listViewItem;
+    }
+    public void searchDataList(ArrayList<ClubHelperClassEvent> searchList){
+        clubHelperClassEvents = searchList;
+        notifyDataSetChanged();
     }
 }
