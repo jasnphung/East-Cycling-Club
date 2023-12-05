@@ -12,6 +12,7 @@
         <item>Select Seach Type</item>
         <item>Event Name</item>
         <item>Event Type</item>
+        <item>Clubs</item>
     </string-array>
 
     <string-array name="EventOptions">

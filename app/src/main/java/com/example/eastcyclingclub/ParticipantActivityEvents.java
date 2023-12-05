@@ -8,16 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterViewAnimator;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +30,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     ListView listViewEventsP;
     DatabaseReference databaseEvents;
 
-    List<ClubHelperClassEvent> clubHelperClassEvents;
+    List<ParticipantHelperClassEvent> participantHelperClassEvents;
 
     Spinner spinner;
 
@@ -100,12 +97,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
        listViewEventsP = (ListView) findViewById(R.id.listViewEventsP);
 
-
-
-
-
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -122,10 +113,8 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
 
     public void searchList(String text){
-        ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
-
         if (spinner.getSelectedItem().toString().equals("Event Name")){
-
+            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -137,9 +126,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                             for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
-                                        if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(clubHelperClassEvent);
+                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
+                                        if (participantHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(participantHelperClassEvent);
                                         }
                                     }
                                 }
@@ -148,7 +137,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                     }
                     Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
 
-                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
+                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
                     Log.d("TAG", "onDataChange: Adapter set");
@@ -160,8 +149,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 }
             });
 
-        }else if (spinner.getSelectedItem().toString().equals("Event Type")){
-
+        }
+        else if (spinner.getSelectedItem().toString().equals("Event Type")){
+            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -170,12 +160,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         if (postSnapshot.hasChildren()) {
-                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
-                                if (postpostSnapshot.hasChildren()) {
-                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
-                                        if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(clubHelperClassEvent);
+                            for (DataSnapshot postPostSnapshot : postSnapshot.getChildren()) {
+                                if (postPostSnapshot.hasChildren()) {
+                                    for (DataSnapshot eventSnapshot : postPostSnapshot.getChildren()) {
+                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
+                                        if (participantHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(participantHelperClassEvent);
                                         }
                                     }
                                 }
@@ -183,7 +173,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
-                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
+                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
 
@@ -193,8 +183,31 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                 }
             });
+        }
+        else if (spinner.getSelectedItem().toString().equals("Clubs")) {
+            List<GeneralHelperClassUser> generalHelperClassUsers = new ArrayList<>();
+            databaseEvents.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    generalHelperClassUsers.clear();
 
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) { // getting users
+                        GeneralHelperClassUser generalHelperClassUser = postSnapshot.getValue(GeneralHelperClassUser.class);
 
+                        if (generalHelperClassUser.getRole().contains("Cycling Club Owner") && generalHelperClassUser.getName().toLowerCase().contains(text.toLowerCase())) {
+                            generalHelperClassUsers.add(generalHelperClassUser);
+                        }
+                    }
+
+                    ParticipantListClub userAdapter = new ParticipantListClub(ParticipantActivityEvents.this, generalHelperClassUsers);
+                    listViewEventsP.setAdapter(userAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -205,12 +218,16 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         // Depending on the selected item, perform actions accordingly
         if (selectedItem.equals("Event Type")) {
             // Perform actions specific to "Join a Club"
-            Toast.makeText(this, "event type selected", Toast.LENGTH_SHORT).show();
-        } else // Perform actions specific to "Participants"
-            if (selectedItem.equals("Event Name"))
-                Toast.makeText(this, "event name selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
+        }
+        // Perform actions specific to "Participants"
+        else if (selectedItem.equals("Event Name")) {
+                Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
+        }
+        else if (selectedItem.equals("Clubs")) {
+            Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
@@ -223,14 +240,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                clubHelperClassEvents.clear();
+//                participantHelperClassEvents.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ClubHelperClassEvent clubHelperClassEvent = postSnapshot.getValue(ClubHelperClassEvent.class);
-//                    clubHelperClassEvents.add(clubHelperClassEvent);
+                    ParticipantHelperClassEvent participantHelperClassEvent = postSnapshot.getValue(ParticipantHelperClassEvent.class);
+//                    participantHelperClassEvents.add(participantHelperClassEvent);
                 }
 
-//                ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, clubHelperClassEvents);
+//                ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, participantHelperClassEvents);
 //                listViewEvents.setAdapter(eventAdapter);
             }
 
