@@ -5,10 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterViewAnimator;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,16 +27,35 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantActivityEvents extends AppCompatActivity {
+public class ParticipantActivityEvents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String userUsername, userName, userRole, userPassword;
-    ListView listViewEvents;
+    String userUsername, userName, userRole, userPassword, selectedSearch;
+    ListView listViewEventsP;
     DatabaseReference databaseEvents;
+
+    List<ClubHelperClassEvent> clubHelperClassEvents;
+
+    Spinner spinner;
+
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.participant_activity_events);
+
+
+
+        spinner = findViewById(R.id.searchoptions);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.SearchOptions, R.layout.participant_spinner_search);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        selectedSearch = spinner.getSelectedItem().toString();
+
+        searchView = findViewById(R.id.searchView);
+
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -72,33 +97,134 @@ public class ParticipantActivityEvents extends AppCompatActivity {
         });
 
 
-//        databaseEvents = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("events");
-//        listViewEvents = (ListView) findViewById(R.id.listViewEvents);
+       databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
+       listViewEventsP = (ListView) findViewById(R.id.listViewEventsP);
 
-//        clubHelperClassEvents = new ArrayList<>();
+
+
+
+
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchList(newText);
+                return true;
+            }
+        });
+    }
+
+
+    public void searchList(String text){
+        ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
+
+        if (spinner.getSelectedItem().toString().equals("Event Name")){
+
+            databaseEvents.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    searchList.clear();
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        if (postSnapshot.hasChildren()) {
+                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+                                if (postpostSnapshot.hasChildren()) {
+                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(clubHelperClassEvent);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
+
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
+                    listViewEventsP.setAdapter(eventAdapter);
+
+                    Log.d("TAG", "onDataChange: Adapter set");
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }else if (spinner.getSelectedItem().toString().equals("Event Type")){
+
+            databaseEvents.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    searchList.clear();
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        if (postSnapshot.hasChildren()) {
+                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+                                if (postpostSnapshot.hasChildren()) {
+                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
+                                            searchList.add(clubHelperClassEvent);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
+                    listViewEventsP.setAdapter(eventAdapter);
+
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+    }
+
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedItem = parent.getItemAtPosition(position).toString();
+
+        // Depending on the selected item, perform actions accordingly
+        if (selectedItem.equals("Event Type")) {
+            // Perform actions specific to "Join a Club"
+            Toast.makeText(this, "event type selected", Toast.LENGTH_SHORT).show();
+        } else // Perform actions specific to "Participants"
+            if (selectedItem.equals("Event Name"))
+                Toast.makeText(this, "event name selected", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        databaseEvents.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                clubHelperClassEvents.clear();
-//
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    ClubHelperClassEvent clubHelperClassEvent = postSnapshot.getValue(ClubHelperClassEvent.class);
-////                    clubHelperClassEvents.add(clubHelperClassEvent);
-//                }
-//
-////                ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, clubHelperClassEvents);
-////                listViewEvents.setAdapter(eventAdapter);
-//            }
 
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

@@ -8,6 +8,12 @@
         <item>Participant</item>
     </string-array>
 
+    <string-array name="SearchOptions">
+        <item>Select Seach Type</item>
+        <item>Event Name</item>
+        <item>Event Type</item>
+    </string-array>
+
     <string-array name="EventOptions">
         <item>Select Event Type</item>
         <item>Time Trial</item>
