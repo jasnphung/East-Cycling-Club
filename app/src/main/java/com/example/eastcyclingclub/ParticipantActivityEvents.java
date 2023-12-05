@@ -220,7 +220,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     @Override
     protected void onStart() {
         super.onStart();
-<<<<<<< HEAD
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -240,13 +239,11 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
             }
         });
-=======
 
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
->>>>>>> e312ab46d5377d8ff4c3d3bc7d4414072bc410b2
     }
 }
