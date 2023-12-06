@@ -102,11 +102,14 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
             }else if(!validateMobile(phoneNumber.getText().toString())){
                 phoneNumber.setError("Invalid Phone Number");
             }
-            else if (!validateIGUsername(instagramUsername.getText().toString())){
+            else if(!validateMobile(mainContact.getText().toString()) && !mainContact.getText().toString().isEmpty()){
+                mainContact.setError("Invalid Mobile Number");
+            }
+            else if (!validateIGUsername(instagramUsername.getText().toString()) && !instagramUsername.getText().toString().isEmpty()){
                 instagramUsername.setError("Invalid IG Username");
-            }else if (!validateTwitterUsername(twitterUsername.getText().toString())){
+            }else if (!validateTwitterUsername(twitterUsername.getText().toString()) && !twitterUsername.getText().toString().isEmpty()){
                 twitterUsername.setError("Invalid Twitter Username");
-            }else if (!validateFacebookLink(facebookLink.getText().toString())){
+            }else if (!validateFacebookLink(facebookLink.getText().toString()) && !facebookLink.getText().toString().isEmpty()){
                 facebookLink.setError("Invalid Facebook Link");
             }
             else {
