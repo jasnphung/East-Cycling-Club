@@ -101,8 +101,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
             return false;
         });
 
-        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
-        listViewEventsP = (ListView) findViewById(R.id.ratingsListView);
+
+       databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
+       listViewEventsP = (ListView) findViewById(R.id.ratingsListView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -121,10 +122,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     }
 
 
-    public boolean searchList(String text){
-
-        if( text.isEmpty() ){ return false; }
-
+    public void searchList(String text){
         if (spinner.getSelectedItem().toString().equals("Search for events by: Event Name")){
             ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
@@ -161,8 +159,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 }
             });
 
-            return !searchList.isEmpty();
-
         }
         else if (spinner.getSelectedItem().toString().equals("Search for events by: Event Type")){
             ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
@@ -197,7 +193,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                 }
             });
-            return !searchList.isEmpty();
         }
         else if (spinner.getSelectedItem().toString().equals("Search for clubs")) {
             List<GeneralHelperClassUser> generalHelperClassUsers = new ArrayList<>();
@@ -238,9 +233,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                 }
             });
-            return !generalHelperClassUsers.isEmpty();
         }
-        return false;
     }
 
 
@@ -249,7 +242,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
         // Depending on the selected item, perform actions accordingly
         if (selectedItem.equals("Event Type")) {
-            // Perform actions specific to "Join a Club"
             Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
         }
         // Perform actions specific to "Participants"
@@ -257,10 +249,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
             Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
         } else if (selectedItem.equals("Clubs")) {
             Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
-        } else if ( selectedItem.equals("Event Name") ){
-            Toast.makeText(this, "Event Name Selected", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();

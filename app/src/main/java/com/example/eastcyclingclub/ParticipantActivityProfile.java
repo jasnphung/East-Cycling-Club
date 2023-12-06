@@ -21,7 +21,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference reference;
-    TextView profileRole, profileUsername, profileAge, profilePace, profileExperienceLevel, welcomeText;
+    TextView profileName, profileRole, profileUsername, profileAge, profilePace, profileExperienceLevel, welcomeText;
     Button editProfile, logout;
     String userUsername, userName, userRole, userPassword, userAge, userPace, userExperienceLevel;
 
@@ -84,7 +84,6 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         // Initializing database
         database = FirebaseDatabase.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("users");
-
 
         profileUsername = findViewById(R.id.profileUsername);
         profileRole = findViewById(R.id.profileRole);
