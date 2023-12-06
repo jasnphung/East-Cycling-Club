@@ -33,7 +33,7 @@
     </string-array>
 
     <string-array name="ExperienceLevelOptions">
-        <item>Select Your Experience Level in Cycling</item>
+        <item>Select Your Experience Level</item>
         <item>Newbie</item>
         <item>Beginner</item>
         <item>Average</item>

@@ -30,6 +30,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
     ListView listViewEventsP;
     DatabaseReference databaseEvents, databaseEvents1;
     List<ParticipantHelperClassEvent> participantHelperClassEvents;
+    List<ClubHelperClassEvent> clubHelperClassEvents;
     Spinner spinner;
     SearchView searchView;
 
@@ -124,7 +125,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
     public void searchList(String text){
         if (spinner.getSelectedItem().toString().equals("Search for events by: Event Name")){
-            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
+            ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -136,9 +137,11 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                             for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
-                                        if (participantHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(participantHelperClassEvent);
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventType() != null) {
+                                            if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())) {
+                                                searchList.add(clubHelperClassEvent);
+                                            }
                                         }
                                     }
                                 }
@@ -147,7 +150,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                     }
                     Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
 
-                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
                     Log.d("TAG", "onDataChange: Adapter set");
@@ -161,7 +164,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
         }
         else if (spinner.getSelectedItem().toString().equals("Search for events by: Event Type")){
-            ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
+            ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -170,12 +173,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         if (postSnapshot.hasChildren()) {
-                            for (DataSnapshot postPostSnapshot : postSnapshot.getChildren()) {
-                                if (postPostSnapshot.hasChildren()) {
-                                    for (DataSnapshot eventSnapshot : postPostSnapshot.getChildren()) {
-                                        ParticipantHelperClassEvent participantHelperClassEvent = eventSnapshot.getValue(ParticipantHelperClassEvent.class);
-                                        if (participantHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())){
-                                            searchList.add(participantHelperClassEvent);
+                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+                                if (postpostSnapshot.hasChildren()) {
+                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+                                        if (clubHelperClassEvent.getEventType() != null) {
+                                            if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())) {
+                                                searchList.add(clubHelperClassEvent);
+                                            }
                                         }
                                     }
                                 }
@@ -183,7 +188,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
-                    ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, searchList);
+                    ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
 
@@ -241,13 +246,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         String selectedItem = parent.getItemAtPosition(position).toString();
 
         // Depending on the selected item, perform actions accordingly
-        if (selectedItem.equals("Event Type")) {
+        if (selectedItem.equals("Search for events by: Event Type")) {
             Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
         }
         // Perform actions specific to "Participants"
-        else if (selectedItem.equals("Event Name")) {
+        else if (selectedItem.equals("Search for events by: Event Name")) {
             Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
-        } else if (selectedItem.equals("Clubs")) {
+        }
+        else if (selectedItem.equals("Search for clubs")) {
             Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
         }
     }
