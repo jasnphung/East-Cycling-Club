@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textViewEventType"
+        android:id="@+id/textViewRatingNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -13,7 +13,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/textViewEventName"
+        android:id="@+id/textViewRatingName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -23,7 +23,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/textViewDate"
+        android:id="@+id/textViewRatingComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

@@ -35,7 +35,7 @@
         android:paddingEnd="20dp">
 
         <TextView
-            android:id="@+id/profileName"
+            android:id="@+id/nameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

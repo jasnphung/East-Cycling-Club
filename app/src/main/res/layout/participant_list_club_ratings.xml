@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textViewRatingNumber"
+        android:id="@+id/textViewRatingName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -13,7 +13,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/textViewDifficulty"
+        android:id="@+id/textViewRatingNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -23,27 +23,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/textViewMinimumAge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/sf_pro"
-        android:text=""
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-    <TextView
-        android:id="@+id/textViewMaximumAge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/sf_pro"
-        android:text=""
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-    <TextView
-        android:id="@+id/textViewPace"
+        android:id="@+id/textViewRatingComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

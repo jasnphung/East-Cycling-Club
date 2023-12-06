@@ -24,9 +24,9 @@ public class ParticipantListEvent extends ArrayAdapter<ParticipantHelperClassEve
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.participant_list_event, null, true);
 
-        TextView textViewEventType = (TextView) listViewItem.findViewById(R.id.textViewEventType);
-        TextView textViewEventName = (TextView) listViewItem.findViewById(R.id.textViewEventName);
-        TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
+        TextView textViewEventType = (TextView) listViewItem.findViewById(R.id.textViewRatingNumber);
+        TextView textViewEventName = (TextView) listViewItem.findViewById(R.id.textViewRatingName);
+        TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewRatingComment);
         TextView textViewMaxParticipants = (TextView) listViewItem.findViewById(R.id.textViewMaxParticipants);
 
         ParticipantHelperClassEvent participantHelperClassEvent = participantHelperClassEvents.get(position);

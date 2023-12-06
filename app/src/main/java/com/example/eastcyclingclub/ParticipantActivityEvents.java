@@ -28,12 +28,9 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
     String userUsername, userName, userRole, userPassword, selectedSearch;
     ListView listViewEventsP;
-    DatabaseReference databaseEvents;
-
+    DatabaseReference databaseEvents, databaseEvents1;
     List<ParticipantHelperClassEvent> participantHelperClassEvents;
-
     Spinner spinner;
-
     SearchView searchView;
 
     @Override
@@ -95,7 +92,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
 
        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
-       listViewEventsP = (ListView) findViewById(R.id.listViewEventsP);
+       listViewEventsP = (ListView) findViewById(R.id.ratingsListView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,11 +106,13 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 return true;
             }
         });
+
+
     }
 
 
     public void searchList(String text){
-        if (spinner.getSelectedItem().toString().equals("Event Name")){
+        if (spinner.getSelectedItem().toString().equals("Search for events by: Event Name")){
             ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -150,7 +149,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
             });
 
         }
-        else if (spinner.getSelectedItem().toString().equals("Event Type")){
+        else if (spinner.getSelectedItem().toString().equals("Search for events by: Event Type")){
             ArrayList <ParticipantHelperClassEvent> searchList = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -184,7 +183,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 }
             });
         }
-        else if (spinner.getSelectedItem().toString().equals("Clubs")) {
+        else if (spinner.getSelectedItem().toString().equals("Search for clubs")) {
             List<GeneralHelperClassUser> generalHelperClassUsers = new ArrayList<>();
             databaseEvents.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -201,6 +200,21 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                     ParticipantListClub userAdapter = new ParticipantListClub(ParticipantActivityEvents.this, generalHelperClassUsers);
                     listViewEventsP.setAdapter(userAdapter);
+
+                    listViewEventsP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            GeneralHelperClassUser generalHelperClassUser = generalHelperClassUsers.get(position);
+
+                            Intent intent = new Intent(ParticipantActivityEvents.this, ParticipantActivityViewClub.class);
+
+                            intent.putExtra("userUsernameKey", generalHelperClassUser.getUsername());
+
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                            finish();
+                        }
+                    });
                 }
 
                 @Override

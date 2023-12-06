@@ -13,6 +13,18 @@
         android:theme="@style/Theme.EastCyclingClub"
         tools:targetApi="31">
         <activity
+            android:name=".ParticipantActivityViewClubRatings"
+            android:exported="false" />
+        <activity
+            android:name=".ParticipantActivityAddRating"
+            android:exported="false" />
+        <activity
+            android:name=".ParticipantActivityViewClubEvents"
+            android:exported="false" />
+        <activity
+            android:name=".ParticipantActivityViewClub"
+            android:exported="false" />
+        <activity
             android:name=".ParticipantActivityProfile"
             android:exported="false" />
         <activity

@@ -4,13 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,8 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class ParticipantActivityProfile extends AppCompatActivity {
 
@@ -79,7 +74,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("users");
 
-        profileName = findViewById(R.id.profileName);
+        profileName = findViewById(R.id.nameTextView);
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
 

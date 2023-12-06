@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -68,14 +67,14 @@ public class ClubActivityProfile extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(userUsername);
 
-        profileName = findViewById(R.id.profileName);
+        profileName = findViewById(R.id.nameTextView);
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
-        phoneNumber = findViewById(R.id.phoneNumber);
-        mainContact = findViewById(R.id.mainContact);
-        instagramUsername = findViewById(R.id.instagramUsername);
-        twitterUsername = findViewById(R.id.twitterUsername);
-        facebookLink = findViewById(R.id.facebookLink);
+        phoneNumber = findViewById(R.id.phoneNumberTextView);
+        mainContact = findViewById(R.id.mainContactTextView);
+        instagramUsername = findViewById(R.id.instagramUsernameTextView);
+        twitterUsername = findViewById(R.id.twitterUsernameTextView);
+        facebookLink = findViewById(R.id.facebookLinkTextView);
 
         // TODO: Implement club picture display
         clubPicture = findViewById(R.id.clubPicture);

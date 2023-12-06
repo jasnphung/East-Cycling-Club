@@ -24,7 +24,7 @@ public class AdminListEvent extends ArrayAdapter<AdminHelperClassEvent>{
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.admin_list_event, null, true);
 
-        TextView textViewEventType = (TextView) listViewItem.findViewById(R.id.textViewEventType);
+        TextView textViewEventType = (TextView) listViewItem.findViewById(R.id.textViewRatingNumber);
         TextView textViewDifficulty = (TextView) listViewItem.findViewById(R.id.textViewDifficulty);
         TextView textViewMinimumAge = (TextView) listViewItem.findViewById(R.id.textViewMinimumAge);
         TextView textViewMaximumAge = (TextView) listViewItem.findViewById(R.id.textViewMaximumAge);

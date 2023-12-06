@@ -2,6 +2,14 @@
     <string name="app_name">EastCyclingClub</string>
     <string name="menu">Select an Option</string>
 
+    <string-array name="RatingOptions">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
     <string-array name="AccountOptions">
         <item>Select Account Type</item>
         <item>Cycling Club Owner</item>
@@ -9,10 +17,10 @@
     </string-array>
 
     <string-array name="SearchOptions">
-        <item>Select Seach Type</item>
-        <item>Event Name</item>
-        <item>Event Type</item>
-        <item>Clubs</item>
+        <item>Search by:</item>
+        <item>Search for events by: Event Name</item>
+        <item>Search for events by: Event Type</item>
+        <item>Search for clubs</item>
     </string-array>
 
     <string-array name="EventOptions">

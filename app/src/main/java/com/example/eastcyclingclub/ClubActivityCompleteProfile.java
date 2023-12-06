@@ -46,11 +46,11 @@ public class ClubActivityCompleteProfile extends AppCompatActivity {
         reference = database.getReference(userUsername);
 
         // Variables for each text field and the complete profile button
-        phoneNumber = findViewById(R.id.phoneNumber);
-        mainContact = findViewById(R.id.mainContact);
-        instagramUsername = findViewById(R.id.instagramUsername);
-        twitterUsername = findViewById(R.id.twitterUsername);
-        facebookLink = findViewById(R.id.facebookLink);
+        phoneNumber = findViewById(R.id.phoneNumberTextView);
+        mainContact = findViewById(R.id.mainContactTextView);
+        instagramUsername = findViewById(R.id.instagramUsernameTextView);
+        twitterUsername = findViewById(R.id.twitterUsernameTextView);
+        facebookLink = findViewById(R.id.facebookLinkTextView);
         completeProfile = findViewById(R.id.completeProfile);
 
         completeProfile.setOnClickListener(view -> {

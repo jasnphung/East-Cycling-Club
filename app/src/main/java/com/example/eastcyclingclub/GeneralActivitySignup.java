@@ -33,10 +33,10 @@ public class GeneralActivitySignup extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_activity_signup);
 
-        signupName = findViewById(R.id.phoneNumber);
-        signupEmail = findViewById(R.id.mainContact);
-        signupUsername = findViewById(R.id.instagramUsername);
-        signupPassword = findViewById(R.id.facebookLink);
+        signupName = findViewById(R.id.phoneNumberTextView);
+        signupEmail = findViewById(R.id.mainContactTextView);
+        signupUsername = findViewById(R.id.instagramUsernameTextView);
+        signupPassword = findViewById(R.id.facebookLinkTextView);
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.completeProfile);
 
