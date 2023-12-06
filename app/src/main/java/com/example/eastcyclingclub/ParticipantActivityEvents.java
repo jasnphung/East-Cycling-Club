@@ -153,8 +153,8 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
                                         ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
-                                        if (clubHelperClassEvent.getEventType() != null) {
-                                            if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())) {
+                                        if (clubHelperClassEvent.getEventName() != null) {
+                                            if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())) {
                                                 searchList.add(clubHelperClassEvent);
                                             }
                                         }
