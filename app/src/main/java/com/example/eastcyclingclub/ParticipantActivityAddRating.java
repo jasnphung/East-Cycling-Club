@@ -25,6 +25,8 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
     Button submitRatingButton, returnToClubButton;
     String userUsername, selectedRating;
 
+    String userName, userRole, userPassword, userAge, userPace, userExperienceLevel, clubUsername;
+
     private static final int MINIMUM_RATING = 1;
     private static final int MAXIMUM_RATING = 5;
 
@@ -37,12 +39,33 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
+                clubUsername = null;
                 userUsername = null;
+                userName = null;
+                userRole = null;
+                userPassword = null;
+                userAge = null;
+                userPace = null;
+                userExperienceLevel = null;
             } else {
-                userUsername = extras.getString("userUsernameKey");
+                clubUsername = extras.getString("clubUsername");
+                userUsername = extras.getString("username");
+                userName = extras.getString("name");
+                userRole = extras.getString("role");
+                userPassword = extras.getString("password");
+                userAge = extras.getString("age");
+                userPace = extras.getString("pace");
+                userExperienceLevel = extras.getString("experienceLevel");
             }
         } else {
-            userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
+            clubUsername = (String) savedInstanceState.getSerializable("clubUsername");
+            userUsername = (String) savedInstanceState.getSerializable("username");
+            userName = (String) savedInstanceState.getSerializable("name");
+            userRole = (String) savedInstanceState.getSerializable("role");
+            userPassword = (String) savedInstanceState.getSerializable("password");
+            userAge = (String) savedInstanceState.getSerializable("age");
+            userPace = (String) savedInstanceState.getSerializable("pace");
+            userExperienceLevel = (String) savedInstanceState.getSerializable("experienceLevel");
         }
 
         database = FirebaseDatabase.getInstance();
@@ -82,7 +105,7 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
                     alertDialog.show();
                 }
                 else {
-                    DatabaseReference specificUserReferenceNumbers = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername).child("ratings");
+                    DatabaseReference specificUserReferenceNumbers = FirebaseDatabase.getInstance().getReference().child("users").child(clubUsername).child("ratings");
 
                     ParticipantHelperClassRating helper = new ParticipantHelperClassRating(userUsername, ratingNumber, ratingComment);
 
@@ -91,7 +114,13 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
                     Toast.makeText(ParticipantActivityAddRating.this, "Rating submitted!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(getApplicationContext(), ParticipantActivityEvents.class);
-                    intent.putExtra("userUsernameKey", userUsername);
+                    intent.putExtra("clubUsername", clubUsername);
+                    intent.putExtra("username", userUsername);
+                    intent.putExtra("name", userName);
+                    intent.putExtra("password", userPassword);
+                    intent.putExtra("age", userUsername);
+                    intent.putExtra("pace", userName);
+                    intent.putExtra("experienceLevel", userRole);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                     finish();
@@ -103,7 +132,13 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityViewClub.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -119,14 +154,16 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
 
     }
 
-    public boolean reviewIsValid(String comment, String userRating){
+    public boolean reviewIsValid(String comment, String userRating) {
+        try {
+            int rating = Integer.parseInt(userRating);
+            boolean commentIsValid = !comment.isEmpty();
+            boolean ratingIsValid = (rating >= MINIMUM_RATING) && (rating <= MAXIMUM_RATING);
 
-        int rating = Integer.parseInt(userRating);
-
-        boolean commentIsValid = !comment.isEmpty();
-        boolean ratingIsValid = (rating >= MINIMUM_RATING) && (rating <= MAXIMUM_RATING);
-
-        return (!comment.isEmpty() && ratingIsValid);
-
+            return commentIsValid && ratingIsValid;
+        } catch (NumberFormatException e) {
+            // Handle the case where userRating is not a valid integer
+            return false;
+        }
     }
 }

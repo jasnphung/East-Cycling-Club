@@ -116,6 +116,13 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityAddRating.class);
+//                Log.d("TAG", clubUsername.toString());
+//                Log.d("TAG", userUsername.toString());
+//                Log.d("TAG", userName.toString());
+//                Log.d("TAG", userPassword.toString());
+//                Log.d("TAG", userName.toString());
+//                Log.d("TAG", userRole.toString());
+
                 intent.putExtra("clubUsername", clubUsername);
                 intent.putExtra("username", userUsername);
                 intent.putExtra("name", userName);
