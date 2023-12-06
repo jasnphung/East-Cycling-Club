@@ -217,15 +217,15 @@ public class ClubActivityEditProfile extends AppCompatActivity {
             }else if(!validateMobile(editPhoneNumber.getText().toString())){
                 editPhoneNumber.setError("Invalid Phone Number");
             }
-            else if(!validateMobile(editMainContact.getText().toString())){
+            else if(!validateMobile(editMainContact.getText().toString()) && !editMainContactText.isEmpty()){
                 editMainContact.setError("Invalid Mobile Number");
             }else if (!validateEmail(editEmail.getText().toString())){
                 editEmail.setError("Invalid Email");
-            }else if (!validateIGUsername(editInstagramUsername.getText().toString())){
+            }else if (!validateIGUsername(editInstagramUsername.getText().toString()) && !editInstagramUsernameText.isEmpty()){
                 editInstagramUsername.setError("Invalid IG Username");
-            }else if (!validateTwitterUsername(editTwitterUsername.getText().toString())){
+            }else if (!validateTwitterUsername(editTwitterUsername.getText().toString()) && !editTwitterUsernameText.isEmpty()){
                 editTwitterUsername.setError("Invalid Twitter Username");
-            }else if (!validateFacebookLink(editFacebookLink.getText().toString())){
+            }else if (!validateFacebookLink(editFacebookLink.getText().toString()) && !editFacebookLinkText.isEmpty()){
                 editFacebookLink.setError("Invalid Facebook Link");
             }
             else {
