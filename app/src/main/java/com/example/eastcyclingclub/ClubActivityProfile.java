@@ -76,8 +76,6 @@ public class ClubActivityProfile extends AppCompatActivity {
         twitterUsername = findViewById(R.id.twitterUsernameTextView);
         facebookLink = findViewById(R.id.facebookLinkTextView);
 
-        // TODO: Implement club picture display
-        clubPicture = findViewById(R.id.clubPicture);
 
         editProfile = findViewById(R.id.editButton);
         logout = findViewById(R.id.logoutButton);
@@ -157,31 +155,6 @@ public class ClubActivityProfile extends AppCompatActivity {
                     else {
                         twitterUsername.setText("Twitter username: " + twitterUsernameFromDatabase[0]);
                     }
-                    if (profilePicturePathFromDatabase[0] != null && !profilePicturePathFromDatabase[0].isEmpty()) {
-                        // Use Firebase Storage to download the image
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(profilePicturePathFromDatabase[0]);
-
-                        final long ONE_MEGABYTE = 1024 * 1024;
-                        storageReference.getBytes(ONE_MEGABYTE)
-                                .addOnSuccessListener(bytes -> {
-                                    // Create a Bitmap from the bytes and set it to the ImageView
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    clubPicture.setImageBitmap(bitmap);
-                                })
-                                .addOnSuccessListener(bytes -> {
-                                    // Create a Bitmap from the bytes and set it to the ImageView
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    clubPicture.setImageBitmap(bitmap);
-                                })
-                                .addOnFailureListener(exception -> {
-                                    // Handle failures
-                                    Log.e("TAG", "Failed to download profile picture", exception);
-                                });
-                    } else {
-                        // Set a default image or handle the case when there's no profile picture
-                        clubPicture.setImageResource(R.drawable.default_pfp);
-                    }
-
                     if (facebookLinkFromDatabase[0].isEmpty()) {
                         facebookLink.setText("Facebook username: None");
                     }
