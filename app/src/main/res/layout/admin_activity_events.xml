@@ -13,7 +13,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/sf_pro"
-        android:text="List of Active Events:"
+        android:text="List of Active Event Types"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -81,6 +81,6 @@
         android:layout_toStartOf="@+id/offerEventFAB"
         android:fontFamily="@font/sf_pro"
         android:gravity="center"
-        android:text="Offer Event" />
+        android:text="Offer Event Type" />
 
 </RelativeLayout>
