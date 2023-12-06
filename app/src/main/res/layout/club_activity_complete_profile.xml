@@ -57,7 +57,7 @@
                 android:drawableLeft="@drawable/baseline_phone_locked_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="Name of Main Contact"
+                android:hint="Main Contact Phone Number"
                 android:inputType="text|textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/black" />
