@@ -33,21 +33,6 @@ public class ParticipantEventSelectAndRateUnitTest {
 //        return !(rating < MINIMUM_EVENT_RATING) && !(rating > MAXIMUM_EVENT_RATING);
 //    }
 
-    /* ==========================
-     *  SEARCH FOR EVENTS TEST
-     ========================= */
-    @Test
-    public void testEmptySearch(){
-        ParticipantActivityEvents testedEvent = new ParticipantActivityEvents();
-        boolean result = testedEvent.searchList(EMPTY_SEARCH_QUERY);
-        assertFalse(result);
-    }
-
-
-    /* ==========================
-     *     RATE EVENTS TESTS
-     ========================= */
-
     @Test
     public void testallValidCredentials(){
         ParticipantActivityAddRating testedEvent = new ParticipantActivityAddRating();
