@@ -120,6 +120,10 @@ public class GeneralActivityLogin extends AppCompatActivity {
                         String nameFromDB = snapshot.child(userUsername).child("name").getValue(String.class);
                         String roleFromDB = snapshot.child(userUsername).child("role").getValue(String.class);
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
+                        String ageFromDB = snapshot.child(userUsername).child("age").getValue(String.class);
+                        String paceFromDB = snapshot.child(userUsername).child("pace").getValue(String.class);
+                        String experienceLevelFromDB = snapshot.child(userUsername).child("experienceLevel").getValue(String.class);
+
 
                         if (roleFromDB.equals("Cycling Club Owner")) {
                             // Checking if their profile is completed (at least
@@ -147,14 +151,33 @@ public class GeneralActivityLogin extends AppCompatActivity {
                             }
                         }
                         else {
-                            Intent intent = new Intent(GeneralActivityLogin.this, ParticipantActivityEvents.class);
+                            // Checking if their profile is completed (registration requirements are specified)
+                            if (((snapshot.child(userUsername).child("age").exists() && snapshot.child(userUsername).child("age").getValue() != null) ||
+                                    (snapshot.child(userUsername).child("averagePace").exists() && snapshot.child(userUsername).child("averagePace").getValue() != null) ||
+                                    (snapshot.child(userUsername).child("experienceLevel").exists() && snapshot.child(userUsername).child("experienceLevel").getValue() != null))) {
 
-                            intent.putExtra("name", nameFromDB);
-                            intent.putExtra("password", passwordFromDB);
-                            intent.putExtra("role", roleFromDB);
-                            intent.putExtra("username",usernameFromDB);
+                                Log.d("TAG", "Profile completed");
 
-                            startActivity(intent);
+                                Intent intent = new Intent(GeneralActivityLogin.this, ParticipantActivityEvents.class);
+
+                                intent.putExtra("name", nameFromDB);
+                                intent.putExtra("password", passwordFromDB);
+                                intent.putExtra("username",usernameFromDB);
+                                intent.putExtra("age", ageFromDB);
+                                intent.putExtra("pace", paceFromDB);
+                                intent.putExtra("experienceLevel", experienceLevelFromDB);
+
+                                startActivity(intent);
+                            }
+                            else {
+                                Log.d("TAG", "Profile not completed");
+
+                                Toast.makeText(GeneralActivityLogin.this, "Profile incomplete!", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(GeneralActivityLogin.this, ParticipantActivityCompleteProfile.class);
+                                intent.putExtra("username", userUsername);
+                                startActivity(intent);
+                            }
                         }
 
                     } else {

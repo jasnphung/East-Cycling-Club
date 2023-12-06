@@ -32,13 +32,14 @@
         <item>Group Rides</item>
     </string-array>
 
-    <string-array name="DifficultyLevelOptions">
-        <item>Select Difficulty Level</item>
+    <string-array name="ExperienceLevelOptions">
+        <item>Select Your Experience Level in Cycling</item>
+        <item>Newbie</item>
         <item>Beginner</item>
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
-        <item>Extreme</item>
+        <item>Average</item>
+        <item>Experienced</item>
+        <item>Pro</item>
+        <item>Cycling is Everything To Me</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

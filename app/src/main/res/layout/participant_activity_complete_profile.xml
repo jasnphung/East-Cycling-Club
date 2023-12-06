@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ParticipantActivityEditProfile">
+    tools:context=".ParticipantActivityCompleteProfile">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,69 +28,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro"
-                android:text="Edit Profile"
+                android:text="Complete Your Profile"
                 android:textAlignment="center"
                 android:textColor="@color/royal_blue"
-                android:textSize="36sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/ageParticipant"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/royalblue_border"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="New Name"
-                android:inputType="textPersonName"
+                android:hint="Enter Age"
+                android:inputType="text|textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
             <EditText
-                android:id="@+id/editEmail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_email_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="@font/sf_pro"
-                android:hint="New Email"
-                android:inputType="textEmailAddress"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editUsername"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="@font/sf_pro"
-                android:hint="New Password"
-                android:inputType="textVisiblePassword"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editAge"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/royalblue_border"
-                android:drawableLeft="@drawable/baseline_person_pin_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="@font/sf_pro"
-                android:hint="New Age"
-                android:inputType="textVisiblePassword"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editPace"
+                android:id="@+id/paceParticipant"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -98,13 +57,13 @@
                 android:drawableLeft="@drawable/baseline_directions_bike_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/sf_pro"
-                android:hint="New Pace"
-                android:inputType="textVisiblePassword"
+                android:hint="Enter Average Pace"
+                android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
             <Spinner
-                android:id="@+id/editExperienceLevel"
+                android:id="@+id/dropdown_menu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -116,15 +75,15 @@
                 android:spinnerMode="dropdown" />
 
             <Button
-                android:id="@+id/saveButton"
+                android:id="@+id/completeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/royal_blue"
                 android:fontFamily="@font/sf_pro"
-                android:text="Save"
+                android:text="Complete Profile"
                 android:textSize="18sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="30dp" />
 
         </LinearLayout>
 

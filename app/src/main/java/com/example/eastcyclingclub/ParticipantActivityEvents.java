@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ParticipantActivityEvents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String userUsername, userName, userRole, userPassword, selectedSearch;
+    String userUsername, userName, userRole, userPassword, userAge, userPace, userExperienceLevel,selectedSearch;
     ListView listViewEventsP;
     DatabaseReference databaseEvents, databaseEvents1;
     List<ParticipantHelperClassEvent> participantHelperClassEvents;
@@ -58,17 +58,26 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 userName = null;
                 userRole = null;
                 userPassword = null;
+                userAge = null;
+                userPace = null;
+                userExperienceLevel = null;
             } else {
                 userUsername = extras.getString("username");
                 userName = extras.getString("name");
                 userRole = extras.getString("role");
                 userPassword = extras.getString("password");
+                userAge = extras.getString("age");;
+                userPace = extras.getString("pace");
+                userExperienceLevel = extras.getString("experienceLevel");
             }
         } else {
             userUsername = (String) savedInstanceState.getSerializable("username");
             userName = (String) savedInstanceState.getSerializable("name");
             userRole = (String) savedInstanceState.getSerializable("role");
             userPassword = (String) savedInstanceState.getSerializable("password");
+            userAge = (String) savedInstanceState.getSerializable("age");;
+            userPace = (String) savedInstanceState.getSerializable("pace");;
+            userExperienceLevel = (String) savedInstanceState.getSerializable("experienceLevel");;
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -81,8 +90,10 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityProfile.class);
                 intent.putExtra("username", userUsername);
                 intent.putExtra("name", userName);
-                intent.putExtra("role", userRole);
                 intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -231,6 +242,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
         // Depending on the selected item, perform actions accordingly
         if (selectedItem.equals("Event Type")) {
+<<<<<<< Updated upstream
             // Perform actions specific to "Join a Club"
             Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
         }
@@ -241,6 +253,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         else if (selectedItem.equals("Clubs")) {
             Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
         }
+=======
+            Toast.makeText(this, "Event Type Selected", Toast.LENGTH_SHORT).show();
+        } else
+            if (selectedItem.equals("Event Name"))
+                Toast.makeText(this, "Event Name Selected", Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

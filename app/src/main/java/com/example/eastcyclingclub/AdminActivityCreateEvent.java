@@ -40,7 +40,7 @@ public class AdminActivityCreateEvent extends AppCompatActivity {
 
         //Dropdown menu for difficulty level selection
         Spinner difficultyLevel = findViewById(R.id.difficultyLevel);
-        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.DifficultyLevelOptions, R.layout.admin_spinner_event_type);
+        ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.ExperienceLevelOptions, R.layout.admin_spinner_event_type);
         difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         difficultyLevel.setAdapter(difficultyAdapter);
 

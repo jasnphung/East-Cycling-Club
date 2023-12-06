@@ -10,7 +10,6 @@
         android:id="@+id/welcomeText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/linearLayout"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
@@ -25,22 +24,27 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="160dp"
         android:background="@drawable/royalblue_border"
         android:orientation="vertical"
         android:padding="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp">
 
+
         <TextView
+<<<<<<< Updated upstream
             android:id="@+id/nameTextView"
+=======
+            android:id="@+id/profileUsername"
+>>>>>>> Stashed changes
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Name"
+            android:text="Username: "
             android:textSize="20sp" />
 
         <TextView
@@ -49,17 +53,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Role"
+            android:text="Role: "
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/profileUsername"
+            android:id="@+id/profileAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/sf_pro"
-            android:text="Username"
+            android:text="Age: "
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/profilePace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/sf_pro"
+            android:text="Pace: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/profileExperienceLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/sf_pro"
+            android:text="Experience Level: "
+            android:textSize="20sp" />
+
 
     </LinearLayout>
 
