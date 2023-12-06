@@ -63,11 +63,9 @@ public class AdminActivityEvents extends AppCompatActivity {
         offerFAB = findViewById(R.id.offerEventFAB);
 
         offerText = findViewById(R.id.offerEventText);
-        editText = findViewById(R.id.editEventTypeText);
 
         offerFAB.setVisibility(View.GONE);
         offerText.setVisibility(View.GONE);
-        editText.setVisibility(View.GONE);
 
         areAllFABsVisible = false;
 

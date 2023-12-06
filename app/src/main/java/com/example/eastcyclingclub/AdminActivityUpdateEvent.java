@@ -29,17 +29,19 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_activity_update_event);
 
-        String eventTypeValue, minimumAgeValue, maximumAgeValue, paceValue;
+        String eventTypeValue, minimumAgeValue, maximumAgeValue, paceValue, difficultyValue;
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 eventTypeValue = null;
+                difficultyValue = null;
                 minimumAgeValue = null;
                 maximumAgeValue = null;
                 paceValue = null;
             } else {
                 eventTypeValue = extras.getString("eventTypeKey");
+                difficultyValue = extras.getString("difficultyKey");
                 minimumAgeValue = extras.getString("minimumAgeKey");
                 maximumAgeValue = extras.getString("maximumAgeKey");
                 paceValue = extras.getString("paceKey");
@@ -47,6 +49,7 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
 
         } else {
             eventTypeValue = (String) savedInstanceState.getSerializable("eventTypeKey");
+            difficultyValue = (String) savedInstanceState.getSerializable("difficultyKey");
             minimumAgeValue = (String) savedInstanceState.getSerializable("minimumAgeKey");
             maximumAgeValue = (String) savedInstanceState.getSerializable("maximumAgeKey");
             paceValue = (String) savedInstanceState.getSerializable("paceKey");
@@ -58,6 +61,8 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
         ArrayAdapter<CharSequence> difficultyAdapter  = ArrayAdapter.createFromResource(this, R.array.ExperienceLevelOptions, R.layout.admin_spinner_event_type);
         difficultyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         difficultyLevel.setAdapter(difficultyAdapter);
+
+        difficultyLevel.setSelection(difficultyAdapter.getPosition(difficultyValue));
 
         editEventBTN = findViewById(R.id.editEventButton);
         deleteEventBTN = findViewById(R.id.deleteEventButton);
@@ -86,8 +91,7 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
             String paceText = pace.getText().toString();
             String selectedDifficultyLevel = difficultyLevel.getSelectedItem().toString();
 
-            // Checks if at least one option is selected: if so, allows event creation, if not, outputs warning message
-            if (!selectedDifficultyLevel.equals("Select Difficulty Level") && (!minAgeText.isEmpty() || maxAgeText.isEmpty() ||paceText.isEmpty())) {
+            if (!selectedDifficultyLevel.equals("Select Your Experience Level") && !paceText.isEmpty() && (!minAgeText.isEmpty() || maxAgeText.isEmpty())) {
                 updateProduct(eventTypeValue, selectedDifficultyLevel, minAgeText, maxAgeText, paceText);
                 Toast.makeText(AdminActivityUpdateEvent.this, "Event updated", Toast.LENGTH_SHORT).show();
 
@@ -98,7 +102,7 @@ public class AdminActivityUpdateEvent extends AppCompatActivity {
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivityUpdateEvent.this);
                 builder.setTitle("Try again!");
-                builder.setMessage("Ensure that difficulty level is specified");
+                builder.setMessage("Ensure that difficulty level and pace are specified");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
