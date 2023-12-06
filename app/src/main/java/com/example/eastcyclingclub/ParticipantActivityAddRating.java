@@ -25,6 +25,9 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
     Button submitRatingButton, returnToClubButton;
     String userUsername, selectedRating;
 
+    private static final int MINIMUM_RATING = 1;
+    private static final int MAXIMUM_RATING = 5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
                 String ratingNumber = selectedRating;
                 String ratingComment = commentEditText.getText().toString();
 
-                if (ratingComment.isEmpty()) {
+                if ( reviewIsValid(ratingNumber, ratingComment) ) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ParticipantActivityAddRating.this);
                     builder.setTitle("Try again!");
                     builder.setMessage("Please enter a comment");
@@ -113,6 +116,17 @@ public class ParticipantActivityAddRating extends AppCompatActivity implements A
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public boolean reviewIsValid(String comment, String userRating){
+
+        int rating = Integer.parseInt(userRating);
+
+        boolean commentIsValid = !comment.isEmpty();
+        boolean ratingIsValid = (rating >= MINIMUM_RATING) && (rating <= MAXIMUM_RATING);
+
+        return (!comment.isEmpty() && ratingIsValid);
 
     }
 }

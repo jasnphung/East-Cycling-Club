@@ -218,7 +218,7 @@ public class ClubActivityEditProfile extends AppCompatActivity {
                 editPhoneNumber.setError("Invalid Phone Number");
             }
             else if(!validateMobile(editMainContact.getText().toString())){
-                    editMainContact.setError("Invalid Mobile Number");
+                editMainContact.setError("Invalid Mobile Number");
             }else if (!validateEmail(editEmail.getText().toString())){
                 editEmail.setError("Invalid Email");
             }else if (!validateIGUsername(editInstagramUsername.getText().toString())){
@@ -336,7 +336,5 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
         }
     }
-
-
 
 }

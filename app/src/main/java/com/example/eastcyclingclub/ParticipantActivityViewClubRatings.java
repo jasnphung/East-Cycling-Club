@@ -70,7 +70,7 @@ public class ParticipantActivityViewClubRatings extends AppCompatActivity {
                     participantHelperClassRatings.add(participantHelperClassRating);
 
                     // Assuming your ParticipantHelperClassRating has a method to get the rating
-                    if (participantHelperClassRating != null) {
+                    if ( participantHelperClassRating != null ) {
                         totalRating += Double.parseDouble(participantHelperClassRating.getRatingNumber());
                         numRatings++;
                     }

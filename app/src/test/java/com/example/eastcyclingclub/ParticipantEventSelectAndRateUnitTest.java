@@ -19,9 +19,10 @@ public class ParticipantEventSelectAndRateUnitTest {
 
     private static final String EMPTY_SEARCH_QUERY = "";
 
-    private static final int VALID_EVENT_RATING = 3;
-    private static final int INVALID_EVENT_RATING = 6;
-    private static final int NEGATIVE_EVENT_RATING = -3;
+    private static final String VALID_EVENT_RATING = "3";
+    private static final String INVALID_EVENT_RATING = "6";
+    private static final String VALID_EVENT_COMMENT = "i liked the race.";
+    private static final String INVALID_EVENT_COMMENT = "";
 
     // this is here for now until rating has been implemented
 //
@@ -48,25 +49,33 @@ public class ParticipantEventSelectAndRateUnitTest {
      ========================= */
 
     @Test
-    public void testNegativeEventRating(){
-        ParticipantActivityEvents testedEvent = new ParticipantActivityEvents();
-//        boolean result = testedEvent.validateEventRating(NEGATIVE_EVENT_RATING);
-//        assertFalse(result);
+    public void testallValidCredentials(){
+        ParticipantActivityAddRating testedEvent = new ParticipantActivityAddRating();
+        boolean result = testedEvent.reviewIsValid(VALID_EVENT_COMMENT, VALID_EVENT_RATING);
+        assertTrue(result);
     }
 
 
     @Test
-    public void testInvalidEventRating(){
-        ParticipantActivityEvents testedEvent = new ParticipantActivityEvents();
-//        boolean result = testedEvent.validateEventRating(INVALID_EVENT_RATING);
-//        assertFalse(result);
+    public void testAllInvalidCredentials(){
+        ParticipantActivityAddRating testedEvent = new ParticipantActivityAddRating();
+        boolean result = testedEvent.reviewIsValid(INVALID_EVENT_COMMENT, INVALID_EVENT_RATING);
+        assertFalse(result);
     }
 
 
     @Test
-    public void testValidEventRating(){
-        ParticipantActivityEvents testedEvent = new ParticipantActivityEvents();
-//        boolean result = testedEvent.validateEventRating(VALID_EVENT_RATING);
-//        assertTrue(result);
+    public void testInvalidRating(){
+        ParticipantActivityAddRating testedEvent = new ParticipantActivityAddRating();
+                boolean result = testedEvent.reviewIsValid(VALID_EVENT_COMMENT, INVALID_EVENT_RATING);
+        assertFalse(result);
+    }
+
+
+    @Test
+    public void testInvalidComment(){
+        ParticipantActivityAddRating testedEvent = new ParticipantActivityAddRating();
+        boolean result = testedEvent.reviewIsValid(INVALID_EVENT_COMMENT, VALID_EVENT_RATING);
+        assertFalse(result);
     }
 }
