@@ -85,11 +85,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("users");
 
-<<<<<<< Updated upstream
-        profileName = findViewById(R.id.nameTextView);
-=======
         profileUsername = findViewById(R.id.profileUsername);
->>>>>>> Stashed changes
         profileRole = findViewById(R.id.profileRole);
         profileUsername = findViewById(R.id.profileUsername);
         profileAge = findViewById(R.id.profileAge);

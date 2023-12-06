@@ -242,24 +242,16 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
         // Depending on the selected item, perform actions accordingly
         if (selectedItem.equals("Event Type")) {
-<<<<<<< Updated upstream
-            // Perform actions specific to "Join a Club"
             Toast.makeText(this, "Event type selected", Toast.LENGTH_SHORT).show();
         }
         // Perform actions specific to "Participants"
         else if (selectedItem.equals("Event Name")) {
-                Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
-        }
-        else if (selectedItem.equals("Clubs")) {
+            Toast.makeText(this, "Event name selected", Toast.LENGTH_SHORT).show();
+        } else if (selectedItem.equals("Clubs")) {
             Toast.makeText(this, "Clubs selected", Toast.LENGTH_SHORT).show();
         }
-=======
-            Toast.makeText(this, "Event Type Selected", Toast.LENGTH_SHORT).show();
-        } else
-            if (selectedItem.equals("Event Name"))
-                Toast.makeText(this, "Event Name Selected", Toast.LENGTH_SHORT).show();
->>>>>>> Stashed changes
     }
+
 
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();

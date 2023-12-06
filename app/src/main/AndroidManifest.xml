@@ -13,7 +13,6 @@
         android:theme="@style/Theme.EastCyclingClub"
         tools:targetApi="31">
         <activity
-<<<<<<< Updated upstream
             android:name=".ParticipantActivityViewClubRatings"
             android:exported="false" />
         <activity
@@ -23,10 +22,7 @@
             android:name=".ParticipantActivityViewClubEvents"
             android:exported="false" />
         <activity
-            android:name=".ParticipantActivityViewClub"
-=======
             android:name=".ParticipantActivityCompleteProfile"
->>>>>>> Stashed changes
             android:exported="false" />
         <activity
             android:name=".ParticipantActivityProfile"
