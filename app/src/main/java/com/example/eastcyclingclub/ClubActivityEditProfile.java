@@ -41,17 +41,12 @@ import java.util.regex.Pattern;
 
 public class ClubActivityEditProfile extends AppCompatActivity {
     EditText editName, editEmail, editUsername, editPassword, editPhoneNumber, editMainContact, editInstagramUsername, editTwitterUsername, editFacebookLink;
-    Button saveButton, changePictureTextButton;
-    ImageButton changePictureImageButton;
     FirebaseDatabase database;
     DatabaseReference reference;
     String userUsername;
     ClubActivityEditProfileBinding binding;
-    private static final int pickImage = 1;
-    Uri imageUri;
-    StorageReference storageReference;
-    ProgressDialog progressDialog;
 
+    Button saveButton;
 
 
     @Override
@@ -59,22 +54,7 @@ public class ClubActivityEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ClubActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.changePictureImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                changeImage();
-            }
-
-        });
-        binding.changePictureTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                changePicture();
-            }
-        });
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -101,10 +81,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
 
 
         saveButton = findViewById(R.id.saveButton);
-
-        // TODO: Implement club picture upload and display
-        changePictureTextButton = findViewById(R.id.changePictureTextButton);
-        changePictureImageButton = findViewById(R.id.changePictureImageButton);
 
         DatabaseReference specificUserReference1 = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername);
 
@@ -275,66 +251,6 @@ public class ClubActivityEditProfile extends AppCompatActivity {
         Pattern p = Pattern.compile("^(https?:\\/\\/)?(www\\.)?facebook\\.com\\/[a-zA-Z0-9.-]+\\/?$");
         Matcher m = p.matcher(input);
         return m.matches();
-    }
-    private void changeImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), pickImage);
-    }
-
-    private void changePicture() {
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading file");
-        progressDialog.show();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yy_MM_dd_HH_mm_ss", Locale.CANADA);
-        Date now = new Date();
-        String filename = formatter.format(now);
-        storageReference = FirebaseStorage.getInstance().getReference("images/" + filename);
-
-        storageReference.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                // Update the user's profile picture URL in the database
-                                DatabaseReference specificUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername);
-                                specificUserReference.child("profilePictureUrl").setValue(uri.toString());
-
-                                // Clear the image view
-                                binding.changePictureImageButton.setImageURI(null);
-
-                                Toast.makeText(ClubActivityEditProfile.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
-                                if (progressDialog.isShowing())
-                                    progressDialog.dismiss();
-                            }
-                        });
-                    }
-
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if (progressDialog.isShowing())
-                            progressDialog.dismiss();
-                        Toast.makeText(ClubActivityEditProfile.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == pickImage && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            binding.changePictureImageButton.setImageURI(imageUri);
-
-        }
     }
 
 }

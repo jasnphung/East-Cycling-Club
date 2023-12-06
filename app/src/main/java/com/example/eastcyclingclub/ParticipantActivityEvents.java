@@ -118,7 +118,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
 
        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
-       listViewEventsP = (ListView) findViewById(R.id.eventsListView);
+       listViewEventsP = findViewById(R.id.eventsListView);
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -164,22 +164,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
-//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        if (postSnapshot.hasChildren()) {
-//                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
-//                                if (postpostSnapshot.hasChildren()) {
-//                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-//                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
-//                                        if (clubHelperClassEvent.getEventType() != null) {
-//                                            if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())) {
-//                                                searchList.add(clubHelperClassEvent);
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
                     Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
 
                     ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
@@ -283,25 +267,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
-
-
-
-//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        if (postSnapshot.hasChildren()) {
-//                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
-//                                if (postpostSnapshot.hasChildren()) {
-//                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
-//                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
-//                                        if (clubHelperClassEvent.getEventType() != null) {
-//                                            if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())) {
-//                                                searchList.add(clubHelperClassEvent);
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
 
                     ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
