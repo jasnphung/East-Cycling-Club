@@ -68,7 +68,6 @@
         app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Button"
         app:srcCompat="@drawable/baseline_offer" />
 
-
     <TextView
         android:id="@+id/offerEventText"
         android:layout_width="wrap_content"

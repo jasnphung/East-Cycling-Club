@@ -290,7 +290,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                                                     break;
                                                 }
                                                 else {
-                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event! Not Old Enough", Toast.LENGTH_SHORT).show();
                                                     break;
                                                 }
                                             }
@@ -301,7 +301,7 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                                                     break;
                                                 }
                                                 else {
-                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event! Not Young Enough", Toast.LENGTH_SHORT).show();
                                                     break;
                                                 }
                                             }
