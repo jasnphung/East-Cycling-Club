@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +25,7 @@ public class ParticipantActivityViewClubRatings extends AppCompatActivity {
     TextView averageRatingTextView;
     ListView ratingsListView;
     Button returnToClubButton;
-    String userUsername;
+    String userUsername, userName, userRole, userPassword, userAge, userPace, userExperienceLevel,clubUsername;
     double averageRatingNumber;
     List<ParticipantHelperClassRating> participantHelperClassRatings;
 
@@ -39,15 +38,36 @@ public class ParticipantActivityViewClubRatings extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
+                clubUsername = null;
                 userUsername = null;
+                userName = null;
+                userRole = null;
+                userPassword = null;
+                userAge = null;
+                userPace = null;
+                userExperienceLevel = null;
             } else {
-                userUsername = extras.getString("userUsernameKey");
+                clubUsername = extras.getString("clubUsername");
+                userUsername = extras.getString("username");
+                userName = extras.getString("name");
+                userRole = extras.getString("role");
+                userPassword = extras.getString("password");
+                userAge = extras.getString("age");
+                userPace = extras.getString("pace");
+                userExperienceLevel = extras.getString("experienceLevel");
             }
         } else {
-            userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
+            clubUsername = (String) savedInstanceState.getSerializable("clubUsername");
+            userUsername = (String) savedInstanceState.getSerializable("username");
+            userName = (String) savedInstanceState.getSerializable("name");
+            userRole = (String) savedInstanceState.getSerializable("role");
+            userPassword = (String) savedInstanceState.getSerializable("password");
+            userAge = (String) savedInstanceState.getSerializable("age");
+            userPace = (String) savedInstanceState.getSerializable("pace");
+            userExperienceLevel = (String) savedInstanceState.getSerializable("experienceLevel");
         }
 
-        databaseRatings = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("ratings");
+        databaseRatings = FirebaseDatabase.getInstance().getReference("users").child(clubUsername).child("ratings");
 
         averageRatingTextView = findViewById(R.id.averageRatingTextView);
 
@@ -99,7 +119,13 @@ public class ParticipantActivityViewClubRatings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityViewClub.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -111,7 +137,7 @@ public class ParticipantActivityViewClubRatings extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference databaseRatings = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("ratings");
+        DatabaseReference databaseRatings = FirebaseDatabase.getInstance().getReference("users").child(clubUsername).child("ratings");
 
         databaseRatings.addValueEventListener(new ValueEventListener() {
             @Override

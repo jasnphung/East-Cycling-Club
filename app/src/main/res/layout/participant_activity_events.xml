@@ -35,7 +35,7 @@
         android:spinnerMode="dropdown" />
 
     <ListView
-        android:id="@+id/ratingsListView"
+        android:id="@+id/eventsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottomNavigation"
@@ -58,7 +58,7 @@
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu_clubowner"/>
+        app:menu="@menu/bottom_menu_participant"/>
 
     <TextView
         android:id="@+id/textView3"

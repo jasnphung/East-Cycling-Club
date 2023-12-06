@@ -13,6 +13,12 @@
         android:theme="@style/Theme.EastCyclingClub"
         tools:targetApi="31">
         <activity
+            android:name=".ParticipantListJoinedEvent"
+            android:exported="false" />
+        <activity
+            android:name=".ParticipantActivityJoinedEvents"
+            android:exported="false" />
+        <activity
             android:name=".ParticipantActivityViewClub"
             android:exported="false" />
         <activity

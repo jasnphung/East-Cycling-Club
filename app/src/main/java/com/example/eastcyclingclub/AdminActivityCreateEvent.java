@@ -71,8 +71,8 @@ public class AdminActivityCreateEvent extends AppCompatActivity {
             String selectedEventType = eventType.getSelectedItem().toString();
 
 
-            // Checks if at least one option is entered: if so, allows event creation, if not, outputs warning message
-            if ((!minAgeText.isEmpty() || !maxAgeText.isEmpty() || !paceText.isEmpty()) && (!selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type"))) {
+            // Checks if at least one of the age options are entered: if so, allows event creation, if not, outputs warning message
+            if (((!minAgeText.isEmpty() || !maxAgeText.isEmpty()) && !paceText.isEmpty()) && !selectedDifficultyLevel.equals("Select Difficulty Level") && !selectedEventType.equals("Select Event Type")) {
 
                 // Create an instance of the EventCreateHelperClass with event details
                 AdminHelperClassEvent helper = new AdminHelperClassEvent(selectedEventType, selectedDifficultyLevel, minAgeText, paceText, maxAgeText);
@@ -89,7 +89,7 @@ public class AdminActivityCreateEvent extends AppCompatActivity {
             else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivityCreateEvent.this);
                 builder.setTitle("Try again!");
-                builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
+                builder.setMessage("Please specify event type, difficulty level, pace, and at least one of either minimum/maximum age requirements");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

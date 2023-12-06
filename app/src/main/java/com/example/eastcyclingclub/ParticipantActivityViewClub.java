@@ -21,7 +21,7 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
     DatabaseReference reference;
     TextView nameTextView, phoneNumberTextView, mainContactTextView, instagramUsernameTextView, twitterUsernameTextView, facebookLinkTextView;
     Button viewEventsButton, viewRatingsButton, addRatingButton, returnToSearchButton;
-    String userUsername;
+    String userUsername, userName, userRole, userPassword, userAge, userPace, userExperienceLevel,clubUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +32,37 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
+                clubUsername = null;
                 userUsername = null;
+                userName = null;
+                userRole = null;
+                userPassword = null;
+                userAge = null;
+                userPace = null;
+                userExperienceLevel = null;
             } else {
-                userUsername = extras.getString("userUsernameKey");
+                clubUsername = extras.getString("clubUsername");
+                userUsername = extras.getString("username");
+                userName = extras.getString("name");
+                userRole = extras.getString("role");
+                userPassword = extras.getString("password");
+                userAge = extras.getString("age");
+                userPace = extras.getString("pace");
+                userExperienceLevel = extras.getString("experienceLevel");
             }
         } else {
-            userUsername = (String) savedInstanceState.getSerializable("userUsernameKey");
+            clubUsername = (String) savedInstanceState.getSerializable("clubUsername");
+            userUsername = (String) savedInstanceState.getSerializable("username");
+            userName = (String) savedInstanceState.getSerializable("name");
+            userRole = (String) savedInstanceState.getSerializable("role");
+            userPassword = (String) savedInstanceState.getSerializable("password");
+            userAge = (String) savedInstanceState.getSerializable("age");
+            userPace = (String) savedInstanceState.getSerializable("pace");
+            userExperienceLevel = (String) savedInstanceState.getSerializable("experienceLevel");
         }
 
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference(userUsername);
+        reference = database.getReference(clubUsername);
 
         nameTextView = findViewById(R.id.nameTextView);
         phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
@@ -61,7 +82,13 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityViewClubEvents.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -72,7 +99,13 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityViewClubRatings.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -83,7 +116,13 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityAddRating.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -94,7 +133,13 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityEvents.class);
-                intent.putExtra("userUsernameKey", userUsername);
+                intent.putExtra("clubUsername", clubUsername);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
                 finish();
@@ -103,7 +148,7 @@ public class ParticipantActivityViewClub extends AppCompatActivity {
     }
 
     public void showUserData() {
-        DatabaseReference specificUserReference = database.getInstance().getReference().child("users").child(userUsername);
+        DatabaseReference specificUserReference = database.getInstance().getReference().child("users").child(clubUsername);
 
         final String[] nameFromDatabase = new String[1];
         final String[] phoneNumberFromDatabase = new String[1];

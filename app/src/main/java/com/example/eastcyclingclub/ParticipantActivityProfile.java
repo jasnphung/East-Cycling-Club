@@ -63,7 +63,7 @@ public class ParticipantActivityProfile extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.profile);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.event) {
+            if (id == R.id.eventsAvailable) {
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityEvents.class);
                 intent.putExtra("username", userUsername);
                 intent.putExtra("name", userName);
@@ -77,6 +77,18 @@ public class ParticipantActivityProfile extends AppCompatActivity {
             }
             if (id == R.id.profile) {
                 return true;
+            }
+            if (id == R.id.eventsJoined) {
+                Intent intent = new Intent(getApplicationContext(), ParticipantActivityJoinedEvents.class);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userAge);
+                intent.putExtra("pace", userPace);
+                intent.putExtra("experienceLevel", userExperienceLevel);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                finish();
             }
             return false;
         });

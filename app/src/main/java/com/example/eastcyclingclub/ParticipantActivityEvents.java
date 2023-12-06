@@ -1,6 +1,7 @@
 package com.example.eastcyclingclub;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,13 +84,25 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
-        bottomNavigationView.setSelectedItemId(R.id.event);
+        bottomNavigationView.setSelectedItemId(R.id.eventsAvailable);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.event){
+            if (id == R.id.eventsAvailable){
                 return true;
             }if (id == R.id.profile){
                 Intent intent = new Intent(getApplicationContext(), ParticipantActivityProfile.class);
+                intent.putExtra("username", userUsername);
+                intent.putExtra("name", userName);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("age", userUsername);
+                intent.putExtra("pace", userName);
+                intent.putExtra("experienceLevel", userRole);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+                finish();
+            }
+            if (id == R.id.eventsJoined) {
+                Intent intent = new Intent(getApplicationContext(), ParticipantActivityJoinedEvents.class);
                 intent.putExtra("username", userUsername);
                 intent.putExtra("name", userName);
                 intent.putExtra("password", userPassword);
@@ -104,7 +118,8 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
 
        databaseEvents = FirebaseDatabase.getInstance().getReference().child("users");
-       listViewEventsP = (ListView) findViewById(R.id.ratingsListView);
+       listViewEventsP = (ListView) findViewById(R.id.eventsListView);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -122,7 +137,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
     }
 
-
     public void searchList(String text){
         if (spinner.getSelectedItem().toString().equals("Search for events by: Event Name")){
             ArrayList <ClubHelperClassEvent> searchList = new ArrayList<>();
@@ -133,13 +147,14 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                     searchList.clear();
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        if (postSnapshot.hasChildren()) {
+                        GeneralHelperClassUser generalHelperClassUser = postSnapshot.getValue(GeneralHelperClassUser.class);
+                        if (generalHelperClassUser.getRole().contains("Cycling Club Owner")) {
                             for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
                                         ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
                                         if (clubHelperClassEvent.getEventType() != null) {
-                                            if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())) {
+                                            if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())) {
                                                 searchList.add(clubHelperClassEvent);
                                             }
                                         }
@@ -148,10 +163,89 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                             }
                         }
                     }
+
+//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        if (postSnapshot.hasChildren()) {
+//                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+//                                if (postpostSnapshot.hasChildren()) {
+//                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+//                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+//                                        if (clubHelperClassEvent.getEventType() != null) {
+//                                            if (clubHelperClassEvent.getEventName().toLowerCase().contains(text.toLowerCase())) {
+//                                                searchList.add(clubHelperClassEvent);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
                     Log.d("TAG", "onDataChange: searchList size: " + searchList.size());
 
                     ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
+
+                    listViewEventsP.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            ClubHelperClassEvent event = searchList.get(position);
+                            DatabaseReference specificEventTypeDetails = FirebaseDatabase.getInstance().getReference("events");
+                            DatabaseReference specificUserJoiningEvent = FirebaseDatabase.getInstance().getReference("users").child(userUsername);
+
+                            specificEventTypeDetails.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                        AdminHelperClassEvent adminHelperClassEvent = postSnapshot.getValue(AdminHelperClassEvent.class);
+                                        if (adminHelperClassEvent.getEventType().equals(event.getEventType())) {
+                                            if (adminHelperClassEvent.getMaximumAge().equals("No Requirement Set")) {
+                                                if ((Integer.parseInt(userAge) > Integer.parseInt(adminHelperClassEvent.getMinimumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace()))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+                                            else if (adminHelperClassEvent.getMinimumAge().equals("No Requirement Set")) {
+                                                if ((Integer.parseInt(userAge) < Integer.parseInt(adminHelperClassEvent.getMaximumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace()))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+                                            else {
+                                                if ((Integer.parseInt(userAge) < Integer.parseInt(adminHelperClassEvent.getMaximumAge()) && (Integer.parseInt(userAge) > Integer.parseInt(adminHelperClassEvent.getMinimumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace())))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+                            return true;
+                        }
+                    });
 
                     Log.d("TAG", "onDataChange: Adapter set");
 
@@ -172,7 +266,8 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                     searchList.clear();
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        if (postSnapshot.hasChildren()) {
+                        GeneralHelperClassUser generalHelperClassUser = postSnapshot.getValue(GeneralHelperClassUser.class);
+                        if (generalHelperClassUser.getRole().contains("Cycling Club Owner")) {
                             for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
                                 if (postpostSnapshot.hasChildren()) {
                                     for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
@@ -188,9 +283,89 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
                         }
                     }
 
+
+
+
+//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        if (postSnapshot.hasChildren()) {
+//                            for (DataSnapshot postpostSnapshot : postSnapshot.getChildren()) {
+//                                if (postpostSnapshot.hasChildren()) {
+//                                    for (DataSnapshot eventSnapshot : postpostSnapshot.getChildren()) {
+//                                        ClubHelperClassEvent clubHelperClassEvent = eventSnapshot.getValue(ClubHelperClassEvent.class);
+//                                        if (clubHelperClassEvent.getEventType() != null) {
+//                                            if (clubHelperClassEvent.getEventType().toLowerCase().contains(text.toLowerCase())) {
+//                                                searchList.add(clubHelperClassEvent);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+
                     ClubListEvent eventAdapter = new ClubListEvent(ParticipantActivityEvents.this, searchList);
                     listViewEventsP.setAdapter(eventAdapter);
 
+                    listViewEventsP.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            ClubHelperClassEvent event = searchList.get(position);
+                            DatabaseReference specificEventTypeDetails = FirebaseDatabase.getInstance().getReference("events");
+                            DatabaseReference specificUserJoiningEvent = FirebaseDatabase.getInstance().getReference("users").child(userUsername);
+                            specificEventTypeDetails.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                        AdminHelperClassEvent adminHelperClassEvent = postSnapshot.getValue(AdminHelperClassEvent.class);
+                                        if (adminHelperClassEvent.getEventType().equals(event.getEventType())) {
+                                            if (adminHelperClassEvent.getMaximumAge().equals("No Requirement Set")) {
+                                                if ((Integer.parseInt(userAge) > Integer.parseInt(adminHelperClassEvent.getMinimumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace()))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+                                            else if (adminHelperClassEvent.getMinimumAge().equals("No Requirement Set")) {
+                                                if ((Integer.parseInt(userAge) < Integer.parseInt(adminHelperClassEvent.getMaximumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace()))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+                                            else {
+                                                if ((Integer.parseInt(userAge) < Integer.parseInt(adminHelperClassEvent.getMaximumAge()) && (Integer.parseInt(userAge) > Integer.parseInt(adminHelperClassEvent.getMinimumAge()) && Integer.parseInt(userPace) > Integer.parseInt(adminHelperClassEvent.getPace())))) {
+                                                    specificUserJoiningEvent.child("eventsJoined").child(event.getEventName()).setValue(event);
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Event Joined!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                                else {
+                                                    Toast.makeText(ParticipantActivityEvents.this, "Ineligible to Join Event!", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+                            return true;
+                        }
+                    });
 
                 }
                 @Override
@@ -224,7 +399,13 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
                             Intent intent = new Intent(ParticipantActivityEvents.this, ParticipantActivityViewClub.class);
 
-                            intent.putExtra("userUsernameKey", generalHelperClassUser.getUsername());
+                            intent.putExtra("clubUsername", generalHelperClassUser.getUsername());
+                            intent.putExtra("username", userUsername);
+                            intent.putExtra("name", userName);
+                            intent.putExtra("password", userPassword);
+                            intent.putExtra("age", userUsername);
+                            intent.putExtra("pace", userName);
+                            intent.putExtra("experienceLevel", userRole);
 
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
@@ -270,15 +451,6 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                participantHelperClassEvents.clear();
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ParticipantHelperClassEvent participantHelperClassEvent = postSnapshot.getValue(ParticipantHelperClassEvent.class);
-//                    participantHelperClassEvents.add(participantHelperClassEvent);
-                }
-
-//                ParticipantListEvent eventAdapter = new ParticipantListEvent(ParticipantActivityEvents.this, participantHelperClassEvents);
-//                listViewEvents.setAdapter(eventAdapter);
             }
 
             @Override
@@ -286,11 +458,12 @@ public class ParticipantActivityEvents extends AppCompatActivity implements Adap
 
             }
         });
-
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
+
+
 }
