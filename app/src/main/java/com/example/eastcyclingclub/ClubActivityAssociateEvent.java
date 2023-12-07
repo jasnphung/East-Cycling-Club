@@ -122,11 +122,10 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             boolean allFieldsEmpty =
                     ( eventDate.length() == 0  )
                             && ( maxParticipants.length() == 0 )
-                            && ( selectedEventType.length() == 0 )
                             && ( eventName.length() == 0 );
 
 
-            if (!allFieldsEmpty) {
+            if (!(eventDate.isEmpty() || maxParticipants.isEmpty() || eventName.isEmpty())) {
 
                 DatabaseReference specificUserEventsReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUsername).child("events");
                 DatabaseReference clubOwnerEvents = specificUserEventsReference.child(eventName);
@@ -146,7 +145,22 @@ public class ClubActivityAssociateEvent extends AppCompatActivity {
             else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ClubActivityAssociateEvent.this);
                 builder.setTitle("Try again!");
-                builder.setMessage("Please specify event type, difficulty level, and at least one of the fields");
+                StringBuilder message = new StringBuilder("Please make sure you have the following entered:");
+
+                if (eventName.isEmpty()) {
+                    message.append("\n\t- An event name");
+                }
+
+                if (eventDate.isEmpty()) {
+                    message.append("\n\t- An event date");
+                }
+
+                if (maxParticipants.isEmpty()) {
+                    message.append("\n\t- A maximum number of participants allowed");
+                }
+
+                builder.setMessage(message);
+
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -122,8 +122,22 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
                 finish();
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ClubActivityUpdateEvent.this);
-                builder.setTitle("Try Again!");
-                builder.setMessage("Ensure that all fields are specified");
+                builder.setTitle("Try again!");
+                StringBuilder message = new StringBuilder("Please make sure you have the following entered:");
+
+                if (newEventName.isEmpty()) {
+                    message.append("\n\t- An event name");
+                }
+
+                if (dateText.isEmpty()) {
+                    message.append("\n\t- An event date");
+                }
+
+                if (maxParticipantsText.isEmpty()) {
+                    message.append("\n\t- A maximum number of participants allowed");
+                }
+
+                builder.setMessage(message);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -176,7 +190,7 @@ public class ClubActivityUpdateEvent extends AppCompatActivity {
     private void deleteProduct(String userUsername, String eventName) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUsername).child("events").child(eventName);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_LONG).show();
     }
 
     private String intMonthToWord(int x) {
